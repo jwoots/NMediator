@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using NMediator.Result;
+using System.Threading.Tasks;
 
 namespace NMediator.Request
 {
     public interface IRequestHandler
     {
-        TResult Handle<TRequest, TResult>(TRequest request);
+        Task<RequestResult<TResult>> Handle<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>;
     }
 }
