@@ -46,7 +46,7 @@ namespace NMediator.Tests.Result
         }
 
         [Fact]
-        public void RequestResult_must_return_a_fail_request_when_passing_error()
+        public void Fail_must_return_a_fail_request_when_passing_error()
         {
             //ARRANGE
             var expectedError = new Error();
