@@ -18,7 +18,10 @@
             IsSuccess = false;
             Error = error;
         }
+    }
 
+    public static class RequestResult
+    {
         public static RequestResult<TData> Success<TData>(TData data) => new RequestResult<TData>(data);
         public static RequestResult<TData> Fail<TData>(Error error) => new RequestResult<TData>(error);
     }

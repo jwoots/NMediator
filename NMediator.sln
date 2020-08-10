@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMediator", "src\NMediator\NMediator.csproj", "{9DB40D5D-4C64-4B1E-8752-7B3960206D69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator", "src\NMediator\NMediator.csproj", "{9DB40D5D-4C64-4B1E-8752-7B3960206D69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMediator.Tests", "test\NMediator.Tests\NMediator.Tests.csproj", "{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9DB40D5D-4C64-4B1E-8752-7B3960206D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DB40D5D-4C64-4B1E-8752-7B3960206D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DB40D5D-4C64-4B1E-8752-7B3960206D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
