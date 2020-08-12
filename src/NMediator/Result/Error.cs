@@ -1,5 +1,8 @@
-﻿namespace NMediator.Result
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace NMediator.Result
 {
+    [ExcludeFromCodeCoverage]
     public class Error
     {
         public string Code { get; set;}

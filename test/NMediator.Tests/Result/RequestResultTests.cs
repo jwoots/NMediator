@@ -7,7 +7,7 @@ namespace NMediator.Tests.Result
     public class RequestResultTests
     {
         [Fact]
-        public void RequestResult_must_init_IsSuccess_to_true_when_passing_data()
+        public void RequestResult_must_init_successful_result_when_passing_data()
         {
             //ACT
             var rr = new RequestResult<string>("data");
@@ -16,10 +16,12 @@ namespace NMediator.Tests.Result
             rr.IsSuccess.Should().Be(true);
             rr.Data.Should().Be("data");
             rr.Error.Should().BeNull();
+            IRequestResult irr = rr;
+            irr.Data.Should().Be("data");
         }
 
         [Fact]
-        public void RequestResult_must_init_IsSuccess_to_false_when_passing_error()
+        public void RequestResult_must_init_fialed_result_when_passing_error()
         {
             //ARRANGE
             var expectedError = new Error();
@@ -31,6 +33,8 @@ namespace NMediator.Tests.Result
             rr.IsSuccess.Should().Be(false);
             rr.Error.Should().Be(expectedError);
             rr.Data.Should().BeNull();
+            IRequestResult irr = rr;
+            irr.Data.Should().BeNull();
         }
 
         [Fact]
@@ -43,6 +47,8 @@ namespace NMediator.Tests.Result
             rr.IsSuccess.Should().Be(true);
             rr.Data.Should().Be("data");
             rr.Error.Should().BeNull();
+            IRequestResult irr = rr;
+            irr.Data.Should().Be("data");
         }
 
         [Fact]
@@ -58,6 +64,8 @@ namespace NMediator.Tests.Result
             rr.IsSuccess.Should().Be(false);
             rr.Error.Should().Be(expectedError);
             rr.Data.Should().BeNull();
+            IRequestResult irr = rr;
+            irr.Data.Should().BeNull();
         }
     }
 }
