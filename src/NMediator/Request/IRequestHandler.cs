@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace NMediator.Request
 {
-    public interface IRequestHandler
+    public interface IRequestHandler<TRequest, TResult> where TRequest : IRequest<TResult>
     {
-        Task<RequestResult<TResult>> Handle<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>;
+        Task<RequestResult<TResult>> Handle(TRequest request);
     }
 }

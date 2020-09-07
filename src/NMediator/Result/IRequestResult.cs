@@ -2,8 +2,8 @@
 {
     public interface IRequestResult
     {
-        bool IsSuccess { get; set; }
+        bool IsSuccess { get; }
         object Data { get; }
-        Error Error { get; set; }
+        Error Error { get; }
     }
 }
