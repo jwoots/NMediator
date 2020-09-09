@@ -7,14 +7,14 @@ namespace NMediator.InProcess
 {
     public class InProcessRequestProcessor : IRequestProcessor
     {
-        private readonly IInstanceActivator _instanceActivator;
+        private readonly IHandlerActivator _instanceActivator;
 
-        public InProcessRequestProcessor(IInstanceActivator instanceActivator)
+        public InProcessRequestProcessor(IHandlerActivator instanceActivator)
         {
             _instanceActivator = instanceActivator;
         }
 
-        public Task<RequestResult<TResult>> Process<TRequest, TResult>(TRequest request) 
+        public Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request) 
             where TRequest : IRequest<TResult>
         {
             var instance = _instanceActivator.GetInstance<IRequestHandler<TRequest, TResult>>();

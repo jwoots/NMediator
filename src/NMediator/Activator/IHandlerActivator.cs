@@ -2,7 +2,7 @@
 
 namespace NMediator.Activator
 {
-    public interface IInstanceActivator
+    public interface IHandlerActivator
     {
         T GetInstance<T>();
         object GetInstance(Type type);

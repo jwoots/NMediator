@@ -5,6 +5,6 @@ namespace NMediator.Request
 {
     public interface IRequestProcessor
     {
-        Task<RequestResult<TResult>> Process<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>;
+        Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>;
     }
 }
