@@ -1,7 +1,7 @@
-﻿using NMediator.Configuration;
+﻿using NMediator.Activator;
+using NMediator.Configuration;
 using NMediator.InProcess;
 using NMediator.SInjector;
-using System;
 
 namespace NMediator.Request.Configuration
 {
@@ -16,8 +16,8 @@ namespace NMediator.Request.Configuration
 
         public RequestConfiguration ExecuteWithInProcess()
         {
-            var inProcessProcessor = new InProcessRequestProcessor()
-            _container.Register<IRequestProcessor>()
+            _container.Register<IRequestProcessor>(ctx => new InProcessRequestProcessor(ctx.Get<IHandlerActivator>()));
+            return this;
         }
     }
 }
