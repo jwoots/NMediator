@@ -115,6 +115,7 @@ namespace NMediator.Configuration
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ConfigurationExtender
     {
         internal readonly ICollection<Action> _toRegister = new List<Action>();
