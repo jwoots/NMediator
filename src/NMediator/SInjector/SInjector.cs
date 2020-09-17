@@ -56,6 +56,7 @@ namespace NMediator.SInjector
             => Decorate(typeof(TService), rc => decorator(rc));
     }
 
+    [ExcludeFromCodeCoverage]
     /// <summary>
     /// Registration context containing all informations for a service type
     /// </summary>
