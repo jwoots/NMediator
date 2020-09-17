@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace NMediator.SInjector
 {
+    [ExcludeFromCodeCoverage]
     public class Container
     {
         private readonly IDictionary<Type, RegistrationContext> _services = new Dictionary<Type, RegistrationContext>();

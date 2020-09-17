@@ -9,6 +9,7 @@ namespace NMediator.Configuration
         {
             var rc = new RequestConfiguration(config.Container);
             action(rc);
+            config.RegisterConfiguration(rc);
             return config;
         }
     }

@@ -1,4 +1,5 @@
-﻿using NMediator.SInjector;
+﻿using NMediator.Activator;
+using NMediator.SInjector;
 
 namespace NMediator.Configuration
 {
@@ -9,6 +10,12 @@ namespace NMediator.Configuration
         public MediatorConfiguration()
         {
 
+        }
+
+        public MediatorConfiguration WithActivator(IHandlerActivator activator)
+        {
+            Container.Register<IHandlerActivator>(ctx => activator);
+            return this;
         }
     }
 }

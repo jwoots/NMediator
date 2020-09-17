@@ -6,5 +6,7 @@ namespace NMediator.Activator
     {
         T GetInstance<T>();
         object GetInstance(Type type);
+
+
     }
 }
