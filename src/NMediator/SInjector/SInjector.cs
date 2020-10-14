@@ -83,6 +83,7 @@ namespace NMediator.SInjector
         TService Get<TService>();
     }
 
+    [ExcludeFromCodeCoverage]
     internal class ResolutionContext : IResolutionContext
     {
         private readonly RegistrationContext _rc;
