@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NMediator.Transport;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,6 @@ namespace NMediator.Routing
 {
     interface IRouter
     {
-        Pipeline Route(object message);
+        IOutgoingTransport Route(Type messageType);
     }
 }

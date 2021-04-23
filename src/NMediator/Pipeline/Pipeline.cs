@@ -8,7 +8,7 @@ namespace NMediator.Pipeline
     {
         public object ExecutePipeline(object message)
         {
-            
+            return null;
         }
     }
 }

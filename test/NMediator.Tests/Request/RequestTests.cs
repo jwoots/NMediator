@@ -21,7 +21,7 @@ namespace NMediator.Tests.Request
             activator.RegisterRequest<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World "+request.Name)));
 
             config.WithActivator(activator)
-                .Request(r => r.ExecuteWithInProcess());
+                .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
 
             BaseConfiguration.Configure(config);
 
