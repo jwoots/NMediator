@@ -4,6 +4,8 @@ using NMediator.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,10 +27,17 @@ namespace NMediator.Transport
             var handlerType = typeof(IRequestHandler<,>).MakeGenericType(requestType, responseType);
 
             dynamic param = message;
-            object handlerResult = _handlerActivator.GetInstance(handlerType);
-            dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handlerResult, new object[] {  message });
-            await awaitable;
-            return (IRequestResult) awaitable.GetAwaiter().GetResult();
+            dynamic handlerResult = _handlerActivator.GetInstance(handlerType);
+            try
+            {
+                dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handlerResult, new object[] { message });
+                await awaitable;
+                return (IRequestResult)awaitable.GetAwaiter().GetResult();
+            }catch(TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
+            }
         }
     }
 }
