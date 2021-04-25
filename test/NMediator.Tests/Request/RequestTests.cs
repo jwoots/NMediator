@@ -40,7 +40,7 @@ namespace NMediator.Tests.Request
             var activator = new SimpleHandlerActivator();
 
             config.WithActivator(activator)
-                .Request(r => r.ExecuteWithInProcess());
+                .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
 
             BaseConfiguration.Configure(config);
 
