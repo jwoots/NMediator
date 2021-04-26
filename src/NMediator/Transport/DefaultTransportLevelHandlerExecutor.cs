@@ -20,7 +20,7 @@ namespace NMediator.Transport
             _handlerActivator = handlerActivator;
         }
 
-        public async Task<IRequestResult> ExecuteHandler(object message)
+        public async Task<IRequestResult> ExecuteHandler(object message, IDictionary<string, string> headers)
         {
             var requestType = message.GetType();
             var responseType = requestType.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>)).GetGenericArguments()[0];

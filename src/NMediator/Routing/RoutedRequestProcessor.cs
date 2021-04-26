@@ -16,9 +16,9 @@ namespace NMediator.Routing
             _router = router;
         }
 
-        public async Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>
+        public async Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request, IDictionary<string, string> headers = null) where TRequest : IRequest<TResult>
         {
-            var result = await _router.Route(typeof(TRequest)).SendMessage(request);
+            var result = await _router.Route(typeof(TRequest)).SendMessage(request, headers);
             return (RequestResult<TResult>) result;
         }
     }

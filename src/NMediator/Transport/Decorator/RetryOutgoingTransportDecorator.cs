@@ -16,14 +16,14 @@ namespace NMediator.Transport.Decorator
             _decoratee = decoratee;
             _retryTimes = retryTimes;
         }
-        public async Task<IRequestResult> SendMessage(object message)
+        public async Task<IRequestResult> SendMessage(object message, IDictionary<string,string> headers)
         {
             Exception e = null;
             for(int i=0;i<_retryTimes;i++)
             {
                 try
                 {
-                    return await _decoratee.SendMessage(message);
+                    return await _decoratee.SendMessage(message, headers);
                 }
                 catch(Exception ex)
                 {

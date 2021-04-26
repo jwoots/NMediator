@@ -8,6 +8,6 @@ namespace NMediator.Transport
 {
     public interface ITransportLevelHandlerExecutor
     {
-        Task<IRequestResult> ExecuteHandler(object message);
+        Task<IRequestResult> ExecuteHandler(object message, IDictionary<string, string> headers);
     }
 }

@@ -16,7 +16,7 @@ namespace NMediator.InProcess
             _handlerExecutor = handlerExecutor ?? throw new ArgumentNullException(nameof(handlerExecutor));
         }
 
-        public Task<IRequestResult> SendMessage(object message)
+        public Task<IRequestResult> SendMessage(object message, IDictionary<string, string> headers)
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
