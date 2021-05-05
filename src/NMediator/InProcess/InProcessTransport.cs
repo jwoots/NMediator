@@ -21,7 +21,7 @@ namespace NMediator.InProcess
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
 
-            return _handlerExecutor.ExecuteHandler(message);
+            return _handlerExecutor.ExecuteHandler(message, headers);
         }
     }
 }

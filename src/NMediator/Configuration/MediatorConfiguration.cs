@@ -3,6 +3,7 @@ using NMediator.Request;
 using NMediator.Routing;
 using NMediator.SInjector;
 using NMediator.Transport;
+using NMediator.Transport.Decorator;
 
 namespace NMediator.Configuration
 {
@@ -18,6 +19,7 @@ namespace NMediator.Configuration
             Container.Register(ctx => typeBasedRouter);
             Container.Register<IRequestProcessor>(ctx => routedRequestProcessor ??= new RoutedRequestProcessor(ctx.Get<IRouter>()));
             Container.Register<ITransportLevelHandlerExecutor>(ctx => new DefaultTransportLevelHandlerExecutor(ctx.Get<IHandlerActivator>()));
+            Container.Decorate<ITransportLevelHandlerExecutor>(ctx => new MessageContextTransportLevelHandlerExecutorDecorator(ctx.Get<ITransportLevelHandlerExecutor>()));
         }
 
         public MediatorConfiguration WithActivator(IHandlerActivator activator)

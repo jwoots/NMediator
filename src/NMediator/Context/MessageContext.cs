@@ -8,6 +8,9 @@ namespace NMediator.Context
     [Serializable]
     public class MessageContext
     {
+        const string KEY_ID = "id-message";
+        const string KEY_DATE = "date-message";
+
         private static AsyncLocal<MessageContext> _local = new AsyncLocal<MessageContext>();
       
         public static MessageContext Current => _local.Value ??= new MessageContext();
@@ -19,14 +22,15 @@ namespace NMediator.Context
 
         private IDictionary<string, string> _values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public string Id { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public string Id  => _values[KEY_ID];
+        public DateTimeOffset Date => DateTimeOffset.Parse(_values[KEY_DATE]);
+
         public IDictionary<string, string> Values => _values;
 
         public MessageContext()
         {
-            Id = Guid.NewGuid().ToString();
-            Date = DateTimeOffset.Now;
+            _values[KEY_ID] = Guid.NewGuid().ToString();
+            _values[KEY_DATE] = DateTimeOffset.Now.ToString("O");
         }
     }
 }

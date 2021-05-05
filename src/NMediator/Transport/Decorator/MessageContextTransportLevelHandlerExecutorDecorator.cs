@@ -1,4 +1,6 @@
-﻿using NMediator.Result;
+﻿using NMediator.Context;
+using NMediator.Extensions;
+using NMediator.Result;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +11,17 @@ namespace NMediator.Transport.Decorator
     public class MessageContextTransportLevelHandlerExecutorDecorator : ITransportLevelHandlerExecutor
     {
         private readonly ITransportLevelHandlerExecutor _decoratee;
-
-        public Task<IRequestResult> ExecuteHandler(object message)
+        public MessageContextTransportLevelHandlerExecutorDecorator(ITransportLevelHandlerExecutor decoratee)
         {
-            return _decoratee.ExecuteHandler(message);
+            _decoratee = decoratee;
+        }
+
+        public Task<IRequestResult> ExecuteHandler(object message, IDictionary<string, string> headers)
+        {
+            var mc = new MessageContext();
+            headers?.ForEach(kvp => mc.Values[kvp.Key] = kvp.Value);
+            MessageContext.SetContext(mc);
+            return _decoratee.ExecuteHandler(message, headers);
         }
     }
 }
