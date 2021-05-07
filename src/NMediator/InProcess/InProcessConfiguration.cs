@@ -29,6 +29,14 @@ namespace NMediator.InProcess
             return transportConfiguration;
         }
 
+        public TransportOptionsConfiguration PublishInProcess(params Type[] types)
+        {
+            var transportConfiguration = new TransportOptionsConfiguration(_container, () => _container.Get<InProcessTransport>(), types);
+            _transportConfigurations.Add(transportConfiguration);
+
+            return transportConfiguration;
+        }
+
         protected override void Resolve()
         {
             _transportConfigurations.ForEach(tc => tc.Configure());

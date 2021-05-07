@@ -27,10 +27,10 @@ namespace NMediator.Transport
             var handlerType = typeof(IRequestHandler<,>).MakeGenericType(requestType, responseType);
 
             dynamic param = message;
-            dynamic handlerResult = _handlerActivator.GetInstance(handlerType);
+            IEnumerable<dynamic> handlerResult = _handlerActivator.GetInstances(handlerType);
             try
             {
-                dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handlerResult, new object[] { message });
+                dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handlerResult.First(), new object[] { message });
                 await awaitable;
                 return (IRequestResult)awaitable.GetAwaiter().GetResult();
             }catch(TargetInvocationException ex)

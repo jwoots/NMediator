@@ -10,16 +10,16 @@ namespace NMediator.Activator
     {
         private readonly IDictionary<Type, object> _handlers = new Dictionary<Type, object>();
 
-        public T GetInstance<T>()
+        public IEnumerable<T> GetInstances<T>()
         {
-            return (T)GetInstance(typeof(T));
+            yield return (T)GetInstances(typeof(T));
         }
 
-        public object GetInstance(Type type)
+        public IEnumerable<object> GetInstances(Type type)
         {
             if (_handlers.TryGetValue(type, out var result))
             {
-                return result;
+                yield return result;
             }
 
             throw new InvalidOperationException($"there is no handler instance for type {type}");
