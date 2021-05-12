@@ -18,24 +18,9 @@ namespace NMediator.Core.Transport
             _handlerActivator = handlerActivator;
         }
 
-        public async Task<IRequestResult> ExecuteHandler(object message, IDictionary<string, string> headers)
+        public Task<IRequestResult> ExecuteHandler(object message, IDictionary<string, string> headers)
         {
-            var requestType = message.GetType();
-            var responseType = requestType.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>)).GetGenericArguments()[0];
-            var handlerType = typeof(IRequestHandler<,>).MakeGenericType(requestType, responseType);
-
-            dynamic param = message;
-            IEnumerable<dynamic> handlerResult = _handlerActivator.GetInstances(handlerType);
-            try
-            {
-                dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handlerResult.First(), new object[] { message });
-                await awaitable;
-                return (IRequestResult)awaitable.GetAwaiter().GetResult();
-            }catch(TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
+            return _handlerActivator.ProcessMessageHandler(message);
         }
     }
 }

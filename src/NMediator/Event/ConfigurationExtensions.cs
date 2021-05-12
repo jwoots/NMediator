@@ -1,8 +1,7 @@
-﻿using NMediator.Core.Configuration;
-using NMediator.Event;
+﻿using NMediator.Event;
 using System;
 
-namespace NMediator.Configuration
+namespace NMediator.Core.Configuration
 {
     public static class EventConfigurationExtensions
     {

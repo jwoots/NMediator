@@ -1,10 +1,10 @@
-﻿using NMediator.Core.Result;
+﻿using NMediator.Core.Message;
+using NMediator.Core.Result;
 using System.Threading.Tasks;
 
 namespace NMediator.Event
 {
-    public interface IEventHandler<TEvent> where TEvent : IEvent
+    public interface IEventHandler<TEvent>  : IMessageHandler<TEvent, Nothing> where TEvent : IEvent
     {
-        Task<RequestResult<Nothing>> Handle(TEvent @event);
     }
 }

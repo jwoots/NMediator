@@ -1,6 +1,8 @@
-﻿namespace NMediator.Request
+﻿using NMediator.Core.Message;
+
+namespace NMediator.Request
 {
-    public interface IRequest<TResult>
+    public interface IRequest<TResult> : IMessage<TResult>
     {
     }
 }

@@ -1,8 +1,7 @@
-﻿using NMediator.Core.Configuration;
-using NMediator.Request.Configuration;
+﻿using NMediator.Request.Configuration;
 using System;
 
-namespace NMediator.Configuration
+namespace NMediator.Core.Configuration
 {
     public static class ConfigurationExtensions
     {

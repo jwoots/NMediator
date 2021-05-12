@@ -1,12 +1,13 @@
 ﻿using NMediator.Core.Transport.Decorator;
-using NMediator.Request.Configuration;
+using NMediator.Event;
+using NMediator.InProcess;
 using System;
 
-namespace NMediator.InProcess
+namespace NMediator.Core.Configuration
 {
-    public static class EventConfigurationExtensions
+    public static class InProccessEventConfigurationExtensions
     {
-        public static TransportOptionsConfiguration ExecuteWithInProcess(this RequestConfiguration rc, params Type[] types)
+        public static TransportOptionsConfiguration ExecuteWithInProcess(this EventConfiguration rc, params Type[] types)
         {
             var inProcessConfig = rc.GetOrRegisterConfiguration(() => new InProcessConfiguration(rc.Container));
             return inProcessConfig.ExecuteWithInProcess(types);

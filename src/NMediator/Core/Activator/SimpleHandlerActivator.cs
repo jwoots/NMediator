@@ -1,4 +1,5 @@
-﻿using NMediator.Core.Result;
+﻿using NMediator.Core.Message;
+using NMediator.Core.Result;
 using NMediator.Request;
 using System;
 using System.Collections.Generic;
@@ -19,27 +20,27 @@ namespace NMediator.Core.Activator
         {
             if (_handlers.TryGetValue(type, out var result))
             {
-                yield return result;
+                return new object[] { result };
             }
-
-            throw new InvalidOperationException($"there is no handler instance for type {type}");
+        
+            throw new InvalidOperationException($"No handler instance found for type {type}");
         }
 
-        public void RegisterRequest<TRequest, TResult>(Func<TRequest, Task<RequestResult<TResult>>> func) where TRequest : IRequest<TResult>
+        public void RegisterRequest<TMessage, TResult>(Func<TMessage, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
         {
-            _handlers[typeof(IRequestHandler<TRequest,TResult>)] = new GenericRequestHandler<TRequest, TResult>(func);
+            _handlers[typeof(IMessageHandler<TMessage,TResult>)] = new GenericRequestHandler<TMessage, TResult>(func);
         }
 
-        class GenericRequestHandler<TRequest, TResult> : IRequestHandler<TRequest, TResult> where TRequest : IRequest<TResult>
+        class GenericRequestHandler<TMessage, TResult> : IMessageHandler<TMessage, TResult> where TMessage : IMessage<TResult>
         {
-            private readonly Func<TRequest, Task<RequestResult<TResult>>> _func;
+            private readonly Func<TMessage, Task<RequestResult<TResult>>> _func;
 
-            public GenericRequestHandler(Func<TRequest, Task<RequestResult<TResult>>> func)
+            public GenericRequestHandler(Func<TMessage, Task<RequestResult<TResult>>> func)
             {
                 _func = func;
             }
 
-            public Task<RequestResult<TResult>> Handle(TRequest request)
+            public Task<RequestResult<TResult>> Handle(TMessage request)
             {
                 return _func(request);
             }

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using NMediator.Core.Message;
+using NMediator.Core.Result;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NMediator.Event
 {
-    public interface IEvent
+    public interface IEvent : IMessage<Nothing>
     {
     }
 }

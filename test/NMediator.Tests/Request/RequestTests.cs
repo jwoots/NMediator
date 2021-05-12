@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using NMediator.Configuration;
 using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Core.Result;
@@ -27,7 +26,7 @@ namespace NMediator.Tests.Request
             BaseConfiguration.Configure(config);
 
             //ACT
-            var processor = config.Container.Get<IRequestProcessor>();
+            var processor = config.Container.Get<IRequestExecutor>();
             var result = await processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
 
             //ASSERT
@@ -46,7 +45,7 @@ namespace NMediator.Tests.Request
             BaseConfiguration.Configure(config);
 
             //ACT
-            var processor = config.Container.Get<IRequestProcessor>();
+            var processor = config.Container.Get<IRequestExecutor>();
             Func<Task<RequestResult<string>>> action = () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
 
             //ASSERT
