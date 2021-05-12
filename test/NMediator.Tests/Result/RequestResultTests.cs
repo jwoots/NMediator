@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using NMediator.Result;
+using NMediator.Core.Result;
 using Xunit;
 
 namespace NMediator.Tests.Result

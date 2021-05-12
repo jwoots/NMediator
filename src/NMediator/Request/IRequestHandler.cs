@@ -1,4 +1,4 @@
-﻿using NMediator.Result;
+﻿using NMediator.Core.Result;
 using System.Threading.Tasks;
 
 namespace NMediator.Request

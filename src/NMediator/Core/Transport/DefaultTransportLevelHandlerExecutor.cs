@@ -1,15 +1,13 @@
-﻿using NMediator.Activator;
+﻿using NMediator.Core.Activator;
+using NMediator.Core.Result;
 using NMediator.Request;
-using NMediator.Result;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NMediator.Transport
+namespace NMediator.Core.Transport
 {
     public class DefaultTransportLevelHandlerExecutor : ITransportLevelHandlerExecutor
     {

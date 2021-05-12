@@ -1,15 +1,13 @@
-﻿using NMediator.Event;
+﻿using NMediator.Core.Result;
+using NMediator.Event;
 using NMediator.Request;
-using NMediator.Result;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NMediator.Activator
+namespace NMediator.Core.Activator
 {
     public static class IHandlerActivatorExtensions
     {

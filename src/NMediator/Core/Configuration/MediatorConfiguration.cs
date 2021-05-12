@@ -1,11 +1,11 @@
-﻿using NMediator.Activator;
+﻿using NMediator.Core.Activator;
+using NMediator.Core.Routing;
+using NMediator.Core.SInjector;
+using NMediator.Core.Transport;
+using NMediator.Core.Transport.Decorator;
 using NMediator.Request;
-using NMediator.Routing;
-using NMediator.SInjector;
-using NMediator.Transport;
-using NMediator.Transport.Decorator;
 
-namespace NMediator.Configuration
+namespace NMediator.Core.Configuration
 {
     public class MediatorConfiguration : BaseConfiguration
     {

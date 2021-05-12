@@ -1,11 +1,9 @@
-﻿using NMediator.Configuration;
-using NMediator.Extensions;
-using NMediator.SInjector;
-using NMediator.Transport;
-using NMediator.Transport.Decorator;
+﻿using NMediator.Core.Configuration;
+using NMediator.Core.SInjector;
+using NMediator.Core.Transport;
+using NMediator.Core.Transport.Decorator;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NMediator.InProcess
 {

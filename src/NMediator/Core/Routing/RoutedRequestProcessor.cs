@@ -1,11 +1,9 @@
-﻿using NMediator.Request;
-using NMediator.Result;
-using System;
+﻿using NMediator.Core.Result;
+using NMediator.Request;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NMediator.Routing
+namespace NMediator.Core.Routing
 {
     internal class RoutedRequestProcessor : IRequestProcessor
     {

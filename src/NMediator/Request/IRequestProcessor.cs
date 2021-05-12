@@ -1,4 +1,4 @@
-﻿using NMediator.Result;
+﻿using NMediator.Core.Result;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

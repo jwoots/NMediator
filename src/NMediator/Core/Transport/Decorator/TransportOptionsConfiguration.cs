@@ -1,12 +1,9 @@
-﻿using NMediator.Configuration;
-using NMediator.Extensions;
-using NMediator.Routing;
-using NMediator.SInjector;
+﻿using NMediator.Core.Routing;
+using NMediator.Core.SInjector;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace NMediator.Transport.Decorator
+namespace NMediator.Core.Transport.Decorator
 {
     public class TransportOptionsConfiguration
     {

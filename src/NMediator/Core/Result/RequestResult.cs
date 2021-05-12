@@ -1,4 +1,4 @@
-﻿namespace NMediator.Result
+﻿namespace NMediator.Core.Result
 {
     public class RequestResult<T> : IRequestResult
     {

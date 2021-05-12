@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NMediator.Extensions;
 
-namespace NMediator.Configuration
+namespace NMediator.Core.Configuration
 {
     [ExcludeFromCodeCoverage]
     public abstract class BaseConfiguration : IDisposable

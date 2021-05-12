@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace NMediator.SInjector
+namespace NMediator.Core.SInjector
 {
     [ExcludeFromCodeCoverage]
     public class Container

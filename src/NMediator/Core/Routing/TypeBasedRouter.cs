@@ -1,9 +1,8 @@
-﻿using NMediator.Transport;
+﻿using NMediator.Core.Transport;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace NMediator.Routing
+namespace NMediator.Core.Routing
 {
     public class TypeBasedRouter : IRouter
     {

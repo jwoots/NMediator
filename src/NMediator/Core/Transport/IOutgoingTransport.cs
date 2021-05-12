@@ -1,10 +1,8 @@
-﻿using NMediator.Result;
-using System;
+﻿using NMediator.Core.Result;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NMediator.Transport
+namespace NMediator.Core.Transport
 {
     public interface IOutgoingTransport
     {

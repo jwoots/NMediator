@@ -1,10 +1,10 @@
-﻿using NMediator.Request;
-using NMediator.Result;
+﻿using NMediator.Core.Result;
+using NMediator.Request;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NMediator.Activator
+namespace NMediator.Core.Activator
 {
     public class SimpleHandlerActivator : IHandlerActivator
     {
@@ -45,5 +45,4 @@ namespace NMediator.Activator
             }
         }
     }
-
 }

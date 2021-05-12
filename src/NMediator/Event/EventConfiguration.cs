@@ -1,8 +1,5 @@
-﻿using NMediator.Configuration;
-using NMediator.SInjector;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NMediator.Core.Configuration;
+using NMediator.Core.SInjector;
 
 namespace NMediator.Event
 {

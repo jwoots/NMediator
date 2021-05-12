@@ -1,6 +1,6 @@
-﻿using NMediator.InProcess;
+﻿using NMediator.Core.Transport.Decorator;
+using NMediator.InProcess;
 using NMediator.Request.Configuration;
-using NMediator.Transport.Decorator;
 using System;
 
 namespace NMediator.Configuration

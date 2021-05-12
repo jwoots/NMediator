@@ -1,10 +1,9 @@
-﻿using NMediator.Result;
+﻿using NMediator.Core.Result;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NMediator.Transport.Decorator
+namespace NMediator.Core.Transport.Decorator
 {
     class RetryOutgoingTransportDecorator : IOutgoingTransport
     {

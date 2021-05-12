@@ -3,7 +3,7 @@ using NMediator.Request;
 using System;
 using System.Collections.Generic;
 
-namespace NMediator.Activator
+namespace NMediator.Core.Activator
 {
     public interface IHandlerActivator
     {

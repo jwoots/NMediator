@@ -1,8 +1,7 @@
-﻿using NMediator.Result;
-using NMediator.Transport;
+﻿using NMediator.Core.Result;
+using NMediator.Core.Transport;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NMediator.InProcess

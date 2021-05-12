@@ -1,7 +1,4 @@
-﻿using NMediator.Result;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NMediator.Core.Result;
 using System.Threading.Tasks;
 
 namespace NMediator.Event

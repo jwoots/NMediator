@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NMediator.Extensions
+﻿namespace System.Collections.Generic
 {
     public static class IEnumeratorExtensions
     {

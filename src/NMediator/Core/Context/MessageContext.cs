@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace NMediator.Context
+namespace NMediator.Core.Context
 {
     [Serializable]
     public class MessageContext

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace NMediator.Result
+namespace NMediator.Core.Result
 {
     [ExcludeFromCodeCoverage]
     public class Error

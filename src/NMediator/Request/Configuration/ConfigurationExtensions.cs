@@ -1,4 +1,5 @@
-﻿using NMediator.Request.Configuration;
+﻿using NMediator.Core.Configuration;
+using NMediator.Request.Configuration;
 using System;
 
 namespace NMediator.Configuration

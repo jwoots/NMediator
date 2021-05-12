@@ -1,8 +1,6 @@
-﻿using NMediator.Request.Configuration;
-using NMediator.Transport.Decorator;
+﻿using NMediator.Core.Transport.Decorator;
+using NMediator.Request.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NMediator.InProcess
 {

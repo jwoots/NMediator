@@ -1,12 +1,9 @@
-﻿using NMediator.Context;
-using NMediator.Extensions;
-using NMediator.Result;
-using System;
+﻿using NMediator.Core.Context;
+using NMediator.Core.Result;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NMediator.Transport.Decorator
+namespace NMediator.Core.Transport.Decorator
 {
     public class MessageContextTransportLevelHandlerExecutorDecorator : ITransportLevelHandlerExecutor
     {

@@ -1,4 +1,5 @@
-﻿using NMediator.Event;
+﻿using NMediator.Core.Configuration;
+using NMediator.Event;
 using System;
 
 namespace NMediator.Configuration

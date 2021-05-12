@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NMediator.Result
+namespace NMediator.Core.Result
 {
     public class Nothing
     {

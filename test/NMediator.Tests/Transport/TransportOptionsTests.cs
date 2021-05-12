@@ -1,11 +1,9 @@
 ﻿using FluentAssertions;
-using NMediator.Activator;
 using NMediator.Configuration;
+using NMediator.Core.Activator;
+using NMediator.Core.Configuration;
 using NMediator.Request;
-using NMediator.Result;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

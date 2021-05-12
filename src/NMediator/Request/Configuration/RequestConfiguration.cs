@@ -1,13 +1,5 @@
-﻿using NMediator.Activator;
-using NMediator.Configuration;
-using NMediator.Extensions;
-using NMediator.InProcess;
-using NMediator.Routing;
-using NMediator.SInjector;
-using NMediator.Transport;
-using NMediator.Transport.Decorator;
-using System;
-using System.Collections.Generic;
+﻿using NMediator.Core.Configuration;
+using NMediator.Core.SInjector;
 
 namespace NMediator.Request.Configuration
 {
