@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
+using NMediator.Core.Message;
 using NMediator.Core.Result;
 using NMediator.Request;
 using System;
@@ -18,7 +19,7 @@ namespace NMediator.Tests.Request
             var config = new MediatorConfiguration();
             var activator = new SimpleHandlerActivator();
 
-            activator.RegisterRequest<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World "+request.Name)));
+            activator.RegisterMessage<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World "+request.Name)));
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
@@ -49,7 +50,7 @@ namespace NMediator.Tests.Request
             Func<Task<RequestResult<string>>> action = () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
 
             //ASSERT
-            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"there is no handler instance for type {typeof(IRequestHandler<MyRequest,string>)}");
+            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No handler instance found for type {typeof(IMessageHandler<MyRequest,string>)}");
         }
 
         class MyRequest : IRequest<string>

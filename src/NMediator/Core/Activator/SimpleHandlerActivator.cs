@@ -9,7 +9,7 @@ namespace NMediator.Core.Activator
 {
     public class SimpleHandlerActivator : IHandlerActivator
     {
-        private readonly IDictionary<Type, object> _handlers = new Dictionary<Type, object>();
+        private readonly IDictionary<Type, ICollection<object>> _handlers = new Dictionary<Type, ICollection<object>>();
 
         public IEnumerable<T> GetInstances<T>()
         {
@@ -20,15 +20,18 @@ namespace NMediator.Core.Activator
         {
             if (_handlers.TryGetValue(type, out var result))
             {
-                return new object[] { result };
+                return result;
             }
         
             throw new InvalidOperationException($"No handler instance found for type {type}");
         }
 
-        public void RegisterRequest<TMessage, TResult>(Func<TMessage, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
+        public void RegisterMessage<TMessage, TResult>(Func<TMessage, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
         {
-            _handlers[typeof(IMessageHandler<TMessage,TResult>)] = new GenericRequestHandler<TMessage, TResult>(func);
+            if (_handlers.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
+                handlers.Add(new GenericRequestHandler<TMessage, TResult>(func));
+
+                _handlers[typeof(IMessageHandler<TMessage,TResult>)] = new List<object>() { new GenericRequestHandler<TMessage, TResult>(func) };
         }
 
         class GenericRequestHandler<TMessage, TResult> : IMessageHandler<TMessage, TResult> where TMessage : IMessage<TResult>

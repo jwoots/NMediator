@@ -20,7 +20,7 @@ namespace NMediator.Tests.Context
             var activator = new SimpleHandlerActivator();
             MessageContext mc = null;
 
-            activator.RegisterRequest<MyRequest, string>(request => { mc = MessageContext.Current; return Task.FromResult(RequestResult.Success("Hello World " + request.Name)); });
+            activator.RegisterMessage<MyRequest, string>(request => { mc = MessageContext.Current; return Task.FromResult(RequestResult.Success("Hello World " + request.Name)); });
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
@@ -44,7 +44,7 @@ namespace NMediator.Tests.Context
             var activator = new SimpleHandlerActivator();
             MessageContext mc = null;
 
-            activator.RegisterRequest<MyRequest, string>(request => { mc = MessageContext.Current; return Task.FromResult(RequestResult.Success("Hello World " + request.Name)); });
+            activator.RegisterMessage<MyRequest, string>(request => { mc = MessageContext.Current; return Task.FromResult(RequestResult.Success("Hello World " + request.Name)); });
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
@@ -58,6 +58,8 @@ namespace NMediator.Tests.Context
             //ASSERT
             result.Data.Should().Be("Hello World jwoots");
             mc.Values.Contains(new KeyValuePair<string, string>("my-header", "my-value"));
+            mc.Values.ContainsKey(MessageContext.KEY_ID).Should().BeTrue();
+            mc.Values.ContainsKey(MessageContext.KEY_DATE).Should().BeTrue();
         }
 
         class MyRequest : IRequest<string>

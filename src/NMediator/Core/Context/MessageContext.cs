@@ -8,8 +8,8 @@ namespace NMediator.Core.Context
     [Serializable]
     public class MessageContext
     {
-        const string KEY_ID = "id-message";
-        const string KEY_DATE = "date-message";
+        public const string KEY_ID = "id-message";
+        public const string KEY_DATE = "date-message";
 
         private static AsyncLocal<MessageContext> _local = new AsyncLocal<MessageContext>();
       
