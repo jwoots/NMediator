@@ -1,4 +1,5 @@
 ﻿using NMediator.Core.Activator;
+using NMediator.Core.Context;
 using NMediator.Core.Message;
 using NMediator.Core.Routing;
 using NMediator.Core.SInjector;
@@ -21,6 +22,7 @@ namespace NMediator.Core.Configuration
             Container.Register<IMessageProcessor>(ctx => routedRequestProcessor ??= new RoutedMessageProcessor(ctx.Get<IRouter>()));
             Container.Register<ITransportLevelHandlerExecutor>(ctx => new DefaultTransportLevelHandlerExecutor(ctx.Get<IHandlerActivator>()));
             Container.Decorate<ITransportLevelHandlerExecutor>(ctx => new MessageContextTransportLevelHandlerExecutorDecorator(ctx.Get<ITransportLevelHandlerExecutor>()));
+            Container.Decorate<IMessageProcessor>(ctx => new DefaultHeadersMessageProcessorDecorator(ctx.Get<IMessageProcessor>()));
         }
 
         public MediatorConfiguration WithActivator(IHandlerActivator activator)

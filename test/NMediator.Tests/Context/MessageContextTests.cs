@@ -58,8 +58,8 @@ namespace NMediator.Tests.Context
             //ASSERT
             result.Data.Should().Be("Hello World jwoots");
             mc.Values.Contains(new KeyValuePair<string, string>("my-header", "my-value"));
-            mc.Values.ContainsKey(MessageContext.KEY_ID).Should().BeTrue();
-            mc.Values.ContainsKey(MessageContext.KEY_DATE).Should().BeTrue();
+            mc.Values.ContainsKey(Headers.DATE).Should().BeTrue();
+            mc.Values.ContainsKey(Headers.ID).Should().BeTrue();
         }
 
         class MyRequest : IRequest<string>
