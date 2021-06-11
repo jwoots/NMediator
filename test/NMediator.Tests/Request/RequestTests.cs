@@ -13,7 +13,7 @@ namespace NMediator.Tests.Request
     public class RequestTests
     {
         [Fact]
-        public async Task Request_must_be_executed_correctly()
+        public async Task Execute_must_be_executed_correctly()
         {
             //ACT
             var config = new MediatorConfiguration();
@@ -35,7 +35,7 @@ namespace NMediator.Tests.Request
         }
 
         [Fact]
-        public async Task Request_must_be_executed_correctly_with_generic_request()
+        public async Task Execute_must_be_executed_correctly_with_generic_request()
         {
             //ACT
             var config = new MediatorConfiguration();
@@ -73,6 +73,28 @@ namespace NMediator.Tests.Request
 
             //ASSERT
             await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No handler instance found for type {typeof(IMessageHandler<MyRequest,string>)}");
+        }
+
+        [Fact]
+        public async Task Execute_must_throw_invalid_operation_if_no_route_find()
+        {
+            //ACT
+            var config = new MediatorConfiguration();
+            var activator = new SimpleHandlerActivator();
+
+            activator.RegisterMessage<MyGenericRequest<int>, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
+
+            config.WithActivator(activator)
+                .Request(r => r.ExecuteWithInProcess());
+
+            BaseConfiguration.Configure(config);
+
+            //ACT
+            var processor = config.Container.Get<IRequestExecutor>();
+            Func<Task<RequestResult<string>>> result = () => processor.Execute<MyGenericRequest<int>, string>(new MyGenericRequest<int>() { Data = 15 });
+
+            //ASSERT
+            await result.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No route find for message type {typeof(MyGenericRequest<int>)}");
         }
 
         class MyRequest : IRequest<string>

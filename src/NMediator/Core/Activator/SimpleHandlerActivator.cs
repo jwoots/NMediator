@@ -30,7 +30,7 @@ namespace NMediator.Core.Activator
         {
             if (_handlers.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
                 handlers.Add(new GenericRequestHandler<TMessage, TResult>(func));
-
+            else
                 _handlers[typeof(IMessageHandler<TMessage,TResult>)] = new List<object>() { new GenericRequestHandler<TMessage, TResult>(func) };
         }
 
