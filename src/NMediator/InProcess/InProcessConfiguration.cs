@@ -17,6 +17,7 @@ namespace NMediator.InProcess
         {
             _container = container;
             _container.Register(ctx => new InProcessTransport(ctx.Get<ITransportLevelHandlerExecutor>()));
+            _container.Register(ctx => new InProcessEventTransport(ctx.Get<ITransportLevelHandlerExecutor>()));
         }
 
         public TransportOptionsConfiguration ExecuteWithInProcess(params Type[] types)
@@ -29,7 +30,7 @@ namespace NMediator.InProcess
 
         public TransportOptionsConfiguration PublishInProcess(params Type[] types)
         {
-            var transportConfiguration = new TransportOptionsConfiguration(_container, () => _container.Get<InProcessTransport>(), types);
+            var transportConfiguration = new TransportOptionsConfiguration(_container, () => _container.Get<InProcessEventTransport>(), types);
             _transportConfigurations.Add(transportConfiguration);
 
             return transportConfiguration;

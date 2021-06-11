@@ -24,7 +24,7 @@ namespace NMediator.Tests.Event
             });
 
             config.WithActivator(activator)
-                    .Event(e => e.ExecuteWithInProcess(typeof(MyEvent)));
+                    .Event(e => e.PublishWithInProcess(typeof(MyEvent)));
 
             BaseConfiguration.Configure(config);
 

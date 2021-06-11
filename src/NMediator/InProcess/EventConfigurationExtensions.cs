@@ -7,10 +7,10 @@ namespace NMediator.Core.Configuration
 {
     public static class InProccessEventConfigurationExtensions
     {
-        public static TransportOptionsConfiguration ExecuteWithInProcess(this EventConfiguration rc, params Type[] types)
+        public static TransportOptionsConfiguration PublishWithInProcess(this EventConfiguration rc, params Type[] types)
         {
             var inProcessConfig = rc.GetOrRegisterConfiguration(() => new InProcessConfiguration(rc.Container));
-            return inProcessConfig.ExecuteWithInProcess(types);
+            return inProcessConfig.PublishInProcess(types);
         }
     }
 }
