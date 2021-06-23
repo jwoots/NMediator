@@ -20,14 +20,14 @@ namespace NMediator.Core.Configuration
             Container.Register<IRouter>(ctx => typeBasedRouter);
             Container.Register(ctx => typeBasedRouter);
             Container.Register<IMessageProcessor>(ctx => routedRequestProcessor ??= new RoutedMessageProcessor(ctx.Get<IRouter>()));
-            Container.Register<ITransportLevelHandlerExecutor>(ctx => new DefaultTransportLevelHandlerExecutor(ctx.Get<IHandlerActivator>()));
+            Container.Register<ITransportLevelHandlerExecutor>(ctx => new DefaultTransportLevelHandlerExecutor(ctx.Get<IServiceActivator>()));
             Container.Decorate<ITransportLevelHandlerExecutor>(ctx => new MessageContextTransportLevelHandlerExecutorDecorator(ctx.Get<ITransportLevelHandlerExecutor>()));
             Container.Decorate<IMessageProcessor>(ctx => new DefaultHeadersMessageProcessorDecorator(ctx.Get<IMessageProcessor>()));
         }
 
-        public MediatorConfiguration WithActivator(IHandlerActivator activator)
+        public MediatorConfiguration WithActivator(IServiceActivator activator)
         {
-            Container.Register<IHandlerActivator>(ctx => activator);
+            Container.Register<IServiceActivator>(ctx => activator);
             return this;
         }
     }

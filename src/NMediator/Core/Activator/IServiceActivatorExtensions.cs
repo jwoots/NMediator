@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace NMediator.Core.Activator
 {
-    public static class IHandlerActivatorExtensions
+    public static class IServiceActivatorExtensions
     {
-        public static async Task<IRequestResult> ProcessMessageHandler(this IHandlerActivator handlerActivator, object message)
+        public static async Task<IRequestResult> ProcessMessageHandler(this IServiceActivator handlerActivator, object message)
         {
             var messageType = message.GetType();
             var responseType = messageType.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMessage<>)).GetGenericArguments()[0];

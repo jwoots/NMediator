@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace NMediator.Core.Activator
 {
-    public class SimpleHandlerActivator : IHandlerActivator
+    public class SimpleServiceActivator : IServiceActivator
     {
-        private readonly IDictionary<Type, ICollection<object>> _handlers = new Dictionary<Type, ICollection<object>>();
+        public IDictionary<Type, ICollection<object>> Instances { get; } = new Dictionary<Type, ICollection<object>>();
 
         public IEnumerable<T> GetInstances<T>()
         {
@@ -18,20 +18,20 @@ namespace NMediator.Core.Activator
 
         public IEnumerable<object> GetInstances(Type type)
         {
-            if (_handlers.TryGetValue(type, out var result))
+            if (Instances.TryGetValue(type, out var result))
             {
                 return result;
             }
         
-            throw new InvalidOperationException($"No handler instance found for type {type}");
+            throw new InvalidOperationException($"No instance found for type {type}");
         }
 
         public void RegisterMessage<TMessage, TResult>(Func<TMessage, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
         {
-            if (_handlers.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
+            if (Instances.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
                 handlers.Add(new GenericRequestHandler<TMessage, TResult>(func));
             else
-                _handlers[typeof(IMessageHandler<TMessage,TResult>)] = new List<object>() { new GenericRequestHandler<TMessage, TResult>(func) };
+                Instances[typeof(IMessageHandler<TMessage,TResult>)] = new List<object>() { new GenericRequestHandler<TMessage, TResult>(func) };
         }
 
         class GenericRequestHandler<TMessage, TResult> : IMessageHandler<TMessage, TResult> where TMessage : IMessage<TResult>

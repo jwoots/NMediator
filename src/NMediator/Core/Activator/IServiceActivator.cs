@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NMediator.Core.Activator
 {
-    public interface IHandlerActivator
+    public interface IServiceActivator
     {
         IEnumerable<THandler> GetInstances<THandler>();
         IEnumerable<object> GetInstances(Type handlerType);

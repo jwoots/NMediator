@@ -15,7 +15,7 @@ namespace NMediator.Tests.Transport
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
             var callCount = 0;
 
             activator.RegisterMessage<MyRequest, string>(request => { callCount++; throw new InvalidOperationException("test"); });
@@ -42,7 +42,7 @@ namespace NMediator.Tests.Transport
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
             var myrequestCallCount = 0;
             var myRequest2CallCount = 0;
 

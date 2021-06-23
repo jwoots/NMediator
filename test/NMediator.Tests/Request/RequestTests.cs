@@ -17,7 +17,7 @@ namespace NMediator.Tests.Request
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
 
             activator.RegisterMessage<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World "+request.Name)));
 
@@ -39,7 +39,7 @@ namespace NMediator.Tests.Request
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
 
             activator.RegisterMessage<MyGenericRequest<int>, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
 
@@ -60,7 +60,7 @@ namespace NMediator.Tests.Request
         public async Task Execute_must_throw_InvalidOperationException_when_no_handler_registered()
         {
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
@@ -72,7 +72,7 @@ namespace NMediator.Tests.Request
             Func<Task<RequestResult<string>>> action = () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
 
             //ASSERT
-            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No handler instance found for type {typeof(IMessageHandler<MyRequest,string>)}");
+            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No instance found for type {typeof(IMessageHandler<MyRequest,string>)}");
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace NMediator.Tests.Request
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
 
             activator.RegisterMessage<MyGenericRequest<int>, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
 
