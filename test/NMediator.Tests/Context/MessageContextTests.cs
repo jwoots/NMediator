@@ -17,7 +17,7 @@ namespace NMediator.Tests.Context
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
             MessageContext mc = null;
 
             activator.RegisterMessage<MyRequest, string>(request => { mc = MessageContext.Current; return Task.FromResult(RequestResult.Success("Hello World " + request.Name)); });
@@ -41,7 +41,7 @@ namespace NMediator.Tests.Context
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
             MessageContext mc = null;
 
             activator.RegisterMessage<MyRequest, string>(request => { mc = MessageContext.Current; return Task.FromResult(RequestResult.Success("Hello World " + request.Name)); });

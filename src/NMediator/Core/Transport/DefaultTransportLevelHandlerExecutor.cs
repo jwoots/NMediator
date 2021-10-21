@@ -11,9 +11,9 @@ namespace NMediator.Core.Transport
 {
     public class DefaultTransportLevelHandlerExecutor : ITransportLevelHandlerExecutor
     {
-        private readonly IHandlerActivator _handlerActivator;
+        private readonly IServiceActivator _handlerActivator;
 
-        public DefaultTransportLevelHandlerExecutor(IHandlerActivator handlerActivator)
+        public DefaultTransportLevelHandlerExecutor(IServiceActivator handlerActivator)
         {
             _handlerActivator = handlerActivator;
         }

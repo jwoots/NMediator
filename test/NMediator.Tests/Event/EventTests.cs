@@ -15,7 +15,7 @@ namespace NMediator.Tests.Event
         {
             //ARRANGE
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
             bool handlerCalled = false;
 
             activator.RegisterMessage<MyEvent, Nothing>(request => { 
@@ -42,7 +42,7 @@ namespace NMediator.Tests.Event
         {
             //ARRANGE
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
             bool handlerCalled = false;
             bool handlerCalled2 = false;
 
