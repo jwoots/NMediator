@@ -61,7 +61,7 @@ namespace NMediator.Tests.Request
         {
             //ACT
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
 
             activator.RegisterMessage<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
 

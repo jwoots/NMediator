@@ -22,7 +22,7 @@ namespace NMediator.Tests.Http
         {
             //ARRANGE
             var config = new MediatorConfiguration();
-            var activator = new SimpleHandlerActivator();
+            var activator = new SimpleServiceActivator();
 
             var responseMessage = new HttpResponseMessage();
             mockHttp.When(HttpMethod.Get, "http://test/").Respond(req => responseMessage);
