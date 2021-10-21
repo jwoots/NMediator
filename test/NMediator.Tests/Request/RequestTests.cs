@@ -57,6 +57,29 @@ namespace NMediator.Tests.Request
         }
 
         [Fact]
+        public async Task Execute_must_be_executed_correctly_with_multiple_request_definition()
+        {
+            //ACT
+            var config = new MediatorConfiguration();
+            var activator = new SimpleHandlerActivator();
+
+            activator.RegisterMessage<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
+
+            config.WithActivator(activator)
+                .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)))
+                .Request(r => r.ExecuteWithInProcess(typeof(MyGenericRequest<>)));
+
+            BaseConfiguration.Configure(config);
+
+            //ACT
+            var processor = config.Container.Get<IRequestExecutor>();
+            var result = await processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
+
+            //ASSERT
+            result.Data.Should().Be("Hello World jwoots");
+        }
+
+        [Fact]
         public async Task Execute_must_throw_InvalidOperationException_when_no_handler_registered()
         {
             var config = new MediatorConfiguration();

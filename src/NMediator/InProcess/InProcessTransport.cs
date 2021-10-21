@@ -1,4 +1,5 @@
-﻿using NMediator.Core.Result;
+﻿using NMediator.Core.Message;
+using NMediator.Core.Result;
 using NMediator.Core.Transport;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,12 @@ namespace NMediator.InProcess
             _handlerExecutor = handlerExecutor ?? throw new ArgumentNullException(nameof(handlerExecutor));
         }
 
-        public Task<IRequestResult> SendMessage(object message, IDictionary<string, string> headers)
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, IDictionary<string, string> headers) where TMessage : IMessage<TResult>
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
 
-            return _handlerExecutor.ExecuteHandler(message, headers);
+            return await _handlerExecutor.ExecuteHandler(message, headers);
         }
     }
 
@@ -33,7 +34,8 @@ namespace NMediator.InProcess
             _handlerExecutor = handlerExecutor ?? throw new ArgumentNullException(nameof(handlerExecutor));
         }
 
-        public async Task<IRequestResult> SendMessage(object message, IDictionary<string, string> headers)
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, IDictionary<string, string> headers) 
+            where TMessage : IMessage<TResult>
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message));

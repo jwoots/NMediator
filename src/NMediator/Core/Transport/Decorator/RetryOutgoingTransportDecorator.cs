@@ -1,4 +1,5 @@
-﻿using NMediator.Core.Result;
+﻿using NMediator.Core.Message;
+using NMediator.Core.Result;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,14 +16,14 @@ namespace NMediator.Core.Transport.Decorator
             _decoratee = decoratee;
             _retryTimes = retryTimes;
         }
-        public async Task<IRequestResult> SendMessage(object message, IDictionary<string,string> headers)
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, IDictionary<string,string> headers) where TMessage : IMessage<TResult>
         {
             Exception e = null;
             for(int i=0;i<_retryTimes;i++)
             {
                 try
                 {
-                    return await _decoratee.SendMessage(message, headers);
+                    return await _decoratee.SendMessage<TMessage, TResult>(message, headers);
                 }
                 catch(Exception ex)
                 {

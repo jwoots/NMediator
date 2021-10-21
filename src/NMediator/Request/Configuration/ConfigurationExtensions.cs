@@ -8,8 +8,8 @@ namespace NMediator.Core.Configuration
         public static MediatorConfiguration Request(this MediatorConfiguration config, Action<RequestConfiguration> action)
         {
             var rc = new RequestConfiguration(config.Container);
-            action(rc);
             config.RegisterConfiguration(rc);
+            action(rc);
             return config;
         }
     }
