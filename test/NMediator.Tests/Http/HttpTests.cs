@@ -45,6 +45,7 @@ namespace NMediator.Tests.Http
             //ASSERT
             result.Data.Should().Be("Hello World");
         }
+        
 
         class MyRequest : IRequest<string>
         {
