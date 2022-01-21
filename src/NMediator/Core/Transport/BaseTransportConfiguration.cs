@@ -8,7 +8,7 @@ namespace NMediator.Core.Transport
 {
     public class TransportConfiguration : BaseConfiguration
     {
-        internal ICollection<TransportOptionsConfiguration> TransportConfigurations { get; } = new List<TransportOptionsConfiguration>();
+        public ICollection<TransportOptionsConfiguration> TransportConfigurations { get; } = new List<TransportOptionsConfiguration>();
 
         protected override void Resolve()
         {

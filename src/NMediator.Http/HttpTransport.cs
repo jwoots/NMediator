@@ -24,7 +24,7 @@ namespace NMediator.NMediator.Http
         {
             var httpRequest = _factory.CreateRequest(message);
             var result = await _clientFactory().SendAsync(httpRequest);
-            return _factory.CreateResult<TResult>(result);
+            return await _factory.CreateResult<TResult>(result);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Linq;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace NMediator.Tests.Http
 {
@@ -53,7 +54,7 @@ namespace NMediator.Tests.Http
 
         [Theory]
         [MemberData(nameof(HttpStatusCode2xx))]
-        public void CreateResult_must_return_success_result_for_response_200(HttpStatusCode statusCode)
+        public async Task CreateResult_must_return_success_result_for_response_200(HttpStatusCode statusCode)
         {
             //ARRANGE
             HttpResponseMessage expected = new HttpResponseMessage()
@@ -63,7 +64,7 @@ namespace NMediator.Tests.Http
             };
 
             //ACT
-            var result = _sut.CreateResult<string>(expected);
+            var result = await _sut.CreateResult<string>(expected);
 
             //ASSERT
             result.IsSuccess.Should().BeTrue();

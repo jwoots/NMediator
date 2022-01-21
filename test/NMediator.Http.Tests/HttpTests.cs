@@ -27,7 +27,7 @@ namespace NMediator.Tests.Http
             var responseMessage = new HttpResponseMessage();
             mockHttp.When(HttpMethod.Get, "http://test/").Respond(req => responseMessage);
             mockHttpMessageFactory.Setup(x => x.CreateRequest(It.IsAny<object>())).Returns(new HttpRequestMessage(HttpMethod.Get, "http://test/"));
-            mockHttpMessageFactory.Setup(x => x.CreateResult<string>(responseMessage)).Returns(RequestResult.Success("Hello World"));
+            mockHttpMessageFactory.Setup(x => x.CreateResult<string>(responseMessage)).ReturnsAsync(RequestResult.Success("Hello World"));
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithHttp(options =>

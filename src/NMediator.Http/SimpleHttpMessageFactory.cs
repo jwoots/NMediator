@@ -33,13 +33,32 @@ namespace NMediator.NMediator.Http
 
         HttpRequestMessage IHttpMessageFactory.CreateRequest(object message)
         {
-            if (!_requestMessagefactories.ContainsKey(message.GetType()))
-                throw new InvalidOperationException($"there is no factory registered for type {message.GetType()}");
+            var result = CreateRequest(message);
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(result.Error.Description);
 
-            return _requestMessagefactories[message.GetType()](message);
+            return result.Data;
         }
 
-        async Task<RequestResult<T>> IHttpMessageFactory.CreateResult<T>(HttpResponseMessage httpMessage)
+        protected virtual RequestResult<HttpRequestMessage> CreateRequest(object message)
+        {
+            if (!_requestMessagefactories.ContainsKey(message.GetType()))
+                return RequestResult.Fail<HttpRequestMessage>(new Error()
+                {
+                    Code = "NO_FACTORY_REGISTERED",
+                    Description = $"there is no factory registered for type {message.GetType()}"
+                });
+
+
+            return RequestResult.Success(_requestMessagefactories[message.GetType()](message));
+        }
+
+        Task<RequestResult<T>> IHttpMessageFactory.CreateResult<T>(HttpResponseMessage httpMessage)
+        {
+            return CreateResult<T>(httpMessage);
+        }
+
+        protected virtual async Task<RequestResult<T>> CreateResult<T>(HttpResponseMessage httpMessage)
         {
             if (_errorfactories.ContainsKey(httpMessage.StatusCode))
                 return RequestResult.Fail<T>(_errorfactories[httpMessage.StatusCode](httpMessage));
