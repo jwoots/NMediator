@@ -21,7 +21,7 @@ jobs:
       run: dotnet tool install --global dotnet-sonarscanner
       
     - name: Begin Sonar scan
-      run: dotnet sonarscanner begin /k:"jwoots_NMediator" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml
+      run: dotnet sonarscanner begin /k:"jwoots_NMediator" /o:"jwoots" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml /d:sonar.host.url=https://sonarcloud.io
       
     - name: Install dependencies
       run: dotnet restore
