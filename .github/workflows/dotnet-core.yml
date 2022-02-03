@@ -33,7 +33,7 @@ jobs:
         sonarOrganization: jwoots
         sonarBeginArguments: >
             /d:sonar.verbose="true"
-            /d:sonar.cs.opencover.reportsPaths='**/*.opencover.xml"'
+            /d:sonar.cs.opencover.reportsPaths='**/*.opencover.xml'
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
