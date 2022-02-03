@@ -13,27 +13,27 @@ jobs:
     environment: Test
     steps:
     - uses: actions/checkout@v2
-    #- name: Setup .NET Core
-     # uses: actions/setup-dotnet@v1.9.0
-     # with:
-      #  dotnet-version: 6.0.x
-    #- name: Install dependencies
-     # run: dotnet restore
-    #- name: Build
-      #run: dotnet build --configuration Release --no-restore
-    #- name: Test
-      #run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs"
-    - name: SonarScanner for .NET 6 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.1.2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1.9.0
       with:
-        dotnetBuildArguments: --configuration Release
-        dotnetTestArguments: /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs".
-        sonarProjectKey: jwoots_NMediator
-        sonarProjectName: jwoots_NMediator
-        sonarOrganization: jwoots
-        sonarBeginArguments: >
-            /d:sonar.verbose="true"
-            /d:sonar.cs.opencover.reportsPaths='**/*.opencover.xml'
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        dotnet-version: 6.0.x
+    - name: Install dotnet scanner
+      run: dotnet tool install --global dotnet-sonarscanner
+      
+    - name: Begin Sonar scan
+      run: dotnet sonarscanner begin /k:"jwoots_NMediator" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml
+      
+    - name: Install dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs"
+      
+    - name: End Sonar scan
+      run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+      
+    
+   
