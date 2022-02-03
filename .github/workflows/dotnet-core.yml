@@ -13,12 +13,12 @@ jobs:
     environment: Test
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.9.0
-      with:
-        dotnet-version: 6.0.x
-    - name: Install dependencies
-      run: dotnet restore
+    #- name: Setup .NET Core
+     # uses: actions/setup-dotnet@v1.9.0
+     # with:
+      #  dotnet-version: 6.0.x
+    #- name: Install dependencies
+     # run: dotnet restore
     #- name: Build
       #run: dotnet build --configuration Release --no-restore
     #- name: Test
@@ -26,7 +26,7 @@ jobs:
     - name: SonarScanner for .NET 6 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@v2.1.2
       with:
-        dotnetBuildArguments: --configuration Release --no-restore
+        dotnetBuildArguments: --configuration Release
         dotnetTestArguments: /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs".
         sonarProjectKey: jwoots_NMediator
         sonarProjectName: jwoots_NMediator
