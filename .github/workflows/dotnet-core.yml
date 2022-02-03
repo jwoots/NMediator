@@ -23,15 +23,15 @@ jobs:
       #run: dotnet build --configuration Release --no-restore
     #- name: Test
       #run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs"
-    - name: Sonarscanner for dotnet
-      uses: Secbyte/dotnet-sonarscanner@v2.3
+    - name: SonarScanner for .NET 6 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.1.2
       with:
-        buildCommand: dotnet build --configuration Release --no-restore
-        testCommand: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs".
-        projectKey: jwoots_NMediator
-        projectName: jwoots_NMediator
-        sonarOrganisation: jwoots
-        beginArguments: >
+        dotnetBuildArguments: --configuration Release --no-restore
+        dotnetTestArguments: /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs".
+        sonarProjectKey: jwoots_NMediator
+        sonarProjectName: jwoots_NMediator
+        sonarOrganization: jwoots
+        sonarBeginArguments: >
             /d:sonar.verbose="true"
             /d:sonar.cs.opencover.reportsPaths='**/*.opencover.xml"'
       env:
