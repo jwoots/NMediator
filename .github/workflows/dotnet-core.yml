@@ -19,9 +19,9 @@ jobs:
         dotnet-version: 6.0.x
     - name: Install dependencies
       run: dotnet restore
-    - name: Build
+    #- name: Build
       #run: dotnet build --configuration Release --no-restore
-    - name: Test
+    #- name: Test
       #run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs"
     - name: Sonarscanner for dotnet
       uses: Secbyte/dotnet-sonarscanner@v2.3
