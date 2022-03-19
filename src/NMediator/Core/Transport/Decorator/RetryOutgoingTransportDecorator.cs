@@ -9,7 +9,7 @@ namespace NMediator.Core.Transport.Decorator
     class RetryOutgoingTransportDecorator : IOutgoingTransport
     {
         private readonly int _retryTimes;
-        private IOutgoingTransport _decoratee;
+        private readonly IOutgoingTransport _decoratee;
 
         public RetryOutgoingTransportDecorator(IOutgoingTransport decoratee, int retryTimes)
         {

@@ -2,17 +2,11 @@
 using NMediator.Http;
 using NMediator.Http.Reflection.BodyConverter;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -103,13 +97,10 @@ namespace NMediator.NMediator.Http.Reflection
         {
             var typeToEvaluate = Nullable.GetUnderlyingType(pi.PropertyType) ?? pi.PropertyType;
 
-            foreach(var binder in NMeditatorHttpConfigurations.Binders)
-            {
-                if (binder.CanBind(typeToEvaluate, value))
-                    return binder.Bind(typeToEvaluate, value).ToArray();
-            }
-            
-            throw new InvalidOperationException($"Can not build query string for property {pi.Name}");
+            return NMeditatorHttpConfigurations.Binders
+                .FirstOrDefault(x => x.CanBind(typeToEvaluate, value))
+                ?.Bind(typeToEvaluate, value)?.ToArray()
+                ?? throw new InvalidOperationException($"Can not build query string for property {pi.Name}"); 
         }
     }
 

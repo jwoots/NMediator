@@ -6,7 +6,7 @@ namespace NMediator.Core.Routing
 {
     public class TypeBasedRouter : IRouter
     {
-        private IDictionary<Type, IOutgoingTransport> _routes = new Dictionary<Type, IOutgoingTransport>();
+        private readonly IDictionary<Type, IOutgoingTransport> _routes = new Dictionary<Type, IOutgoingTransport>();
 
         public IOutgoingTransport Route(Type messageType)
         {

@@ -10,7 +10,7 @@ namespace NMediator.InProcess
     public class InProcessConfiguration : BaseConfiguration
     {
         private readonly Container _container;
-        private ICollection<TransportOptionsConfiguration> _transportConfigurations = new List<TransportOptionsConfiguration>();
+        private readonly ICollection<TransportOptionsConfiguration> _transportConfigurations = new List<TransportOptionsConfiguration>();
 
         public InProcessConfiguration(Container container)
         {

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.Tests", "test\NMe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.Http", "src\NMediator.Http\NMediator.Http.csproj", "{7447011B-C5A4-4D80-ADCC-052202D39A3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMediator.Http.Tests", "test\NMediator.Http.Tests\NMediator.Http.Tests.csproj", "{AA8F856A-1242-4168-96A3-9ECAB3184492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.Http.Tests", "test\NMediator.Http.Tests\NMediator.Http.Tests.csproj", "{AA8F856A-1242-4168-96A3-9ECAB3184492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

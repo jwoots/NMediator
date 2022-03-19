@@ -7,7 +7,7 @@ namespace NMediator.Http
 {
     public static class NMeditatorHttpConfigurations
     {
-        public static List<IQueryStringBinder> Binders = new List<IQueryStringBinder>()
+        public static List<IQueryStringBinder> Binders { get; } = new List<IQueryStringBinder>()
         {
             new StringConvertableBinder(),
             new EnumerableBinder(),

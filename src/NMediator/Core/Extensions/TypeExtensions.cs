@@ -25,8 +25,7 @@ namespace System
             genericArgument = null;
             var enumerableType = source
                 .GetInterfaces().Union(new Type[] { source })
-                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-                .SingleOrDefault();
+                .SingleOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 
             if (enumerableType == null)
                 return false;

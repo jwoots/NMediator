@@ -9,7 +9,7 @@ namespace NMediator.Core.Transport.Decorator
     {
         private readonly Container _container;
         private readonly Func<IOutgoingTransport> _transport;
-        private IEnumerable<Type> _types;
+        private readonly IEnumerable<Type> _types;
         private readonly ICollection<Func<IOutgoingTransport, IOutgoingTransport>> _decorators = new List<Func<IOutgoingTransport, IOutgoingTransport>>();
 
         public TransportOptionsConfiguration(Container container, Func<IOutgoingTransport> transport, IEnumerable<Type> types)

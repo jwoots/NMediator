@@ -65,7 +65,7 @@ namespace NMediator.Core.Configuration
         {
             Register();
             Extender._toRegister.ForEach(actionToRegister => actionToRegister());
-            //_children.ForEach(c => c.RegisterConfiguration());
+
             _children.ForEach(c => {
                 c.Register();
                 c.Extender._toRegister.ForEach(actionToRegister => actionToRegister());
@@ -77,7 +77,7 @@ namespace NMediator.Core.Configuration
         {
             Resolve();
             Extender._toResolve.ForEach(actionToResolve => actionToResolve());
-            // _children.ForEach(c => c.ResolveConfiguration());
+
             _children.ForEach(c => {
                 c.Resolve();
                 c.Extender._toResolve.ForEach(action => action());
@@ -88,7 +88,7 @@ namespace NMediator.Core.Configuration
         {
             Start();
             Extender._toStart.ForEach(actionToStart => actionToStart());
-            //_children.ForEach(c => c.StartConfiguration());
+
             _children.ForEach(c => {
                 c.Start();
                 c.Extender._toStart.ForEach(action => action());

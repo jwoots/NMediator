@@ -19,7 +19,6 @@ namespace NMediator.Core.Activator
             var responseType = messageType.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMessage<>)).GetGenericArguments()[0];
             var handlerType = typeof(IMessageHandler<,>).MakeGenericType(messageType, responseType);
 
-            dynamic param = message;
             IEnumerable<dynamic> handlers = handlerActivator.GetInstances(handlerType);
             if (handlers.Count() > 1 && responseType != typeof(Nothing))
                 throw new InvalidOperationException("more than 1 handler found for message with result");

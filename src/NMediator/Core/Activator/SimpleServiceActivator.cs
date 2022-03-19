@@ -16,14 +16,14 @@ namespace NMediator.Core.Activator
             yield return (T)GetInstances(typeof(T));
         }
 
-        public IEnumerable<object> GetInstances(Type type)
+        public IEnumerable<object> GetInstances(Type handlerType)
         {
-            if (Instances.TryGetValue(type, out var result))
+            if (Instances.TryGetValue(handlerType, out var result))
             {
                 return result;
             }
         
-            throw new InvalidOperationException($"No instance found for type {type}");
+            throw new InvalidOperationException($"No instance found for type {handlerType}");
         }
 
         public void RegisterMessage<TMessage, TResult>(Func<TMessage, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
@@ -43,9 +43,9 @@ namespace NMediator.Core.Activator
                 _func = func;
             }
 
-            public Task<RequestResult<TResult>> Handle(TMessage request)
+            public Task<RequestResult<TResult>> Handle(TMessage message)
             {
-                return _func(request);
+                return _func(message);
             }
         }
     }

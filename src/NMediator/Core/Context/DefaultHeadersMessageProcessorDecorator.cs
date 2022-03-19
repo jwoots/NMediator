@@ -9,7 +9,7 @@ namespace NMediator.Core.Context
 {
     public class DefaultHeadersMessageProcessorDecorator : IMessageProcessor
     {
-        private IMessageProcessor _decoratee;
+        private readonly IMessageProcessor _decoratee;
 
         public DefaultHeadersMessageProcessorDecorator(IMessageProcessor decoratee)
         {
