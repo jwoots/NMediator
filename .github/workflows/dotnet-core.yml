@@ -10,39 +10,32 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    environment: Test
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1.9.0
       with:
         dotnet-version: 6.0.x
+    - name: Install dotnet scanner
+      run: dotnet tool install --global dotnet-sonarscanner
+      
+    - name: Begin Sonar scan
+      run: dotnet sonarscanner begin /k:"jwoots_NMediator" /o:"jwoots" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml /d:sonar.host.url=https://sonarcloud.io
+      
     - name: Install dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      
     - name: Test
       run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs"
-    - name: Codecov
-      # You may pin to the exact commit or the version.
-      # uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
-      uses: codecov/codecov-action@v1.0.13
-      with:
-        # User defined upload name. Visible in Codecov UI
-        name: # optional
-        # Repository upload token - get it from codecov.io. Required only for private repositories
-        token: 6707f7dd-5235-48fc-b0cc-1cc7ea1dc0ee
-        # Path to coverage file to upload
-        file: # optional
-        # Comma-separated list of files to upload
-        files: # optional
-        # Directory to search for coverage reports.
-        directory: # optional
-        # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
-        flags: # optional
-        # Write upload file to path before uploading
-        path_to_write_report: # optional
-        # Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
-        env_vars: # optional
-        # Specify whether or not CI build should fail if Codecov runs into an error during upload
-        fail_ci_if_error: true
+      
+    - name: End Sonar scan
+      run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    
+   
