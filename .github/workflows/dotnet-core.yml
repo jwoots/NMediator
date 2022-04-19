@@ -38,10 +38,10 @@ jobs:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        
     - name: Pack
-      run : dotnet pack
+      run : dotnet pack -c Release -o .
       
     - name: Push
-      run : dotnet nuget push *.nupkg ${{ secrets.MYGET_TOKEN }} -Source https://www.myget.org/F/jwoots/api/v2/package
+      run : dotnet nuget push *.nupkg -k ${{ secrets.MYGET_TOKEN }} -s https://www.myget.org/F/jwoots/api/v2/package
       
     
    
