@@ -80,7 +80,7 @@ namespace NMediator.NMediator.Http
         }
 
         /// <summary>
-        /// create a message from http response message
+        /// create a result from http response message
         /// </summary>
         /// <typeparam name="TMessage">Type of message</typeparam>
         /// <param name="httpMessage">the http response message</param>

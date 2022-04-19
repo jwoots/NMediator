@@ -15,6 +15,9 @@ namespace NMediator.Core.Transport.Decorator
         {
             _decoratee = decoratee;
             _retryTimes = retryTimes;
+
+            if(_retryTimes <= 0)
+                throw new ArgumentOutOfRangeException(nameof(retryTimes));
         }
         public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, IDictionary<string,string> headers) where TMessage : IMessage<TResult>
         {
@@ -31,7 +34,10 @@ namespace NMediator.Core.Transport.Decorator
                 }
             }
 
-            throw e;
+            if(e != null)
+                throw e;
+
+            return null;
         }
     }
 }
