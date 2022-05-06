@@ -9,10 +9,13 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     environment: Test
     steps:
     - uses: actions/checkout@v2
+      with:
+          fetch-depth: 0
+          
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1.9.0
       with:
