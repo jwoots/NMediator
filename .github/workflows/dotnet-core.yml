@@ -29,6 +29,8 @@ jobs:
     - name: Determine Version
       id: gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        useConfigFile: true
       
     - name: Install dotnet scanner
       run: dotnet tool install --global dotnet-sonarscanner
