@@ -1,6 +1,5 @@
 ﻿using NMediator.Core.Result;
 using NMediator.Http;
-using NMediator.Http.Reflection.BodyConverter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ using System.Web;
 
 namespace NMediator.NMediator.Http.Reflection
 {
-    public  class ReflectionHttpMessageFactory : SimpleHttpMessageFactory
+    public class ReflectionHttpMessageFactory : SimpleHttpMessageFactory
     {
         private readonly ReflectionHttpMessageOptions _options;
 
@@ -23,7 +22,7 @@ namespace NMediator.NMediator.Http.Reflection
 
         protected override RequestResult<HttpRequestMessage> CreateRequest(object message)
         {
-            var result =  base.CreateRequest(message);
+            var result = base.CreateRequest(message);
             if (result.IsSuccess)
                 return result;
 
@@ -31,18 +30,21 @@ namespace NMediator.NMediator.Http.Reflection
             var messageProperties = message.GetType().GetProperties().ToDictionary(pi => pi, pi => pi.GetValue(message));
             HttpRequestMessage toReturn = new HttpRequestMessage();
 
-            toReturn.RequestUri = CreateUri(descriptor, messageProperties);
+            var uriResult = CreateUri(descriptor, messageProperties);
+            toReturn.RequestUri = uriResult.Uri;
+            var messagePropertiesRemaining = messageProperties.Where(x => !uriResult.UsedProperties.Contains(x.Key)).ToList();
 
             if (descriptor.ParameterLocation == ParameterLocation.BODY)
             {
-                var propertiesToSerialize = messageProperties.ToDictionary(m => m.Key.Name, m => m.Value);
+                var propertiesToSerialize = messagePropertiesRemaining
+                    .ToDictionary(m => m.Key.Name, m => m.Value);
                 toReturn.Content = _options.BodyConverter.Convert(propertiesToSerialize);
             }
             else if (descriptor.ParameterLocation == ParameterLocation.QUERY_STRING)
             {
                 var queryStringBuilder = HttpUtility.ParseQueryString(string.Empty);
 
-                foreach (var entry in messageProperties)
+                foreach (var entry in messagePropertiesRemaining)
                 {
                     if (entry.Value == null) continue;
 
@@ -56,24 +58,25 @@ namespace NMediator.NMediator.Http.Reflection
                 }.Uri;
             }
             else
-                throw new InvalidOperationException();
+                throw new NotSupportedException($"{descriptor.ParameterLocation} not supported");
 
             return RequestResult.Success(toReturn);
         }
 
-        private Uri CreateUri(HttpDescriptor descriptor, IDictionary<PropertyInfo, object> parameters)
+        private UriResult CreateUri(HttpDescriptor descriptor, IDictionary<PropertyInfo, object> parameters)
         {
             var uri = _options.BaseUri.ToString();
             if (!uri.EndsWith("/"))
                 uri += "/";
 
             var relativeUri = descriptor.RelativeUri;
-            if(relativeUri.StartsWith("/"))
+            if (relativeUri.StartsWith("/"))
                 relativeUri = relativeUri.Substring(1);
 
             uri += relativeUri;
 
-            foreach(var parameter in parameters)
+            HashSet<PropertyInfo> usedProperties = new();
+            foreach (var parameter in parameters)
             {
                 if (parameter.Value == null)
                     if (Regex.IsMatch(uri, parameter.Key.Name, RegexOptions.IgnoreCase))
@@ -82,15 +85,15 @@ namespace NMediator.NMediator.Http.Reflection
                         continue;
 
                 var values = BuildHttpParameter(parameter.Key, parameter.Value);
-                var newUri = Regex.Replace(uri, $"{{{parameter.Key.Name}}}", string.Join(",",values), RegexOptions.IgnoreCase);
-                
-                if(newUri != uri)
-                    parameters.Remove(parameter.Key);
-                
+                var newUri = Regex.Replace(uri, $"{{{parameter.Key.Name}}}", string.Join(",", values), RegexOptions.IgnoreCase);
+
+                if (newUri != uri)
+                    usedProperties.Add(parameter.Key);
+
                 uri = newUri;
             }
 
-            return new Uri(uri);
+            return new UriResult { Uri = new Uri(uri), UsedProperties = usedProperties };
         }
 
         private string[] BuildHttpParameter(PropertyInfo pi, object value)
@@ -100,88 +103,13 @@ namespace NMediator.NMediator.Http.Reflection
             return NMeditatorHttpConfigurations.Binders
                 .FirstOrDefault(x => x.CanBind(typeToEvaluate, value))
                 ?.Bind(typeToEvaluate, value)?.ToArray()
-                ?? throw new InvalidOperationException($"Can not build query string for property {pi.Name}"); 
+                ?? throw new InvalidOperationException($"Can not build query string for property {pi.Name}");
         }
-    }
 
-    public class HttpDescriptors
-    {
-        private readonly IDictionary<Type, HttpDescriptor> _descriptors = new Dictionary<Type, HttpDescriptor>(); 
-
-        public void AddFor<T>(HttpDescriptor descriptor)
+        private class UriResult
         {
-            _descriptors[typeof(T)] = descriptor; 
+            public Uri Uri { get; set; }
+            public IEnumerable<PropertyInfo> UsedProperties { get; set; }
         }
-
-        public HttpDescriptor GetFor<T>()
-        {
-            return GetFor(typeof(T));
-        }
-
-        public HttpDescriptor GetFor(Type type)
-        {
-            return _descriptors[type];
-        }
-    }
-
-    public class HttpDescriptor
-    {
-        private readonly IDictionary<Expression, object> _customizations = new Dictionary<Expression, object>();
-        public string RelativeUri { get; set; }
-        public ParameterLocation ParameterLocation { get; set; }
-        public HttpMethod Method { get; set; }
-
-       // public void AddCustomization<T, TProperty>(Expression<Func<T, TProperty>> expression, )
-    }
-
-    public class HttpParameterDescriptor<T, TProperty>
-    {
-        public Expression<Func<T, TProperty>> Expression { get; }
-
-        public HttpParameterDescriptor(Expression<Func<T, TProperty>> expression)
-        {
-            Expression = expression;
-        }
-
-        public ParameterLocation ParamterLocation { get; set; }
-        public Func<TProperty, string> Serializer { get; set; }
-    }
-
-    public class HttpDescriptorBuilder<T>
-    {
-        private readonly HttpDescriptor _descriptor;
-
-        public HttpDescriptorBuilder<T> CallRelativeUri(string relativeUri, HttpMethod method, ParameterLocation defaultParamterLocation)
-        {
-            _descriptor.RelativeUri = relativeUri;
-            _descriptor.Method = method;
-            _descriptor.ParameterLocation = defaultParamterLocation;
-            return this;
-        }
-        
-        //public HttpParameterDescriptor<T, TProperty> AddParameterCustomization<TProperty>(Expression<Func<T, TProperty>> expression)
-        //{
-        //    var p = new HttpParameterDescriptor<T, TProperty>(expression);
-        //}
-
-       
-    }
-
-    public class HttpParameterDescriptorBuilder<TProperty>
-    {
-
-    }
-        
-
-    public enum ParameterLocation
-    {
-        BODY, QUERY_STRING
-    }
-
-    public class ReflectionHttpMessageOptions
-    {
-        public HttpDescriptors Descriptors { get; set; }    
-        public Uri BaseUri { get; set; }
-        public IBodyConverter BodyConverter { get; set; } = new JsonBodyConverter();
     }
 }

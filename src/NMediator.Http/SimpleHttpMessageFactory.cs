@@ -108,7 +108,9 @@ namespace NMediator.NMediator.Http
                     Description = contentString
                 });
 
+#pragma warning disable S112 // General exceptions should never be thrown
             throw new Exception(contentString);
+#pragma warning restore S112 // General exceptions should never be thrown
         }
     }
 }

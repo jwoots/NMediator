@@ -22,15 +22,11 @@ namespace System
         /// <returns></returns>
         public static bool TryGetEnumerableGenericArgument(this Type source, out Type genericArgument)
         {
-            genericArgument = null;
-            var enumerableType = source
-                .GetInterfaces().Union(new Type[] { source })
-                .SingleOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
-
-            if (enumerableType == null)
-                return false;
-
-            genericArgument = enumerableType.GenericTypeArguments[0];
+            genericArgument = source
+                .GetInterfaces().Union(new[] {source})
+                .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                ?.GetGenericArguments()
+                ?.FirstOrDefault();
             return true;
         }
 

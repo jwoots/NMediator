@@ -52,9 +52,5 @@ namespace NMediator.Tests.Http
             public string Name { get; set; }
         }
 
-        class MyGenericRequest<T> : IRequest<string>
-        {
-            public T Data { get; set; }
-        }
     }
 }
