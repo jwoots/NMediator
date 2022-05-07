@@ -37,7 +37,8 @@ namespace NMediator.NMediator.Http
         public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, IDictionary<string, string> headers) where TMessage : IMessage<TResult>
         {
             var httpRequest = _factory.CreateRequest(message);
-            var result = await _clientFactory().SendAsync(httpRequest);
+            var httpClient = _clientFactory();
+            var result = await httpClient.SendAsync(httpRequest);
             return await _factory.CreateResult<TResult>(result);
         }
     }

@@ -96,7 +96,7 @@ namespace NMediator.NMediator.Http
             string contentString = await httpMessage.Content.ReadAsStringAsync();
 
             if (statusCode >= 200 && statusCode < 300)
-                return RequestResult.Success(JsonSerializer.Deserialize<TMessage>(contentString));
+                return RequestResult.Success(string.IsNullOrWhiteSpace(contentString) ? default : JsonSerializer.Deserialize<TMessage>(contentString));
 
             if (statusCode >= 300 && statusCode < 400)
                 throw new NotSupportedException("http response code 3xx are not supported");

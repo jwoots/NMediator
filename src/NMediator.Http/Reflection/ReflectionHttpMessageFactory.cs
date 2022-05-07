@@ -3,7 +3,6 @@ using NMediator.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -13,11 +12,13 @@ namespace NMediator.NMediator.Http.Reflection
 {
     public class ReflectionHttpMessageFactory : SimpleHttpMessageFactory
     {
-        private readonly ReflectionHttpMessageOptions _options;
+        private readonly Uri _baseUri;
+        private readonly HttpDescriptors _descriptors;
 
-        public ReflectionHttpMessageFactory(ReflectionHttpMessageOptions options)
+        public ReflectionHttpMessageFactory(Uri baseUri, HttpDescriptors descriptors)
         {
-            _options = options;
+            _baseUri = baseUri;
+            _descriptors = descriptors;
         }
 
         protected override RequestResult<HttpRequestMessage> CreateRequest(object message)
@@ -26,7 +27,7 @@ namespace NMediator.NMediator.Http.Reflection
             if (result.IsSuccess)
                 return result;
 
-            var descriptor = _options.Descriptors.GetFor(message.GetType());
+            var descriptor = _descriptors.GetFor(message.GetType());
             var messageProperties = message.GetType().GetProperties().ToDictionary(pi => pi, pi => pi.GetValue(message));
             HttpRequestMessage toReturn = new HttpRequestMessage();
 
@@ -38,7 +39,7 @@ namespace NMediator.NMediator.Http.Reflection
             {
                 var propertiesToSerialize = messagePropertiesRemaining
                     .ToDictionary(m => m.Key.Name, m => m.Value);
-                toReturn.Content = _options.BodyConverter.Convert(propertiesToSerialize);
+                toReturn.Content = _descriptors.BodyConverter.Convert(propertiesToSerialize);
             }
             else if (descriptor.ParameterLocation == ParameterLocation.QUERY_STRING)
             {
@@ -65,7 +66,7 @@ namespace NMediator.NMediator.Http.Reflection
 
         private UriResult CreateUri(HttpDescriptor descriptor, IDictionary<PropertyInfo, object> parameters)
         {
-            var uri = _options.BaseUri.ToString();
+            var uri = _baseUri.ToString();
             if (!uri.EndsWith("/"))
                 uri += "/";
 
@@ -100,13 +101,13 @@ namespace NMediator.NMediator.Http.Reflection
         {
             var typeToEvaluate = Nullable.GetUnderlyingType(pi.PropertyType) ?? pi.PropertyType;
 
-            return NMeditatorHttpConfigurations.Binders
+            return _descriptors.QueryParametersBinders
                 .FirstOrDefault(x => x.CanBind(typeToEvaluate, value))
                 ?.Bind(typeToEvaluate, value)?.ToArray()
                 ?? throw new InvalidOperationException($"Can not build query string for property {pi.Name}");
         }
 
-        private class UriResult
+        private sealed class UriResult
         {
             public Uri Uri { get; set; }
             public IEnumerable<PropertyInfo> UsedProperties { get; set; }
