@@ -7,13 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.Core.Activator
 {
     public static class IServiceActivatorExtensions
     {
-        public static async Task<IRequestResult> ProcessMessageHandler(this IServiceActivator handlerActivator, object message)
+        public static async Task<IRequestResult> ProcessMessageHandler(this IServiceActivator handlerActivator, object message, CancellationToken token)
         {
             var messageType = message.GetType();
             var responseType = messageType.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMessage<>)).GetGenericArguments()[0];
@@ -27,7 +28,7 @@ namespace NMediator.Core.Activator
             {
                 if (handlers.Count() == 1)
                 {
-                    dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handlers.First(), new object[] { message });
+                    dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handlers.First(), new object[] { message, token });
                     await awaitable;
                     return (IRequestResult)awaitable.GetAwaiter().GetResult();
                 }
@@ -35,7 +36,7 @@ namespace NMediator.Core.Activator
                 {
                     foreach (var handler in handlers)
                     {
-                        dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handler, new object[] { message });
+                        dynamic awaitable = handlerType.GetMethod("Handle").Invoke(handler, new object[] { message, token });
                         await awaitable;
                     }
 

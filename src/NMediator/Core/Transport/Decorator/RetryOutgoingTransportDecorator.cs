@@ -2,6 +2,7 @@
 using NMediator.Core.Result;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.Core.Transport.Decorator
@@ -19,14 +20,14 @@ namespace NMediator.Core.Transport.Decorator
             if(_retryTimes <= 0)
                 throw new ArgumentOutOfRangeException(nameof(retryTimes));
         }
-        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, IDictionary<string,string> headers) where TMessage : IMessage<TResult>
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string,string> headers) where TMessage : IMessage<TResult>
         {
             Exception e = null;
             for(int i=0;i<_retryTimes;i++)
             {
                 try
                 {
-                    return await _decoratee.SendMessage<TMessage, TResult>(message, headers);
+                    return await _decoratee.SendMessage<TMessage, TResult>(message, token, headers);
                 }
                 catch(Exception ex)
                 {

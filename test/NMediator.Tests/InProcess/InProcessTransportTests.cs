@@ -4,6 +4,7 @@ using NMediator.Core.Configuration;
 using NMediator.Core.Result;
 using NMediator.Request;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace NMediator.Tests.InProcess
             var config = new MediatorConfiguration();
             var activator = new SimpleServiceActivator();
 
-            activator.RegisterMessage<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
+            activator.RegisterMessage<MyRequest, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
@@ -27,7 +28,7 @@ namespace NMediator.Tests.InProcess
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            Func<Task<RequestResult<string>>> action = async () => await processor.Execute<MyRequest, string>(null);
+            Func<Task<RequestResult<string>>> action = async () => await processor.Execute<MyRequest, string>(null, CancellationToken.None);
 
             //ASSERT
             await action.Should().ThrowExactlyAsync<ArgumentNullException>();

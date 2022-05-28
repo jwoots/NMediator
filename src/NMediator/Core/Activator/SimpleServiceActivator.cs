@@ -3,6 +3,7 @@ using NMediator.Core.Result;
 using NMediator.Request;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.Core.Activator
@@ -26,7 +27,7 @@ namespace NMediator.Core.Activator
             throw new InvalidOperationException($"No instance found for type {handlerType}");
         }
 
-        public void RegisterMessage<TMessage, TResult>(Func<TMessage, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
+        public void RegisterMessage<TMessage, TResult>(Func<TMessage, CancellationToken, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
         {
             if (Instances.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
                 handlers.Add(new GenericRequestHandler<TMessage, TResult>(func));
@@ -36,16 +37,16 @@ namespace NMediator.Core.Activator
 
         class GenericRequestHandler<TMessage, TResult> : IMessageHandler<TMessage, TResult> where TMessage : IMessage<TResult>
         {
-            private readonly Func<TMessage, Task<RequestResult<TResult>>> _func;
+            private readonly Func<TMessage, CancellationToken, Task<RequestResult<TResult>>> _func;
 
-            public GenericRequestHandler(Func<TMessage, Task<RequestResult<TResult>>> func)
+            public GenericRequestHandler(Func<TMessage, CancellationToken, Task<RequestResult<TResult>>> func)
             {
                 _func = func;
             }
 
-            public Task<RequestResult<TResult>> Handle(TMessage message)
+            public Task<RequestResult<TResult>> Handle(TMessage message, CancellationToken token)
             {
-                return _func(message);
+                return _func(message, token);
             }
         }
     }

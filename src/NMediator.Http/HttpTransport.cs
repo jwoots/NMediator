@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.NMediator.Http
@@ -34,11 +35,11 @@ namespace NMediator.NMediator.Http
 
        
         /// <inheritdoc/>
-        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, IDictionary<string, string> headers) where TMessage : IMessage<TResult>
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers) where TMessage : IMessage<TResult>
         {
             var httpRequest = _factory.CreateRequest(message);
             var httpClient = _clientFactory();
-            var result = await httpClient.SendAsync(httpRequest);
+            var result = await httpClient.SendAsync(httpRequest, token);
             return await _factory.CreateResult<TResult>(result);
         }
     }

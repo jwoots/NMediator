@@ -2,6 +2,7 @@
 using NMediator.Core.Result;
 using NMediator.Core.Transport;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.Core.Context
@@ -14,12 +15,12 @@ namespace NMediator.Core.Context
             _decoratee = decoratee;
         }
 
-        public Task<IRequestResult> ExecuteHandler(object message, IDictionary<string, string> headers)
+        public Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string> headers)
         {
             var mc = new MessageContext();
             headers?.ForEach(kvp => mc.Values[kvp.Key] = kvp.Value);
             MessageContext.SetContext(mc);
-            return _decoratee.ExecuteHandler(message, headers);
+            return _decoratee.ExecuteHandler(message,token, headers);
         }
     }
 }

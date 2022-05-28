@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Xunit;
@@ -164,7 +165,7 @@ namespace NMediator.Http.Tests
 
             mock.Respond(() => Task.FromResult(new HttpResponseMessage()));
 
-            await requestExecutor.Execute<MyQueryStringRequest<T>, Nothing>(request);
+            await requestExecutor.Execute<MyQueryStringRequest<T>, Nothing>(request, CancellationToken.None);
 
             VerifyQueryStringExpectation(expectedQueryStringKey, string.Join(',',expectedParameters));
         }

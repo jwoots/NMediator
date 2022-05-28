@@ -3,6 +3,7 @@ using NMediator.Core.Result;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.Core.Context
@@ -16,7 +17,7 @@ namespace NMediator.Core.Context
             _decoratee = decoratee;
         }
 
-        public Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, IDictionary<string, string> headers) where TMessage : IMessage<TResult>
+        public Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, CancellationToken token,  IDictionary<string, string> headers) where TMessage : IMessage<TResult>
         {
             IDictionary<string, string> h = headers ?? new Dictionary<string, string>();
             
@@ -25,7 +26,7 @@ namespace NMediator.Core.Context
             if (!h.ContainsKey(Headers.DATE))
                 h[Headers.DATE] = DateTimeOffset.Now.ToString("o");
 
-            return _decoratee.Process<TMessage, TResult>(message, headers);
+            return _decoratee.Process<TMessage, TResult>(message, token, headers);
         }
     }
 }

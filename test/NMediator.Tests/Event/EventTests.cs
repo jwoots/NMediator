@@ -3,6 +3,7 @@ using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Core.Result;
 using NMediator.Event;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace NMediator.Tests.Event
             var activator = new SimpleServiceActivator();
             bool handlerCalled = false;
 
-            activator.RegisterMessage<MyEvent, Nothing>(request => { 
+            activator.RegisterMessage<MyEvent, Nothing>((request, token) => { 
                 handlerCalled = true; 
                 return Task.FromResult(RequestResult.Success<Nothing>(new Nothing())); 
             });
@@ -30,7 +31,7 @@ namespace NMediator.Tests.Event
 
             //ACT
             var processor = config.Container.Get<IEventPublisher>();
-            var result = await processor.Publish(new MyEvent() { Name = "jwoots" });
+            var result = await processor.Publish(new MyEvent() { Name = "jwoots" }, CancellationToken.None) ;
 
             //ASSERT
             result.Data.Should().BeOfType<Nothing>();
@@ -46,12 +47,12 @@ namespace NMediator.Tests.Event
             bool handlerCalled = false;
             bool handlerCalled2 = false;
 
-            activator.RegisterMessage<MyEvent, Nothing>(request => {
+            activator.RegisterMessage<MyEvent, Nothing>((request, token) => {
                 handlerCalled = true;
                 return Task.FromResult(RequestResult.Success<Nothing>(new Nothing()));
             });
 
-            activator.RegisterMessage<MyEvent, Nothing>(request => {
+            activator.RegisterMessage<MyEvent, Nothing>((request, token) => {
                 handlerCalled2 = true;
                 return Task.FromResult(RequestResult.Success<Nothing>(new Nothing()));
             });
@@ -63,7 +64,7 @@ namespace NMediator.Tests.Event
 
             //ACT
             var processor = config.Container.Get<IEventPublisher>();
-            var result = await processor.Publish(new MyEvent() { Name = "jwoots" });
+            var result = await processor.Publish(new MyEvent() { Name = "jwoots" }, CancellationToken.None);
 
             //ASSERT
             result.Data.Should().BeOfType<Nothing>();

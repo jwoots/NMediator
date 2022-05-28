@@ -3,6 +3,7 @@ using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Request;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace NMediator.Tests.Transport
             var activator = new SimpleServiceActivator();
             var callCount = 0;
 
-            activator.RegisterMessage<MyRequest, string>(request => { callCount++; throw new InvalidOperationException("test"); });
+            activator.RegisterMessage<MyRequest, string>((request, token) => { callCount++; throw new InvalidOperationException("test"); });
 
             config.WithActivator(activator)
                 .Request(r => 
@@ -30,7 +31,7 @@ namespace NMediator.Tests.Transport
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            Func<Task> result =  () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
+            Func<Task> result =  () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" }, CancellationToken.None);
 
             //ASSERT
             await result.Should().ThrowExactlyAsync<InvalidOperationException>().WithMessage("test");
@@ -46,8 +47,8 @@ namespace NMediator.Tests.Transport
             var myrequestCallCount = 0;
             var myRequest2CallCount = 0;
 
-            activator.RegisterMessage<MyRequest, string>(request => { myrequestCallCount++; throw new InvalidOperationException("test"); });
-            activator.RegisterMessage<MyRequest2, string>(request => { myRequest2CallCount++; throw new InvalidOperationException("test2"); });
+            activator.RegisterMessage<MyRequest, string>((request, token) => { myrequestCallCount++; throw new InvalidOperationException("test"); });
+            activator.RegisterMessage<MyRequest2, string>((request, token) => { myRequest2CallCount++; throw new InvalidOperationException("test2"); });
 
             config.WithActivator(activator)
                 .Request(r =>
@@ -60,7 +61,7 @@ namespace NMediator.Tests.Transport
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            Func<Task> result = () => processor.Execute<MyRequest2, string>(new MyRequest2() { Name = "jwoots" });
+            Func<Task> result = () => processor.Execute<MyRequest2, string>(new MyRequest2() { Name = "jwoots" }, CancellationToken.None);
 
             //ASSERT
             await result.Should().ThrowExactlyAsync<InvalidOperationException>().WithMessage("test2");

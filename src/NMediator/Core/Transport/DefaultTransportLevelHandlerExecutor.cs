@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.Core.Transport
@@ -18,9 +19,9 @@ namespace NMediator.Core.Transport
             _handlerActivator = handlerActivator;
         }
 
-        public Task<IRequestResult> ExecuteHandler(object message, IDictionary<string, string> headers)
+        public Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string> headers)
         {
-            return _handlerActivator.ProcessMessageHandler(message);
+            return _handlerActivator.ProcessMessageHandler(message, token);
         }
     }
 }

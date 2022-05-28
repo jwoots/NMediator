@@ -5,6 +5,7 @@ using NMediator.Core.Message;
 using NMediator.Core.Result;
 using NMediator.Request;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace NMediator.Tests.Request
             var config = new MediatorConfiguration();
             var activator = new SimpleServiceActivator();
 
-            activator.RegisterMessage<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World "+request.Name)));
+            activator.RegisterMessage<MyRequest, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World "+request.Name)));
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
@@ -28,7 +29,7 @@ namespace NMediator.Tests.Request
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            var result = await processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
+            var result = await processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" }, CancellationToken.None);
 
             //ASSERT
             result.Data.Should().Be("Hello World jwoots");
@@ -41,7 +42,7 @@ namespace NMediator.Tests.Request
             var config = new MediatorConfiguration();
             var activator = new SimpleServiceActivator();
 
-            activator.RegisterMessage<MyGenericRequest<int>, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
+            activator.RegisterMessage<MyGenericRequest<int>, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyGenericRequest<>)));
@@ -50,7 +51,7 @@ namespace NMediator.Tests.Request
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            var result = await processor.Execute<MyGenericRequest<int>, string>(new MyGenericRequest<int>() { Data = 15 });
+            var result = await processor.Execute<MyGenericRequest<int>, string>(new MyGenericRequest<int>() { Data = 15 }, CancellationToken.None);
 
             //ASSERT
             result.Data.Should().Be("Hello World 15");
@@ -63,7 +64,7 @@ namespace NMediator.Tests.Request
             var config = new MediatorConfiguration();
             var activator = new SimpleServiceActivator();
 
-            activator.RegisterMessage<MyRequest, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
+            activator.RegisterMessage<MyRequest, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)))
@@ -73,7 +74,7 @@ namespace NMediator.Tests.Request
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            var result = await processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
+            var result = await processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" }, CancellationToken.None);
 
             //ASSERT
             result.Data.Should().Be("Hello World jwoots");
@@ -92,7 +93,7 @@ namespace NMediator.Tests.Request
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            Func<Task<RequestResult<string>>> action = () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" });
+            Func<Task<RequestResult<string>>> action = () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" }, CancellationToken.None);
 
             //ASSERT
             await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No instance found for type {typeof(IMessageHandler<MyRequest,string>)}");
@@ -105,7 +106,7 @@ namespace NMediator.Tests.Request
             var config = new MediatorConfiguration();
             var activator = new SimpleServiceActivator();
 
-            activator.RegisterMessage<MyGenericRequest<int>, string>(request => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
+            activator.RegisterMessage<MyGenericRequest<int>, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
 
             config.WithActivator(activator)
                 .Request(r => r.ExecuteWithInProcess());
@@ -114,7 +115,7 @@ namespace NMediator.Tests.Request
 
             //ACT
             var processor = config.Container.Get<IRequestExecutor>();
-            Func<Task<RequestResult<string>>> result = () => processor.Execute<MyGenericRequest<int>, string>(new MyGenericRequest<int>() { Data = 15 });
+            Func<Task<RequestResult<string>>> result = () => processor.Execute<MyGenericRequest<int>, string>(new MyGenericRequest<int>() { Data = 15 }, CancellationToken.None);
 
             //ASSERT
             await result.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No route find for message type {typeof(MyGenericRequest<int>)}");
