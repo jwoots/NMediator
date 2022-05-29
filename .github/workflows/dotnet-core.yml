@@ -54,9 +54,11 @@ jobs:
        
     - name: Pack
       run : dotnet pack -c Release -o . -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      if : github.event_name != 'pull_request'
       
     - name: Push
       run : dotnet nuget push *.nupkg -k ${{ secrets.MYGET_TOKEN }} -s https://www.myget.org/F/jwoots/api/v2/package
+      if : github.event_name != 'pull_request'
       
     
    
