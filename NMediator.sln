@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator", "src\NMediator\NMediator.csproj", "{9DB40D5D-4C64-4B1E-8752-7B3960206D69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.Tests", "test\NMediator.Tests\NMediator.Tests.csproj", "{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.Http", "src\NMediator.Http\NMediator.Http.csproj", "{7447011B-C5A4-4D80-ADCC-052202D39A3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.Http.Tests", "test\NMediator.Http.Tests\NMediator.Http.Tests.csproj", "{AA8F856A-1242-4168-96A3-9ECAB3184492}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71CDE822-0AA2-4016-B30E-0D683B15651B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
+		gitVersion.yml = gitVersion.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DB40D5D-4C64-4B1E-8752-7B3960206D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DB40D5D-4C64-4B1E-8752-7B3960206D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DB40D5D-4C64-4B1E-8752-7B3960206D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DB40D5D-4C64-4B1E-8752-7B3960206D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7447011B-C5A4-4D80-ADCC-052202D39A3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7447011B-C5A4-4D80-ADCC-052202D39A3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7447011B-C5A4-4D80-ADCC-052202D39A3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7447011B-C5A4-4D80-ADCC-052202D39A3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA8F856A-1242-4168-96A3-9ECAB3184492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA8F856A-1242-4168-96A3-9ECAB3184492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA8F856A-1242-4168-96A3-9ECAB3184492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA8F856A-1242-4168-96A3-9ECAB3184492}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A525C8E7-8A69-41D9-9C7B-C190F465DC30}
+	EndGlobalSection
+EndGlobal

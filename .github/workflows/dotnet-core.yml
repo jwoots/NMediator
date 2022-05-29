@@ -1,0 +1,64 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    environment: Test
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          fetch-depth: 0
+          
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1.9.0
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.x'
+        
+    - name: Determine Version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        useConfigFile: true
+      
+    - name: Install dotnet scanner
+      run: dotnet tool install --global dotnet-sonarscanner
+      
+    - name: Begin Sonar scan
+      run: dotnet sonarscanner begin /k:"jwoots_NMediator" /o:"jwoots" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml /d:sonar.host.url=https://sonarcloud.io
+      
+    - name: Install dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile="**/*.g.cs"
+      
+    - name: End Sonar scan
+      run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       
+    - name: Pack
+      run : dotnet pack -c Release -o . -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      if : github.event_name != 'pull_request'
+      
+    - name: Push
+      run : dotnet nuget push *.nupkg -k ${{ secrets.MYGET_TOKEN }} -s https://www.myget.org/F/jwoots/api/v2/package
+      if : github.event_name != 'pull_request'
+      
+    
+   
