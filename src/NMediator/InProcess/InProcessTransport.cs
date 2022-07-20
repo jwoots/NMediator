@@ -17,7 +17,7 @@ namespace NMediator.InProcess
             _handlerExecutor = handlerExecutor ?? throw new ArgumentNullException(nameof(handlerExecutor));
         }
 
-        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers) where TMessage : IMessage<TResult>
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers)
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
@@ -36,7 +36,6 @@ namespace NMediator.InProcess
         }
 
         public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers) 
-            where TMessage : IMessage<TResult>
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message));

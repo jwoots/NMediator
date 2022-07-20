@@ -8,7 +8,7 @@ namespace NMediator.Event
 {
     public interface IEventPublisher 
     {
-        Task<RequestResult<Nothing>> Publish<TEvent>(TEvent @event, CancellationToken token, IDictionary<string,string> headers= null) where TEvent : IEvent;
+        Task<RequestResult<Nothing>> Publish<TEvent>(TEvent @event, CancellationToken token, IDictionary<string,string> headers= null);
     }
 
     public class EventPublisher : IEventPublisher
@@ -20,7 +20,7 @@ namespace NMediator.Event
             _processsor = processsor;
         }
 
-        public Task<RequestResult<Nothing>> Publish<TEvent>(TEvent @event, CancellationToken token, IDictionary<string, string> headers  = null) where TEvent : IEvent
+        public Task<RequestResult<Nothing>> Publish<TEvent>(TEvent @event, CancellationToken token, IDictionary<string, string> headers  = null)
         {
             return _processsor.Process<TEvent, Nothing>(@event, token, headers);
         }

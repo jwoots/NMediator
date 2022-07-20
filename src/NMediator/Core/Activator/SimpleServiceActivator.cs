@@ -27,7 +27,7 @@ namespace NMediator.Core.Activator
             throw new InvalidOperationException($"No instance found for type {handlerType}");
         }
 
-        public void RegisterMessage<TMessage, TResult>(Func<TMessage, CancellationToken, Task<RequestResult<TResult>>> func) where TMessage : IMessage<TResult>
+        public void RegisterMessage<TMessage, TResult>(Func<TMessage, CancellationToken, Task<RequestResult<TResult>>> func)
         {
             if (Instances.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
                 handlers.Add(new GenericRequestHandler<TMessage, TResult>(func));
@@ -35,7 +35,7 @@ namespace NMediator.Core.Activator
                 Instances[typeof(IMessageHandler<TMessage,TResult>)] = new List<object>() { new GenericRequestHandler<TMessage, TResult>(func) };
         }
 
-        class GenericRequestHandler<TMessage, TResult> : IMessageHandler<TMessage, TResult> where TMessage : IMessage<TResult>
+        class GenericRequestHandler<TMessage, TResult> : IMessageHandler<TMessage, TResult>
         {
             private readonly Func<TMessage, CancellationToken, Task<RequestResult<TResult>>> _func;
 

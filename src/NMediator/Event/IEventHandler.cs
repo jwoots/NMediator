@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace NMediator.Event
 {
-    public interface IEventHandler<TEvent>  : IMessageHandler<TEvent, Nothing> where TEvent : IEvent
+    public interface IEventHandler<TEvent>  : IMessageHandler<TEvent, Nothing>
     {
     }
 }
