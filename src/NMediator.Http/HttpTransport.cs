@@ -35,7 +35,7 @@ namespace NMediator.NMediator.Http
 
        
         /// <inheritdoc/>
-        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers) where TMessage : IMessage<TResult>
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers)
         {
             var httpRequest = _factory.CreateRequest(message);
             var httpClient = _clientFactory();

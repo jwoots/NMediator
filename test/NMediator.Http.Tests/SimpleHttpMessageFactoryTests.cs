@@ -78,12 +78,12 @@ namespace NMediator.Tests.Http
                 .Select(x => new object[] { x });
         }
 
-        class MyRequest : IRequest<string>
+        class MyRequest
         {
             public string Name { get; set; }
         }
 
-        class MyRequest2 : IRequest<string>
+        class MyRequest2
         {
             public string Name { get; set; }
         }

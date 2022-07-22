@@ -17,7 +17,7 @@ namespace NMediator.Core.Context
             _decoratee = decoratee;
         }
 
-        public Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, CancellationToken token,  IDictionary<string, string> headers) where TMessage : IMessage<TResult>
+        public Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, CancellationToken token,  IDictionary<string, string> headers)
         {
             IDictionary<string, string> h = headers ?? new Dictionary<string, string>();
             

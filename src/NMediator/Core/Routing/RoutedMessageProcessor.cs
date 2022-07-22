@@ -16,7 +16,7 @@ namespace NMediator.Core.Routing
             _router = router;
         }
 
-        public async Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers = null) where TMessage : IMessage<TResult>
+        public async Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers = null)
         {
             var result = await _router.Route(typeof(TMessage)).SendMessage<TMessage, TResult>(message, token, headers);
             return (RequestResult<TResult>)result;

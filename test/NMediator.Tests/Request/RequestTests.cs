@@ -96,7 +96,7 @@ namespace NMediator.Tests.Request
             Func<Task<RequestResult<string>>> action = () => processor.Execute<MyRequest, string>(new MyRequest() { Name = "jwoots" }, CancellationToken.None);
 
             //ASSERT
-            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No instance found for type {typeof(IMessageHandler<MyRequest,string>)}");
+            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No handler found for message {typeof(MyRequest)}");
         }
 
         [Fact]
@@ -121,12 +121,12 @@ namespace NMediator.Tests.Request
             await result.Should().ThrowAsync<InvalidOperationException>().WithMessage($"No route find for message type {typeof(MyGenericRequest<int>)}");
         }
 
-        class MyRequest : IRequest<string>
+        class MyRequest
         {
             public string Name { get; set; }
         }
 
-        class MyGenericRequest<T> : IRequest<string>
+        class MyGenericRequest<T>
         {
             public T Data { get; set; }
         }

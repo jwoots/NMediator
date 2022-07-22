@@ -19,7 +19,6 @@ namespace NMediator.Core.Transport
         /// <param name="message">the message to send</param>
         /// <param name="headers">headers (meta-datas)</param>
         /// <returns></returns>
-        Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers) 
-            where TMessage : IMessage<TResult>;
+        Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string, string> headers);
     }
 }

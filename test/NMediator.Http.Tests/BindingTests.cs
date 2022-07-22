@@ -183,7 +183,7 @@ namespace NMediator.Http.Tests
         }
 
 
-        class MyQueryStringTestRequest : IRequest<Nothing>
+        class MyQueryStringTestRequest
         {
             public string StringProperty { get; set; }
             public int IntProperty { get; set; }
@@ -196,7 +196,7 @@ namespace NMediator.Http.Tests
 
         }
 
-        class MyQueryStringRequest<T> : IRequest<Nothing>
+        class MyQueryStringRequest<T>
         {
             public T Property { get; set; }
         }

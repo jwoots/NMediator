@@ -69,12 +69,12 @@ namespace NMediator.Tests.Transport
             myrequestCallCount.Should().Be(0);
         }
 
-        class MyRequest : IRequest<string>
+        class MyRequest
         {
             public string Name { get; set; }
         }
 
-        class MyRequest2 : IRequest<string>
+        class MyRequest2
         {
             public string Name { get; set; }
         }

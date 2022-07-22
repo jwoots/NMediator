@@ -34,7 +34,7 @@ namespace NMediator.Tests.InProcess
             await action.Should().ThrowExactlyAsync<ArgumentNullException>();
         }
 
-        private class MyRequest : IRequest<string>
+        private class MyRequest
         {
             public string Name { get; set; }
         }

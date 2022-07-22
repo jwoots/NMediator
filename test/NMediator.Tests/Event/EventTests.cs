@@ -72,7 +72,7 @@ namespace NMediator.Tests.Event
             handlerCalled2.Should().BeTrue();
         }
 
-        class MyEvent : IEvent
+        class MyEvent
         {
             public string Name { get; set; }
         }

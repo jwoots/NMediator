@@ -9,7 +9,7 @@ namespace NMediator.Request
     public interface IRequestExecutor
 
     {
-        Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request, CancellationToken token, IDictionary<string, string> headers = null) where TRequest : IRequest<TResult>;
+        Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request, CancellationToken token, IDictionary<string, string> headers = null);
     }
 
     public class RequestExecutor : IRequestExecutor
@@ -21,7 +21,7 @@ namespace NMediator.Request
             _processor = processor;
         }
 
-        public Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request, CancellationToken token, IDictionary<string, string> headers = null) where TRequest : IRequest<TResult>
+        public Task<RequestResult<TResult>> Execute<TRequest, TResult>(TRequest request, CancellationToken token, IDictionary<string, string> headers = null)
         {
             return _processor.Process<TRequest, TResult>(request, token, headers);
         }
