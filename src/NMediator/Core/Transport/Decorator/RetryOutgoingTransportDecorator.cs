@@ -20,7 +20,7 @@ namespace NMediator.Core.Transport.Decorator
             if(_retryTimes <= 0)
                 throw new ArgumentOutOfRangeException(nameof(retryTimes));
         }
-        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string,string> headers) where TMessage : IMessage<TResult>
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string,string> headers)
         {
             Exception e = null;
             for(int i=0;i<_retryTimes;i++)

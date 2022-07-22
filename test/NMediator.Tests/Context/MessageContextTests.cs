@@ -63,7 +63,7 @@ namespace NMediator.Tests.Context
             mc.Values.ContainsKey(Headers.ID).Should().BeTrue();
         }
 
-        class MyRequest : IRequest<string>
+        class MyRequest
         {
             public string Name { get; set; }
         }

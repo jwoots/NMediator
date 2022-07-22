@@ -3,14 +3,20 @@ using NMediator.Core.Result;
 using NMediator.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NMediator.Core.Activator
 {
-    public class SimpleServiceActivator : IServiceActivator
+    public class SimpleServiceActivator : IServiceActivator, IHandlerProvider
     {
-        public IDictionary<Type, ICollection<object>> Instances { get; } = new Dictionary<Type, ICollection<object>>();
+        private IDictionary<Type, ICollection<object>> _instances { get; } = new Dictionary<Type, ICollection<object>>();
+
+        public Type GetHandlerTypeByMessageType(Type messageType)
+        {
+            return _instances.Keys.FirstOrDefault(i => i.GetGenericArguments()[0] == messageType);
+        }
 
         public IEnumerable<T> GetInstances<T>()
         {
@@ -19,20 +25,20 @@ namespace NMediator.Core.Activator
 
         public IEnumerable<object> GetInstances(Type handlerType)
         {
-            if (Instances.TryGetValue(handlerType, out var result))
+            if (_instances.TryGetValue(handlerType, out var result))
             {
                 return result;
             }
         
-            throw new InvalidOperationException($"No instance found for type {handlerType}");
+            return Enumerable.Empty<object>();
         }
 
         public void RegisterMessage<TMessage, TResult>(Func<TMessage, CancellationToken, Task<RequestResult<TResult>>> func)
         {
-            if (Instances.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
+            if (_instances.TryGetValue(typeof(IMessageHandler<TMessage, TResult>), out var handlers))
                 handlers.Add(new GenericRequestHandler<TMessage, TResult>(func));
             else
-                Instances[typeof(IMessageHandler<TMessage,TResult>)] = new List<object>() { new GenericRequestHandler<TMessage, TResult>(func) };
+                _instances[typeof(IMessageHandler<TMessage,TResult>)] = new List<object>() { new GenericRequestHandler<TMessage, TResult>(func) };
         }
 
         class GenericRequestHandler<TMessage, TResult> : IMessageHandler<TMessage, TResult>
