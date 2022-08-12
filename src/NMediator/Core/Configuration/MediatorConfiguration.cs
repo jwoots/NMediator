@@ -33,10 +33,6 @@ namespace NMediator.Core.Configuration
         }
 
         public MediatorConfiguration WithActivator(SimpleServiceActivator activator)
-        {
-            Container.Register<IServiceActivator>(ctx => activator);
-            Container.Register<IHandlerProvider>(ctx => activator);
-            return this;
-        }
+            => WithActivator(activator, activator);
     }
 }

@@ -35,10 +35,8 @@ namespace NMediator.Core.Transport.Decorator
                 }
             }
 
-            if(e != null)
-                throw e;
+            throw e;
 
-            return null;
         }
     }
 }

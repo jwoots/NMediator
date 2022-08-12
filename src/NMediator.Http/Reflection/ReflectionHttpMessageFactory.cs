@@ -30,6 +30,7 @@ namespace NMediator.NMediator.Http.Reflection
             var descriptor = _descriptors.GetFor(message.GetType());
             var messageProperties = message.GetType().GetProperties().ToDictionary(pi => pi, pi => pi.GetValue(message));
             HttpRequestMessage toReturn = new HttpRequestMessage();
+            toReturn.Method = descriptor.Method;
 
             var uriResult = CreateUri(descriptor, messageProperties);
             toReturn.RequestUri = uriResult.Uri;
@@ -58,8 +59,6 @@ namespace NMediator.NMediator.Http.Reflection
                     Query = queryStringBuilder.ToString()
                 }.Uri;
             }
-            else
-                throw new NotSupportedException($"{descriptor.ParameterLocation} not supported");
 
             return RequestResult.Success(toReturn);
         }
