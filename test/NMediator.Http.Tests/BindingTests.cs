@@ -18,69 +18,7 @@ namespace NMediator.Http.Tests
 {
     public class BindingTests
     {
-        private readonly MediatorConfiguration _configuration = new MediatorConfiguration();
         private readonly MockHttpMessageHandler _mockHttpMessageHandler = new MockHttpMessageHandler();
-        private readonly HttpDescriptors _httpDescriptors = new HttpDescriptors();
-        private readonly HttpDescriptor _httpDescriptor = new HttpDescriptor()
-        {
-            Method = System.Net.Http.HttpMethod.Get,
-            ParameterLocation = ParameterLocation.QUERY_STRING,
-            RelativeUri = "/myrelativeURI"
-        };
-
-        public IRequestExecutor ConfigureRequestExecutor()
-        {
-            var serviceActivator = new SimpleServiceActivator();
-
-            _configuration.WithActivator(serviceActivator)
-                    .Request(r => r.ExecuteWithHttp(options =>
-                    {
-                        options.HttpClientFactory = () => _mockHttpMessageHandler.ToHttpClient();
-                        options.HttpDescriptors = _httpDescriptors;
-                        options.BaseUri = new Uri("http://test");
-                    }));
-
-            BaseConfiguration.Configure(_configuration);
-            var requestExecutor = _configuration.Container.Get<IRequestExecutor>();
-            return requestExecutor;
-        }
-
-        //[Fact]
-        //public async Task Execute_must_send_http_request_with_correct_querystring_Binding()
-        //{
-        //    var date = DateTime.Now;
-        //    var request = new MyQueryStringTestRequest
-        //    {
-        //        StringProperty = "test:value",
-        //        ArrayProperty = new decimal[] {1.18m, -5.87m},
-        //        IEnumerableProperty = new int[] {6, 9, -50},
-        //        IntProperty = 35,
-        //        ListProperty = new List<string>(),
-        //        NullableProperty = 15,
-        //        NullValueProperty = null,
-        //        DateProperty = date,
-        //    };
-
-        //    _httpDescriptors.AddFor<MyQueryStringTestRequest>(_httpDescriptor);
-
-        //    _mockHttpMessageHandler.Expect("http://test/myrelativeURI")
-        //                            .WithQueryString(new List<KeyValuePair<string, string>>
-        //                            {
-        //                                { KeyValuePair.Create("StringProperty", "test:value" )},
-        //                                { KeyValuePair.Create("ArrayProperty", "1.18") },
-        //                                { KeyValuePair.Create("ArrayProperty", "-5.87") },
-        //                                { KeyValuePair.Create("IEnumerableProperty", "6") },
-        //                                { KeyValuePair.Create("IEnumerableProperty", "9")},
-        //                                { KeyValuePair.Create("IEnumerableProperty", "-50") },
-        //                                { KeyValuePair.Create("IntProperty", "35") },
-        //                                { KeyValuePair.Create("NullableProperty","15") },
-        //                                { KeyValuePair.Create("DateProperty", date.ToString(CultureInfo.InvariantCulture)) }
-        //                            });
-
-        //    await _requestExecutor.Execute<MyQueryStringTestRequest, Nothing>(request);
-
-        //    _mockHttpMessageHandler.VerifyNoOutstandingExpectation();
-        //}
 
         [Theory]
         [InlineData("", "")]
@@ -142,9 +80,10 @@ namespace NMediator.Http.Tests
                 Property = value
             };
 
-            _httpDescriptors.AddFor<MyQueryStringRequest<T>>(_httpDescriptor);
+            var httpDescriptors = new HttpDescriptors();
+            httpDescriptors.AddFor<MyQueryStringRequest<T>>(b => b.CallRelativeUri("/myrelativeURI", HttpMethod.Get, ParameterLocation.QUERY_STRING));
 
-            var requestExecutor = ConfigureRequestExecutor();
+            var requestExecutor = ConfigureRequestExecutor(httpDescriptors);
             string expectedQueryStringKey = "Property";
 
             var mock = _mockHttpMessageHandler.Expect("http://test/myrelativeURI");
@@ -168,6 +107,24 @@ namespace NMediator.Http.Tests
             await requestExecutor.Execute<MyQueryStringRequest<T>, Nothing>(request, CancellationToken.None);
 
             VerifyQueryStringExpectation(expectedQueryStringKey, string.Join(',',expectedParameters));
+        }
+
+        private IRequestExecutor ConfigureRequestExecutor(HttpDescriptors descriptors)
+        {
+            var configuration = new MediatorConfiguration();
+            var serviceActivator = new SimpleServiceActivator();
+
+            configuration.WithActivator(serviceActivator)
+                    .Request(r => r.ExecuteWithHttp(options =>
+                    {
+                        options.HttpClientFactory = () => _mockHttpMessageHandler.ToHttpClient();
+                        options.HttpDescriptors = descriptors;
+                        options.BaseUri = new Uri("http://test");
+                    }));
+
+            BaseConfiguration.Configure(configuration);
+            var requestExecutor = configuration.Container.Get<IRequestExecutor>();
+            return requestExecutor;
         }
 
         private void VerifyQueryStringExpectation(string exepctedKey, string expectedValue)

@@ -31,11 +31,6 @@ namespace NMediator.NMediator.Http.Reflection
             AddFor<T>(builder.Build());
         }
 
-        public HttpDescriptor GetFor<T>()
-        {
-            return GetFor(typeof(T));
-        }
-
         public HttpDescriptor GetFor(Type type)
         {
             return _descriptors[type];

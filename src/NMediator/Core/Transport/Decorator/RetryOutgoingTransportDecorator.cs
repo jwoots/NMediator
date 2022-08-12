@@ -35,10 +35,10 @@ namespace NMediator.Core.Transport.Decorator
                 }
             }
 
-            if(e != null)
-                throw e;
+#pragma warning disable S2259 // Null pointers should not be dereferenced
+            throw e;
+#pragma warning restore S2259 // Null pointers should not be dereferenced
 
-            return null;
         }
     }
 }
