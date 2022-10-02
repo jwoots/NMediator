@@ -10,6 +10,9 @@ using NMediator.Core.Handling;
 
 namespace NMediator.Core.Handling
 {
+    /// <summary>
+    /// Built in service activator
+    /// </summary>
     public class SimpleServiceActivator : IServiceActivator, IHandlerInterfaceTypeProvider
     {
         private IDictionary<Type, ICollection<object>> _instances { get; } = new Dictionary<Type, ICollection<object>>();
@@ -19,9 +22,9 @@ namespace NMediator.Core.Handling
             return _instances.Keys.FirstOrDefault(i => i.GetGenericArguments()[0] == messageType);
         }
 
-        public IEnumerable<object> GetInstances(Type handlerType)
+        public IEnumerable<object> GetInstances(Type handlerInterfaceType)
         {
-            if (_instances.TryGetValue(handlerType, out var result))
+            if (_instances.TryGetValue(handlerInterfaceType, out var result))
             {
                 return result;
             }
