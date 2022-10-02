@@ -46,9 +46,9 @@ namespace NMediator.Core.Handling
                 _func = func;
             }
 
-            public Task<RequestResult<TResult>> Handle(TMessage message, CancellationToken token)
+            public Task<RequestResult<TResult>> Handle(TMessage message, CancellationToken cancellationToken)
             {
-                return _func(message, token);
+                return _func(message, cancellationToken);
             }
         }
     }
