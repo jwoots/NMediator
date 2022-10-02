@@ -7,7 +7,6 @@ namespace NMediator.Core.Handling
 {
     public interface IServiceActivator
     {
-        IEnumerable<THandler> GetInstances<THandler>();
         IEnumerable<object> GetInstances(Type handlerType);
     }
 }

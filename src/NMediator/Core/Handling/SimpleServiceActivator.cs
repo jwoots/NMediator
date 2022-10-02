@@ -19,11 +19,6 @@ namespace NMediator.Core.Handling
             return _instances.Keys.FirstOrDefault(i => i.GetGenericArguments()[0] == messageType);
         }
 
-        public IEnumerable<T> GetInstances<T>()
-        {
-            return GetInstances(typeof(T)).Cast<T>();
-        }
-
         public IEnumerable<object> GetInstances(Type handlerType)
         {
             if (_instances.TryGetValue(handlerType, out var result))

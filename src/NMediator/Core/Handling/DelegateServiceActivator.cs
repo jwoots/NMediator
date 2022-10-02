@@ -15,11 +15,6 @@ namespace NMediator.Core.Handling
             _func = func;
         }
 
-        public IEnumerable<THandler> GetInstances<THandler>()
-        {
-            return GetInstances(typeof(THandler)).Cast<THandler>();
-        }
-
         public IEnumerable<object> GetInstances(Type handlerType)
         {
             return _func(handlerType);
