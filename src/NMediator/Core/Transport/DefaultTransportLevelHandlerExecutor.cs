@@ -1,5 +1,4 @@
-﻿using NMediator.Core.Activator;
-using NMediator.Core.Result;
+﻿using NMediator.Core.Result;
 using NMediator.Request;
 using System;
 using System.Collections.Generic;
@@ -8,15 +7,16 @@ using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using NMediator.Core.Handling;
 
 namespace NMediator.Core.Transport
 {
     public class DefaultTransportLevelHandlerExecutor : ITransportLevelHandlerExecutor
     {
         private readonly IServiceActivator _handlerActivator;
-        private readonly IHandlerProvider _handlerProvider;
+        private readonly IHandlerInterfaceTypeProvider _handlerProvider;
 
-        public DefaultTransportLevelHandlerExecutor(IServiceActivator handlerActivator, IHandlerProvider handlerProvider)
+        public DefaultTransportLevelHandlerExecutor(IServiceActivator handlerActivator, IHandlerInterfaceTypeProvider handlerProvider)
         {
             _handlerActivator = handlerActivator;
             _handlerProvider = handlerProvider;
@@ -24,7 +24,7 @@ namespace NMediator.Core.Transport
 
         public async Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string> headers)
         { 
-            var handlerType = _handlerProvider.GetHandlerTypeByMessageType(message.GetType());
+            var handlerType = _handlerProvider.GetHandlerInterfaceTypeByMessageType(message.GetType());
             if (handlerType == null)
                 throw new InvalidOperationException($"No handler found for message {message.GetType()}");
 

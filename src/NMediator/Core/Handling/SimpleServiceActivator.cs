@@ -6,21 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NMediator.Core.Handling;
 
-namespace NMediator.Core.Activator
+namespace NMediator.Core.Handling
 {
-    public class SimpleServiceActivator : IServiceActivator, IHandlerProvider
+    public class SimpleServiceActivator : IServiceActivator, IHandlerInterfaceTypeProvider
     {
         private IDictionary<Type, ICollection<object>> _instances { get; } = new Dictionary<Type, ICollection<object>>();
 
-        public Type GetHandlerTypeByMessageType(Type messageType)
+        public Type GetHandlerInterfaceTypeByMessageType(Type messageType)
         {
             return _instances.Keys.FirstOrDefault(i => i.GetGenericArguments()[0] == messageType);
         }
 
         public IEnumerable<T> GetInstances<T>()
         {
-            yield return (T)GetInstances(typeof(T));
+            return GetInstances(typeof(T)).Cast<T>();
         }
 
         public IEnumerable<object> GetInstances(Type handlerType)

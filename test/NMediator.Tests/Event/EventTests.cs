@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
-using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Core.Result;
 using NMediator.Event;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using NMediator.Core.Handling;
 
 namespace NMediator.Tests.Event
 {
@@ -24,7 +24,7 @@ namespace NMediator.Tests.Event
                 return Task.FromResult(RequestResult.Success<Nothing>(new Nothing())); 
             });
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                     .Event(e => e.PublishWithInProcess(typeof(MyEvent)));
 
             BaseConfiguration.Configure(config);
@@ -57,7 +57,7 @@ namespace NMediator.Tests.Event
                 return Task.FromResult(RequestResult.Success<Nothing>(new Nothing()));
             });
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                     .Event(e => e.PublishWithInProcess(typeof(MyEvent)));
 
             BaseConfiguration.Configure(config);

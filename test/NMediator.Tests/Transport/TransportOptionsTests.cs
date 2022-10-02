@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
-using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Request;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using NMediator.Core.Handling;
 
 namespace NMediator.Tests.Transport
 {
@@ -21,7 +21,7 @@ namespace NMediator.Tests.Transport
 
             activator.RegisterMessage<MyRequest, string>((request, token) => { callCount++; throw new InvalidOperationException("test"); });
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r => 
                             r.ExecuteWithInProcess(typeof(MyRequest))
                              .Retry(3)
@@ -50,7 +50,7 @@ namespace NMediator.Tests.Transport
             activator.RegisterMessage<MyRequest, string>((request, token) => { myrequestCallCount++; throw new InvalidOperationException("test"); });
             activator.RegisterMessage<MyRequest2, string>((request, token) => { myRequest2CallCount++; throw new InvalidOperationException("test2"); });
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r =>
                 {
                     r.ExecuteWithInProcess(typeof(MyRequest)).Retry(3);
