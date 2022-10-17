@@ -47,6 +47,6 @@ BaseConfiguration.Configure(config);
 ### Use NMediatior
 ```c#
 var requestExecutor = config.Container.Get<IRequestExecutor>();
-var result = requestExecutor<MyRequest, string>(new MyRequest {MyParameter="MyValue"});
+var result = await requestExecutor.Execute<MyRequest, string>(new MyRequest {MyParameter="MyValue"});
 ```
 
