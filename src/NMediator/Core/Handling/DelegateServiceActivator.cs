@@ -18,9 +18,9 @@ namespace NMediator.Core.Handling
             _func = func;
         }
 
-        public IEnumerable<object> GetInstances(Type handlerType)
+        public IEnumerable<object> GetInstances(Type handlerInterfaceType)
         {
-            return _func(handlerType);
+            return _func(handlerInterfaceType);
         }
     }
 }
