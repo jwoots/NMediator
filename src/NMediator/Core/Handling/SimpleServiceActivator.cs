@@ -6,26 +6,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NMediator.Core.Handling;
 
-namespace NMediator.Core.Activator
+namespace NMediator.Core.Handling
 {
-    public class SimpleServiceActivator : IServiceActivator, IHandlerProvider
+    /// <summary>
+    /// Built in service activator
+    /// </summary>
+    public class SimpleServiceActivator : IServiceActivator, IHandlerInterfaceTypeProvider
     {
         private IDictionary<Type, ICollection<object>> _instances { get; } = new Dictionary<Type, ICollection<object>>();
 
-        public Type GetHandlerTypeByMessageType(Type messageType)
+        public Type GetHandlerInterfaceTypeByMessageType(Type messageType)
         {
             return _instances.Keys.FirstOrDefault(i => i.GetGenericArguments()[0] == messageType);
         }
 
-        public IEnumerable<T> GetInstances<T>()
+        public IEnumerable<object> GetInstances(Type handlerInterfaceType)
         {
-            yield return (T)GetInstances(typeof(T));
-        }
-
-        public IEnumerable<object> GetInstances(Type handlerType)
-        {
-            if (_instances.TryGetValue(handlerType, out var result))
+            if (_instances.TryGetValue(handlerInterfaceType, out var result))
             {
                 return result;
             }
@@ -50,9 +49,9 @@ namespace NMediator.Core.Activator
                 _func = func;
             }
 
-            public Task<RequestResult<TResult>> Handle(TMessage message, CancellationToken token)
+            public Task<RequestResult<TResult>> Handle(TMessage message, CancellationToken cancellationToken)
             {
-                return _func(message, token);
+                return _func(message, cancellationToken);
             }
         }
     }

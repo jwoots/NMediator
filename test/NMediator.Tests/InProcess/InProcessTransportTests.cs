@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Core.Result;
 using NMediator.Request;
@@ -7,6 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using NMediator.Core.Handling;
 
 namespace NMediator.Tests.InProcess
 {
@@ -21,7 +21,7 @@ namespace NMediator.Tests.InProcess
 
             activator.RegisterMessage<MyRequest, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
 
             BaseConfiguration.Configure(config);

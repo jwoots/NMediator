@@ -27,7 +27,20 @@ namespace System
                 .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                 ?.GetGenericArguments()
                 ?.FirstOrDefault();
-            return true;
+
+            return genericArgument != null;
+        }
+
+        /// <summary>
+        /// return true if calling type implement the open generic interface definition openGenericTypeInterfaceDefinition
+        /// </summary>
+        public static bool IsOpenGenericInterface(this Type source, Type openGenericTypeDefinition, out Type genericType)
+        {
+            genericType = source
+                .GetInterfaces()
+                .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == openGenericTypeDefinition);
+
+            return genericType != null;
         }
 
         public static TypeConverter GetConverter(this Type source) => TypeDescriptor.GetConverter(source);

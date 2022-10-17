@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NMediator.Core.Activator
+namespace NMediator.Core.Handling
 {
     /// <summary>
-    /// Provide handler type by message type
+    /// Provide handler interface type (IMessageHandler<,>) by message type
     /// </summary>
-    public interface IHandlerProvider
+    public interface IHandlerInterfaceTypeProvider
     {
         /// <summary>
         /// Get handler type corresponding to message type
         /// </summary>
         /// <param name="messageType"></param>
         /// <returns></returns>
-        Type GetHandlerTypeByMessageType(Type messageType);
+        Type GetHandlerInterfaceTypeByMessageType(Type messageType);
     }
 }

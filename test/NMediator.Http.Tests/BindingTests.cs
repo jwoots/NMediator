@@ -1,4 +1,3 @@
-using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Core.Result;
 using NMediator.NMediator.Http.Reflection;
@@ -13,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Xunit;
+using NMediator.Core.Handling;
 
 namespace NMediator.Http.Tests
 {
@@ -114,7 +114,7 @@ namespace NMediator.Http.Tests
             var configuration = new MediatorConfiguration();
             var serviceActivator = new SimpleServiceActivator();
 
-            configuration.WithActivator(serviceActivator)
+            configuration.Handling(serviceActivator)
                     .Request(r => r.ExecuteWithHttp(options =>
                     {
                         options.HttpClientFactory = () => _mockHttpMessageHandler.ToHttpClient();

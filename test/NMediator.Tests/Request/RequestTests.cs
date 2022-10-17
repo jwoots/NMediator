@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using NMediator.Core.Activator;
 using NMediator.Core.Configuration;
 using NMediator.Core.Message;
 using NMediator.Core.Result;
@@ -8,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using NMediator.Core.Handling;
 
 namespace NMediator.Tests.Request
 {
@@ -22,7 +22,7 @@ namespace NMediator.Tests.Request
 
             activator.RegisterMessage<MyRequest, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World "+request.Name)));
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
 
             BaseConfiguration.Configure(config);
@@ -44,7 +44,7 @@ namespace NMediator.Tests.Request
 
             activator.RegisterMessage<MyGenericRequest<int>, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyGenericRequest<>)));
 
             BaseConfiguration.Configure(config);
@@ -66,7 +66,7 @@ namespace NMediator.Tests.Request
 
             activator.RegisterMessage<MyRequest, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Name)));
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)))
                 .Request(r => r.ExecuteWithInProcess(typeof(MyGenericRequest<>)));
 
@@ -86,7 +86,7 @@ namespace NMediator.Tests.Request
             var config = new MediatorConfiguration();
             var activator = new SimpleServiceActivator();
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r => r.ExecuteWithInProcess(typeof(MyRequest)));
 
             BaseConfiguration.Configure(config);
@@ -108,7 +108,7 @@ namespace NMediator.Tests.Request
 
             activator.RegisterMessage<MyGenericRequest<int>, string>((request, token) => Task.FromResult(RequestResult.Success("Hello World " + request.Data)));
 
-            config.WithActivator(activator)
+            config.Handling(activator)
                 .Request(r => r.ExecuteWithInProcess());
 
             BaseConfiguration.Configure(config);
