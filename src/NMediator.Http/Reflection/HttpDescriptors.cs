@@ -2,7 +2,9 @@
 using NMediator.Http.Reflection.QueryStringBinder;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net.Http;
+using System.Reflection;
 
 namespace NMediator.NMediator.Http.Reflection
 {
@@ -44,5 +46,6 @@ namespace NMediator.NMediator.Http.Reflection
         public string RelativeUri { get; set; }
         public ParameterLocation ParameterLocation { get; set; }
         public HttpMethod Method { get; set; }
+        public IDictionary<MemberInfo, ParameterLocation> ParameterLocationOverride {get;} = new Dictionary<MemberInfo, ParameterLocation>();
     }
 }
