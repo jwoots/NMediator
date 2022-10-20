@@ -38,7 +38,8 @@ namespace NMediator.NMediator.Http.Reflection
 
             if (descriptor.ParameterLocation == ParameterLocation.BODY)
             {
-                var propertiesToSerialize = messagePropertiesRemaining
+                var bodyProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.BODY);
+                var propertiesToSerialize = bodyProperties.Intersect(messagePropertiesRemaining)
                     .ToDictionary(m => m.Key.Name, m => m.Value);
                 toReturn.Content = _descriptors.BodyConverter.Convert(propertiesToSerialize);
             }

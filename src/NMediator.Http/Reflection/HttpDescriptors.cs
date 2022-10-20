@@ -1,4 +1,6 @@
-﻿using NMediator.Http.Reflection.BodyConverter;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Linq;
+using NMediator.Http.Reflection.BodyConverter;
 using NMediator.Http.Reflection.QueryStringBinder;
 using System;
 using System.Collections.Generic;
@@ -47,5 +49,15 @@ namespace NMediator.NMediator.Http.Reflection
         public ParameterLocation ParameterLocation { get; set; }
         public HttpMethod Method { get; set; }
         public IDictionary<MemberInfo, ParameterLocation> ParameterLocationOverride {get;} = new Dictionary<MemberInfo, ParameterLocation>();
+
+        public IDictionary<PropertyInfo, object> GetPropertiesForLocation(object message, ParameterLocation location)
+        {
+            Type t = message.GetType();
+            return t.GetProperties()
+                .Where(x => 
+                            (ParameterLocationOverride.TryGetValue(x, out var plocation) && plocation == location)
+                            || ParameterLocation == location)
+                .ToDictionary(x => x, x => x.GetValue(message));
+        }
     }
 }
