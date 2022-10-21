@@ -1,4 +1,5 @@
-﻿using NMediator.Core.Result;
+﻿using System.Security.Cryptography.X509Certificates;
+using NMediator.Core.Result;
 using NMediator.Http;
 using System;
 using System.Collections.Generic;
@@ -34,20 +35,21 @@ namespace NMediator.NMediator.Http.Reflection
 
             var uriResult = CreateUri(descriptor, messageProperties);
             toReturn.RequestUri = uriResult.Uri;
-            var messagePropertiesRemaining = messageProperties.Where(x => !uriResult.UsedProperties.Contains(x.Key)).ToList();
+            var messagePropertiesRemaining = messageProperties.Where(x => !uriResult.UsedProperties.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value);
 
             if (descriptor.ParameterLocation == ParameterLocation.BODY)
             {
                 var bodyProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.BODY);
-                var propertiesToSerialize = bodyProperties.Intersect(messagePropertiesRemaining)
+                var propertiesToSerialize = bodyProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key))
                     .ToDictionary(m => m.Key.Name, m => m.Value);
                 toReturn.Content = _descriptors.BodyConverter.Convert(propertiesToSerialize);
             }
             else if (descriptor.ParameterLocation == ParameterLocation.QUERY_STRING)
             {
                 var queryStringBuilder = HttpUtility.ParseQueryString(string.Empty);
+                var queryProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.QUERY_STRING);
 
-                foreach (var entry in messagePropertiesRemaining)
+                foreach (var entry in queryProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key)))
                 {
                     if (entry.Value == null) continue;
 
