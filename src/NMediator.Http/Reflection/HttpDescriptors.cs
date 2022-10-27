@@ -53,11 +53,22 @@ namespace NMediator.NMediator.Http.Reflection
         public IDictionary<PropertyInfo, object> GetPropertiesForLocation(object message, ParameterLocation location)
         {
             Type t = message.GetType();
-            return t.GetProperties()
-                .Where(x => 
-                            (ParameterLocationOverride.TryGetValue(x, out var plocation) && plocation == location)
-                            || ParameterLocation == location)
-                .ToDictionary(x => x, x => x.GetValue(message));
+            Dictionary<PropertyInfo, object> dico = new Dictionary<PropertyInfo, object>();
+
+            foreach(var p in t.GetProperties())
+            {
+                if(ParameterLocationOverride.TryGetValue(p, out var locationOverride))
+                {
+                    if(locationOverride == location)
+                        dico[p] = p.GetValue(message);
+                }
+                else if(ParameterLocation == location)
+                {
+                    dico[p] = p.GetValue(message);
+                }
+            }
+
+            return dico;
         }
     }
 }

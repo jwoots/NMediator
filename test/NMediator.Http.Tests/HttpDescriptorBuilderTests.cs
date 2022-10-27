@@ -34,21 +34,43 @@ namespace NMediator.Http.Tests
             };
 
             var httpDescriptors = new HttpDescriptors();
-            httpDescriptors.AddFor<MyRequest>(b => b.CallRelativeUri("/myrelativeURI", HttpMethod.Get, ParameterLocation.BODY).OverrideParameterLocation(x => x.Property2, ParameterLocation.QUERY_STRING));
+            httpDescriptors.AddFor<MyRequest>(b => b.CallRelativeUri("/myrelativeURI", HttpMethod.Post, ParameterLocation.BODY).OverrideParameterLocation(x => x.Property2, ParameterLocation.QUERY_STRING));
 
             var requestExecutor = ConfigureRequestExecutor(httpDescriptors);
 
             var mock = _mockHttpMessageHandler.Expect("http://test/myrelativeURI");
-            mock.WithContent("{\"Property1\"=\"p1\"}");
+            mock.WithContent("{\"Property1\":\"p1\"}");
             mock.WithQueryString("Property2", "p2");
-             mock.Respond(() => Task.FromResult(new HttpResponseMessage()));
+            mock.Respond(() => Task.FromResult(new HttpResponseMessage()));
 
             var result = await requestExecutor.Execute<MyRequest, Nothing>(request, CancellationToken.None);
 
             _mockHttpMessageHandler.VerifyNoOutstandingExpectation();
+        }
 
-            
+        [Fact]
+        public async Task TestOverrideQuery()
+        {
+            var request = new MyRequest()
+            {
+                Property1 = "p1",
+                Property2 = "p2"
+            };
 
+            var httpDescriptors = new HttpDescriptors();
+            httpDescriptors.AddFor<MyRequest>(b => b.CallRelativeUri("/myrelativeURI", HttpMethod.Get, ParameterLocation.QUERY_STRING)
+                                                    .OverrideParameterLocation(x => x.Property2, ParameterLocation.BODY));
+
+            var requestExecutor = ConfigureRequestExecutor(httpDescriptors);
+
+            var mock = _mockHttpMessageHandler.Expect("http://test/myrelativeURI");
+            mock.WithContent("{\"Property2\":\"p2\"}");
+            mock.WithQueryString("Property1", "p1");
+            mock.Respond(() => Task.FromResult(new HttpResponseMessage()));
+
+            var result = await requestExecutor.Execute<MyRequest, Nothing>(request, CancellationToken.None);
+
+            _mockHttpMessageHandler.VerifyNoOutstandingExpectation();
         }
 
         private IRequestExecutor ConfigureRequestExecutor(HttpDescriptors descriptors)

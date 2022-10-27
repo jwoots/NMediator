@@ -37,32 +37,30 @@ namespace NMediator.NMediator.Http.Reflection
             toReturn.RequestUri = uriResult.Uri;
             var messagePropertiesRemaining = messageProperties.Where(x => !uriResult.UsedProperties.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value);
 
-            if (descriptor.ParameterLocation == ParameterLocation.BODY)
+            //body
+            var bodyProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.BODY);
+            var propertiesToSerialize = bodyProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key))
+                .ToDictionary(m => m.Key.Name, m => m.Value);
+            toReturn.Content = _descriptors.BodyConverter.Convert(propertiesToSerialize);
+
+            //query string
+            var queryStringBuilder = HttpUtility.ParseQueryString(string.Empty);
+            var queryProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.QUERY_STRING);
+
+            foreach (var entry in queryProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key)))
             {
-                var bodyProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.BODY);
-                var propertiesToSerialize = bodyProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key))
-                    .ToDictionary(m => m.Key.Name, m => m.Value);
-                toReturn.Content = _descriptors.BodyConverter.Convert(propertiesToSerialize);
+                if (entry.Value == null) continue;
+
+                foreach (var parameter in BuildHttpParameter(entry.Key, entry.Value))
+                    queryStringBuilder.Add(entry.Key.Name, parameter);
             }
-            else if (descriptor.ParameterLocation == ParameterLocation.QUERY_STRING)
+            
+            //build uri
+            toReturn.RequestUri = new UriBuilder(toReturn.RequestUri)
             {
-                var queryStringBuilder = HttpUtility.ParseQueryString(string.Empty);
-                var queryProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.QUERY_STRING);
-
-                foreach (var entry in queryProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key)))
-                {
-                    if (entry.Value == null) continue;
-
-                    foreach (var parameter in BuildHttpParameter(entry.Key, entry.Value))
-                        queryStringBuilder.Add(entry.Key.Name, parameter);
-                }
-
-                toReturn.RequestUri = new UriBuilder(toReturn.RequestUri)
-                {
-                    Query = queryStringBuilder.ToString()
-                }.Uri;
-            }
-
+                Query = queryStringBuilder.ToString()
+            }.Uri;
+          
             return RequestResult.Success(toReturn);
         }
 

@@ -20,7 +20,8 @@ namespace NMediator.Http.Reflection.BodyConverter
         }
         public HttpContent Convert(object objetToConvert)
         {
-            return new StringContent(JsonSerializer.Serialize(objetToConvert, _options),Encoding.UTF8,"application/json");
+            var content = JsonSerializer.Serialize(objetToConvert, _options);
+            return new StringContent(content,Encoding.UTF8,"application/json");
         }
     }
 }
