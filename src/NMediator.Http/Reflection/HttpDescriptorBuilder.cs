@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Linq.Expressions;
+using System.Net.Http;
 
 namespace NMediator.NMediator.Http.Reflection
 {
@@ -14,6 +16,19 @@ namespace NMediator.NMediator.Http.Reflection
             return this;
         }
 
+        public HttpDescriptorBuilder<T> OverrideParameterLocation(Expression<Func<T,object>> expression, ParameterLocation parameterLocation)
+        {
+            if(expression.Body is MemberExpression member)
+            {
+                _descriptor.ParameterLocationOverride[member.Member] = parameterLocation;
+                return this;
+            }
+
+            throw new InvalidOperationException("expression body must be a MemberExpression");
+        }
+
         public HttpDescriptor Build() => _descriptor;
     }
+
+
 }
