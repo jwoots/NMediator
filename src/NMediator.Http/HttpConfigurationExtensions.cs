@@ -1,6 +1,4 @@
 ﻿using NMediator.Core.Routing;
-using NMediator.Core.Transport;
-using NMediator.Core.Transport.Decorator;
 using NMediator.NMediator.Http;
 using NMediator.NMediator.Http.Reflection;
 using NMediator.Request.Configuration;
@@ -18,10 +16,13 @@ namespace NMediator.Core.Configuration
             var options = new HttpOptions();
             optionsFactory(options);
 
-            var ht = new HttpTransport(new ReflectionHttpMessageFactory(options.BaseUri, options.HttpDescriptors), options.HttpClientFactory);
-            var router = config.Container.Get<TypeBasedRouter>();
-            foreach (var type in options.HttpDescriptors.GetRegisteredTypes())
-                router.AddRoute(type, ht);
+            config.Extender.OnResolving(() =>
+            {
+                var ht = new HttpTransport(new ReflectionHttpMessageFactory(options.BaseUri, options.HttpDescriptors), options.HttpClientFactory);
+                var router = config.Container.Get<TypeBasedRouter>();
+                foreach (var type in options.HttpDescriptors.GetRegisteredTypes())
+                    router.AddRoute(type, ht);
+            });
 
             return config;
         }
