@@ -21,7 +21,7 @@ namespace NMediator.Http.Reflection.QueryStringBinder
         public bool CanBind(Type type, object value)
         {
             return type.TryGetEnumerableGenericArgument(out var argType)
-                && argType.GetConverter().CanConvertTo(typeof(string));
+                && argType.GetConverter().CanConvertFrom(typeof(string));
         }
     }
 }

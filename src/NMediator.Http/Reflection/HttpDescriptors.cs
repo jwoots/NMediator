@@ -16,8 +16,9 @@ namespace NMediator.NMediator.Http.Reflection
         public ICollection<IQueryStringBinder> QueryParametersBinders { get; protected set; } = new List<IQueryStringBinder>()
         {
             new StringConvertableBinder(),
-            new EnumerableBinder(),
-            new ArrayBinder()
+            new ArrayBinder(),
+            new EnumerableBinder()
+            
         };
 
         public IBodyConverter BodyConverter { get; protected set; } = new JsonBodyConverter();

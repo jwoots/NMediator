@@ -17,7 +17,7 @@ namespace NMediator.Http.Reflection.QueryStringBinder
 
         public bool CanBind(Type type, object value)
         {
-            return type.IsArray && type.GetElementType().GetConverter().CanConvertTo(typeof(string));
+            return type.IsArray && type.GetElementType().GetConverter().CanConvertFrom(typeof(string));
         }
     }
 }
