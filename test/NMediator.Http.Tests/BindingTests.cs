@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Xunit;
 using NMediator.Core.Handling;
+using FluentAssertions;
 
 namespace NMediator.Http.Tests
 {
@@ -37,6 +38,14 @@ namespace NMediator.Http.Tests
         public async Task Execute_must_bind_int_property_to_query_string(int value, string expected)
         {
             await TestBinding(value, expected);
+        }
+
+        [Fact]
+        public async Task Execute_must_throw_invalidOperationExecption_when_attempt_to_bind_object_property_to_query_string()
+        {
+            Func<Task> action = () =>  TestBinding(new object(), "test");
+
+            await action.Should().ThrowExactlyAsync<InvalidOperationException>().WithMessage("Can not build query string for property*");
         }
 
         [Theory]
