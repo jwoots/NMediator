@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using NMediator.Core.Result;
-using NMediator.Http;
+﻿using NMediator.Core.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +18,7 @@ namespace NMediator.NMediator.Http.Reflection
         {
             _baseUri = baseUri;
             _descriptors = descriptors;
+            _descriptors.ErrorMapper = base.ErrorFactory;
         }
 
         protected override RequestResult<HttpRequestMessage> CreateRequest(object message)
@@ -35,13 +34,16 @@ namespace NMediator.NMediator.Http.Reflection
 
             var uriResult = CreateUri(descriptor, messageProperties);
             toReturn.RequestUri = uriResult.Uri;
-            var messagePropertiesRemaining = messageProperties.Where(x => !uriResult.UsedProperties.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value);
+            var messagePropertiesRemaining = messageProperties.Where(x => !uriResult.UsedProperties.Contains(x.Key))
+                                                              .ToDictionary(x => x.Key, x => x.Value);
 
             //body
             var bodyProperties = descriptor.GetPropertiesForLocation(message, ParameterLocation.BODY);
             var propertiesToSerialize = bodyProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key))
                 .ToDictionary(m => m.Key.Name, m => m.Value);
-            toReturn.Content = _descriptors.BodyConverter.Convert(propertiesToSerialize);
+            var body = _descriptors.BodyConverter.Convert(propertiesToSerialize);
+            toReturn.Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
+                
 
             //query string
             var queryStringBuilder = HttpUtility.ParseQueryString(string.Empty);
@@ -102,8 +104,8 @@ namespace NMediator.NMediator.Http.Reflection
             var typeToEvaluate = Nullable.GetUnderlyingType(pi.PropertyType) ?? pi.PropertyType;
 
             return _descriptors.QueryParametersBinders
-                .FirstOrDefault(x => x.CanBind(typeToEvaluate, value))
-                ?.Bind(typeToEvaluate, value)?.ToArray()
+                .FirstOrDefault(x => x.CanBindToString(typeToEvaluate, value))
+                ?.BindToString(typeToEvaluate, value)?.ToArray()
                 ?? throw new InvalidOperationException($"Can not build query string for property {pi.Name}");
         }
 

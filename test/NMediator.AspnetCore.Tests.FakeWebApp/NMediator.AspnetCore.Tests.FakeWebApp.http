@@ -1,0 +1,6 @@
+@NMediator.AspnetCore.Tests.FakeWebApp_HostAddress = http://localhost:5016
+
+GET {{NMediator.AspnetCore.Tests.FakeWebApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

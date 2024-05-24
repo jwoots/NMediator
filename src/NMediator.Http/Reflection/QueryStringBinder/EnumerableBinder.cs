@@ -8,7 +8,7 @@ namespace NMediator.Http.Reflection.QueryStringBinder
 {
     internal class EnumerableBinder : IQueryStringBinder
     {
-        public IEnumerable<string> Bind(Type type, object value)
+        public IEnumerable<string> BindToString(Type type, object value)
         {
             type.TryGetEnumerableGenericArgument(out var argType);
             var result = ((IEnumerable)value)
@@ -18,10 +18,37 @@ namespace NMediator.Http.Reflection.QueryStringBinder
             return result;
         }
 
-        public bool CanBind(Type type, object value)
+        public object BindToType(Type type, IEnumerable<string> value)
+        {
+            type.TryGetEnumerableGenericArgument(out var argType);
+            var converter = argType.GetConverter();
+
+            if (argType != typeof(string)
+                && value.Count() == 1
+                && value.First().Contains(","))
+            {
+                value = value.First().Split([','],StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
+            }
+
+            var array = Array.CreateInstance(argType, value.Count());
+            value.ForEach((index, item) =>
+            {
+                array.SetValue(converter.ConvertFromInvariantString(item), index);
+            });
+
+            return array;
+        }
+
+        public bool CanBindToString(Type type, object value)
         {
             return type.TryGetEnumerableGenericArgument(out var argType)
                 && argType.GetConverter().CanConvertFrom(typeof(string));
+        }
+
+        public bool CanBindToType(Type type, IEnumerable<string> value)
+        {
+            return type.TryGetEnumerableGenericArgument(out var argType)
+               && argType.GetConverter().CanConvertFrom(typeof(string));
         }
     }
 }

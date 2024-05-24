@@ -1,4 +1,5 @@
 ﻿using NMediator.Core.Result;
+using NMediator.Http;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -16,8 +17,7 @@ namespace NMediator.NMediator.Http
     public class SimpleHttpMessageFactory : IHttpMessageFactory
     {
         private readonly IDictionary<Type, Func<object, HttpRequestMessage>> _requestMessagefactories = new Dictionary<Type, Func<object, HttpRequestMessage>>();
-        private readonly IDictionary<HttpStatusCode, Func<HttpResponseMessage, Error>> _errorfactories = new Dictionary<HttpStatusCode, Func<HttpResponseMessage, Error>>();
-        private readonly IDictionary<HttpStatusCode, Func<HttpResponseMessage, Exception>> _exceptionfactories = new Dictionary<HttpStatusCode, Func<HttpResponseMessage, Exception>>();
+        public HttpResponseToErrorMapper ErrorFactory { get;  } = new HttpResponseToErrorMapper();
 
         /// <summary>
         /// Add a factory for create an HttpRequestMessage from TMessage object
@@ -27,26 +27,6 @@ namespace NMediator.NMediator.Http
         public void AddRequestFactory<TMessage>(Func<TMessage, HttpRequestMessage> factory)
         {
             _requestMessagefactories[typeof(TMessage)] = o => factory((TMessage)o);
-        }
-
-        /// <summary>
-        /// Add a factory to provide a request result Error from HttpResponseMessage for a http status code
-        /// </summary>
-        /// <param name="httpStatusCode">the status code for which apply the factory</param>
-        /// <param name="factory">the factory de create RequestResult Error from Http response message</param>
-        public void AddErrorFactory(HttpStatusCode httpStatusCode, Func<HttpResponseMessage, Error> factory)
-        {
-            _errorfactories[httpStatusCode] = factory;
-        }
-
-        /// <summary>
-        /// Add a factory to create an exception from HttpResponseMessage for a http status code
-        /// </summary>
-        /// <param name="httpStatusCode">the status code for which apply the factory</param>
-        /// <param name="factory">the factory to create Exception from http response message</param>
-        public void AddExceptionFactory(HttpStatusCode httpStatusCode, Func<HttpResponseMessage, Exception> factory)
-        {
-            _exceptionfactories[httpStatusCode] = factory;
         }
 
         HttpRequestMessage IHttpMessageFactory.CreateRequest(object message)
@@ -86,11 +66,11 @@ namespace NMediator.NMediator.Http
         /// <param name="httpMessage">the http response message</param>
         protected virtual async Task<RequestResult<TMessage>> CreateResult<TMessage>(HttpResponseMessage httpMessage)
         {
-            if (_errorfactories.ContainsKey(httpMessage.StatusCode))
-                return RequestResult.Fail<TMessage>(_errorfactories[httpMessage.StatusCode](httpMessage));
+            if (ErrorFactory.TryGetError(httpMessage, out Error error))
+                return RequestResult.Fail<TMessage>(error);
 
-            if (_exceptionfactories.ContainsKey(httpMessage.StatusCode))
-                throw _exceptionfactories[httpMessage.StatusCode](httpMessage);
+            if (ErrorFactory.TryGetException(httpMessage, out Exception exception))
+                throw exception;
 
             int statusCode = (int)httpMessage.StatusCode;
             string contentString = await httpMessage.Content.ReadAsStringAsync();

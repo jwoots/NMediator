@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace NMediator.Http.Reflection.BodyConverter
 {
@@ -18,10 +19,15 @@ namespace NMediator.Http.Reflection.BodyConverter
                 Converters = { new JsonStringEnumConverter() }
             };
         }
-        public HttpContent Convert(object objetToConvert)
+        public string Convert(object objetToConvert)
         {
             var content = JsonSerializer.Serialize(objetToConvert, _options);
-            return new StringContent(content,Encoding.UTF8,"application/json");
+            return content;
+        }
+
+        public object ConvertToType(Type type, string body)
+        {
+            return JsonSerializer.Deserialize(body, type, _options);
         }
     }
 }
