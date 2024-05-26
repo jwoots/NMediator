@@ -1,0 +1,1477 @@
+{
+  "NMediator.dll": {
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Extensions\\TypeExtensions.cs": {
+      "System.TypeExtensions": {
+        "System.Boolean System.TypeExtensions::IsEnumerable(System.Type)": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean System.TypeExtensions::TryGetEnumerableGenericArgument(System.Type,System.Type&)": {
+          "Lines": {
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": [
+            {
+              "Line": 25,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 60,
+              "EndOffset": 66,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 72,
+              "EndOffset": 74,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 72,
+              "EndOffset": 78,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 6,
+              "EndOffset": 31,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Boolean System.TypeExtensions::IsOpenGenericInterface(System.Type,System.Type,System.Type&)": {
+          "Lines": {
+            "38": 46,
+            "39": 46,
+            "40": 46,
+            "41": 61,
+            "43": 46,
+            "44": 46
+          },
+          "Branches": [
+            {
+              "Line": 41,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 41,
+              "Offset": 6,
+              "EndOffset": 27,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 14
+            }
+          ]
+        },
+        "System.ComponentModel.TypeConverter System.TypeExtensions::GetConverter(System.Type)": {
+          "Lines": {
+            "46": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Extensions\\IEnumerableExtensions.cs": {
+      "System.Collections.Generic.IEnumeratorExtensions": {
+        "System.Void System.Collections.Generic.IEnumeratorExtensions::ForEach(System.Collections.Generic.IEnumerable`1<T>,System.Action`1<T>)": {
+          "Lines": {
+            "9": 207,
+            "10": 865,
+            "11": 122,
+            "12": 207
+          },
+          "Branches": [
+            {
+              "Line": 10,
+              "Offset": 32,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 122
+            },
+            {
+              "Line": 10,
+              "Offset": 32,
+              "EndOffset": 34,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 207
+            }
+          ]
+        },
+        "System.Void System.Collections.Generic.IEnumeratorExtensions::ForEach(System.Collections.Generic.IEnumerable`1<T>,System.Action`2<System.Int32,T>)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 37,
+              "EndOffset": 5,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 37,
+              "EndOffset": 39,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Request\\IRequestExecutor.cs": {
+      "NMediator.Request.RequestExecutor": {
+        "System.Threading.Tasks.Task`1<NMediator.Core.Result.RequestResult`1<TResult>> NMediator.Request.RequestExecutor::Execute(TRequest,System.Threading.CancellationToken,System.Collections.Generic.IDictionary`2<System.String,System.String>)": {
+          "Lines": {
+            "25": 11,
+            "26": 11,
+            "27": 11
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Request.RequestExecutor::.ctor(NMediator.Core.Message.IMessageProcessor)": {
+          "Lines": {
+            "19": 11,
+            "20": 11,
+            "21": 11,
+            "22": 11
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Request\\Configuration\\RequestConfiguration.cs": {
+      "NMediator.Request.Configuration.RequestConfiguration": {
+        "NMediator.Core.SInjector.Container NMediator.Request.Configuration.RequestConfiguration::get_Container()": {
+          "Lines": {
+            "9": 23
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Request.Configuration.RequestConfiguration::Register()": {
+          "Lines": {
+            "17": 12,
+            "18": 12,
+            "19": 23,
+            "20": 12
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 11
+            },
+            {
+              "Line": 19,
+              "Offset": 7,
+              "EndOffset": 30,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 11
+            }
+          ]
+        },
+        "System.Void NMediator.Request.Configuration.RequestConfiguration::.ctor(NMediator.Core.SInjector.Container)": {
+          "Lines": {
+            "11": 12,
+            "12": 12,
+            "13": 12,
+            "14": 12
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\InProcess\\InProcessConfiguration.cs": {
+      "NMediator.InProcess.InProcessConfiguration": {
+        "NMediator.Core.Transport.Decorator.TransportOptionsConfiguration NMediator.InProcess.InProcessConfiguration::ExecuteWithInProcess(System.Type[])": {
+          "Lines": {
+            "23": 13,
+            "24": 26,
+            "25": 13,
+            "27": 13,
+            "28": 13
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Transport.Decorator.TransportOptionsConfiguration NMediator.InProcess.InProcessConfiguration::PublishInProcess(System.Type[])": {
+          "Lines": {
+            "31": 2,
+            "32": 4,
+            "33": 2,
+            "35": 2,
+            "36": 2
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.InProcess.InProcessConfiguration::Resolve()": {
+          "Lines": {
+            "39": 13,
+            "40": 28,
+            "41": 13
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.InProcess.InProcessConfiguration::.ctor(NMediator.Core.SInjector.Container)": {
+          "Lines": {
+            "13": 13,
+            "15": 13,
+            "16": 13,
+            "17": 13,
+            "18": 26,
+            "19": 15,
+            "20": 13
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\InProcess\\InProcessTransport.cs": {
+      "NMediator.InProcess.InProcessTransport": {
+        "System.Void NMediator.InProcess.InProcessTransport::.ctor(NMediator.Core.Transport.ITransportLevelHandlerExecutor)": {
+          "Lines": {
+            "15": 13,
+            "16": 13,
+            "17": 13,
+            "18": 13
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 11,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 13
+            }
+          ]
+        }
+      },
+      "NMediator.InProcess.InProcessTransport/<SendMessage>d__2`2": {
+        "System.Void NMediator.InProcess.InProcessTransport/<SendMessage>d__2`2::MoveNext()": {
+          "Lines": {
+            "21": 13,
+            "22": 13,
+            "23": 1,
+            "25": 12,
+            "26": 6
+          },
+          "Branches": [
+            {
+              "Line": 22,
+              "Offset": 31,
+              "EndOffset": 33,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 22,
+              "Offset": 31,
+              "EndOffset": 44,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 12
+            }
+          ]
+        }
+      },
+      "NMediator.InProcess.InProcessEventTransport": {
+        "System.Void NMediator.InProcess.InProcessEventTransport::.ctor(NMediator.Core.Transport.ITransportLevelHandlerExecutor)": {
+          "Lines": {
+            "33": 2,
+            "34": 2,
+            "35": 2,
+            "36": 2
+          },
+          "Branches": [
+            {
+              "Line": 35,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 11,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "NMediator.InProcess.InProcessEventTransport/<SendMessage>d__2`2": {
+        "System.Void NMediator.InProcess.InProcessEventTransport/<SendMessage>d__2`2::MoveNext()": {
+          "Lines": {
+            "39": 2,
+            "40": 2,
+            "41": 0,
+            "43": 2,
+            "45": 2,
+            "46": 2
+          },
+          "Branches": [
+            {
+              "Line": 40,
+              "Offset": 31,
+              "EndOffset": 33,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 40,
+              "Offset": 31,
+              "EndOffset": 44,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Event\\EventConfiguration.cs": {
+      "NMediator.Event.EventConfiguration": {
+        "NMediator.Core.SInjector.Container NMediator.Event.EventConfiguration::get_Container()": {
+          "Lines": {
+            "9": 4
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Event.EventConfiguration::Register()": {
+          "Lines": {
+            "17": 2,
+            "18": 2,
+            "19": 4,
+            "20": 2
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 19,
+              "Offset": 7,
+              "EndOffset": 30,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void NMediator.Event.EventConfiguration::.ctor(NMediator.Core.SInjector.Container)": {
+          "Lines": {
+            "11": 2,
+            "12": 2,
+            "13": 2,
+            "14": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Event\\IEventPublisher.cs": {
+      "NMediator.Event.EventPublisher": {
+        "System.Threading.Tasks.Task`1<NMediator.Core.Result.RequestResult`1<NMediator.Core.Result.Nothing>> NMediator.Event.EventPublisher::Publish(TEvent,System.Threading.CancellationToken,System.Collections.Generic.IDictionary`2<System.String,System.String>)": {
+          "Lines": {
+            "24": 2,
+            "25": 2,
+            "26": 2
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Event.EventPublisher::.ctor(NMediator.Core.Message.IMessageProcessor)": {
+          "Lines": {
+            "18": 2,
+            "19": 2,
+            "20": 2,
+            "21": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Transport\\BaseTransportConfiguration.cs": {
+      "NMediator.Core.Transport.TransportConfiguration": {
+        "System.Collections.Generic.ICollection`1<NMediator.Core.Transport.Decorator.TransportOptionsConfiguration> NMediator.Core.Transport.TransportConfiguration::get_TransportConfigurations()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Transport.TransportConfiguration::Resolve()": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Transport\\DefaultTransportLevelHandlerExecutor.cs": {
+      "NMediator.Core.Transport.DefaultTransportLevelHandlerExecutor": {
+        "System.Void NMediator.Core.Transport.DefaultTransportLevelHandlerExecutor::.ctor(NMediator.Core.Handling.IServiceActivator,NMediator.Core.Handling.IHandlerInterfaceTypeProvider)": {
+          "Lines": {
+            "19": 15,
+            "20": 15,
+            "21": 15,
+            "22": 15,
+            "23": 15
+          },
+          "Branches": []
+        }
+      },
+      "NMediator.Core.Transport.DefaultTransportLevelHandlerExecutor/<ExecuteHandler>d__3": {
+        "System.Void NMediator.Core.Transport.DefaultTransportLevelHandlerExecutor/<ExecuteHandler>d__3::MoveNext()": {
+          "Lines": {
+            "26": 14,
+            "27": 14,
+            "28": 14,
+            "29": 1,
+            "31": 13,
+            "33": 13,
+            "34": 13,
+            "35": 0,
+            "38": 13,
+            "39": 13,
+            "40": 12,
+            "41": 12,
+            "42": 7,
+            "43": 7,
+            "44": 7,
+            "47": 1,
+            "48": 7,
+            "49": 2,
+            "50": 2,
+            "51": 2,
+            "52": 2,
+            "54": 1,
+            "57": 5,
+            "58": 5,
+            "59": 5,
+            "60": 0,
+            "62": 8
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 66,
+              "EndOffset": 68,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 28,
+              "Offset": 66,
+              "EndOffset": 95,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 13
+            },
+            {
+              "Line": 34,
+              "Offset": 154,
+              "EndOffset": 156,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 34,
+              "Offset": 154,
+              "EndOffset": 179,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 12
+            },
+            {
+              "Line": 34,
+              "Offset": 182,
+              "EndOffset": 184,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 182,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 13
+            },
+            {
+              "Line": 39,
+              "Offset": 236,
+              "EndOffset": 241,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 12
+            },
+            {
+              "Line": 41,
+              "Offset": 248,
+              "EndOffset": 252,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 3
+            },
+            {
+              "Line": 41,
+              "Offset": 248,
+              "EndOffset": 289,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 12
+            },
+            {
+              "Line": 41,
+              "Offset": 309,
+              "EndOffset": 313,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 3
+            },
+            {
+              "Line": 41,
+              "Offset": 309,
+              "EndOffset": 381,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 12
+            },
+            {
+              "Line": 39,
+              "Offset": 236,
+              "EndOffset": 622,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            },
+            {
+              "Line": 48,
+              "Offset": 1022,
+              "EndOffset": 658,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 2
+            },
+            {
+              "Line": 50,
+              "Offset": 682,
+              "EndOffset": 686,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 1
+            },
+            {
+              "Line": 50,
+              "Offset": 682,
+              "EndOffset": 723,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 2
+            },
+            {
+              "Line": 50,
+              "Offset": 743,
+              "EndOffset": 747,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 1
+            },
+            {
+              "Line": 50,
+              "Offset": 743,
+              "EndOffset": 815,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 2
+            },
+            {
+              "Line": 48,
+              "Offset": 1022,
+              "EndOffset": 1027,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Transport\\Decorator\\RetryOutgoingTransportDecorator.cs": {
+      "NMediator.Core.Transport.Decorator.RetryOutgoingTransportDecorator": {
+        "System.Void NMediator.Core.Transport.Decorator.RetryOutgoingTransportDecorator::.ctor(NMediator.Core.Transport.IOutgoingTransport,System.Int32)": {
+          "Lines": {
+            "15": 3,
+            "16": 3,
+            "17": 3,
+            "18": 3,
+            "20": 3,
+            "21": 0,
+            "22": 3
+          },
+          "Branches": [
+            {
+              "Line": 20,
+              "Offset": 36,
+              "EndOffset": 38,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 20,
+              "Offset": 36,
+              "EndOffset": 49,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        }
+      },
+      "NMediator.Core.Transport.Decorator.RetryOutgoingTransportDecorator/<SendMessage>d__3`2": {
+        "System.Void NMediator.Core.Transport.Decorator.RetryOutgoingTransportDecorator/<SendMessage>d__3`2::MoveNext()": {
+          "Lines": {
+            "24": 2,
+            "25": 2,
+            "26": 14,
+            "27": 5,
+            "29": 5,
+            "30": 5,
+            "32": 5,
+            "33": 5,
+            "34": 5,
+            "35": 5,
+            "36": 5,
+            "39": 2,
+            "42": 0
+          },
+          "Branches": [
+            {
+              "Line": 26,
+              "Offset": 250,
+              "EndOffset": 34,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            },
+            {
+              "Line": 26,
+              "Offset": 250,
+              "EndOffset": 255,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            }
+          ]
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Transport\\Decorator\\TransportOptionsConfiguration.cs": {
+      "NMediator.Core.Transport.Decorator.TransportOptionsConfiguration": {
+        "NMediator.Core.Transport.Decorator.TransportOptionsConfiguration NMediator.Core.Transport.Decorator.TransportOptionsConfiguration::Retry(System.Int32)": {
+          "Lines": {
+            "23": 3,
+            "24": 6,
+            "25": 3,
+            "26": 3
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Transport.Decorator.TransportOptionsConfiguration::Configure()": {
+          "Lines": {
+            "29": 15,
+            "30": 15,
+            "31": 15,
+            "32": 18,
+            "33": 29,
+            "34": 15
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Transport.Decorator.TransportOptionsConfiguration::.ctor(NMediator.Core.SInjector.Container,System.Func`1<NMediator.Core.Transport.IOutgoingTransport>,System.Collections.Generic.IEnumerable`1<System.Type>)": {
+          "Lines": {
+            "13": 15,
+            "15": 15,
+            "16": 15,
+            "17": 15,
+            "18": 15,
+            "19": 15,
+            "20": 15
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Routing\\RoutedMessageProcessor.cs": {
+      "NMediator.Core.Routing.RoutedMessageProcessor": {
+        "System.Void NMediator.Core.Routing.RoutedMessageProcessor::.ctor(NMediator.Core.Routing.IRouter)": {
+          "Lines": {
+            "14": 13,
+            "15": 13,
+            "16": 13,
+            "17": 13
+          },
+          "Branches": []
+        }
+      },
+      "NMediator.Core.Routing.RoutedMessageProcessor/<Process>d__2`2": {
+        "System.Void NMediator.Core.Routing.RoutedMessageProcessor/<Process>d__2`2::MoveNext()": {
+          "Lines": {
+            "20": 13,
+            "21": 13,
+            "22": 8,
+            "23": 8
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Routing\\TypeBasedRouter.cs": {
+      "NMediator.Core.Routing.TypeBasedRouter": {
+        "NMediator.Core.Transport.IOutgoingTransport NMediator.Core.Routing.TypeBasedRouter::Route(System.Type)": {
+          "Lines": {
+            "12": 13,
+            "13": 13,
+            "14": 11,
+            "16": 2,
+            "17": 1,
+            "19": 1,
+            "20": 12
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 17,
+              "EndOffset": 19,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 11
+            },
+            {
+              "Line": 13,
+              "Offset": 17,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 16,
+              "Offset": 29,
+              "EndOffset": 31,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 16,
+              "Offset": 29,
+              "EndOffset": 52,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 55,
+              "EndOffset": 57,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 16,
+              "Offset": 55,
+              "EndOffset": 61,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void NMediator.Core.Routing.TypeBasedRouter::AddRoute(System.Type,NMediator.Core.Transport.IOutgoingTransport)": {
+          "Lines": {
+            "23": 14
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Routing.TypeBasedRouter::.ctor()": {
+          "Lines": {
+            "9": 13
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Result\\RequestResult.cs": {
+      "NMediator.Core.Result.RequestResult`1": {
+        "System.Boolean NMediator.Core.Result.RequestResult`1::get_IsSuccess()": {
+          "Lines": {
+            "5": 20
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Result.Error NMediator.Core.Result.RequestResult`1::get_Error()": {
+          "Lines": {
+            "6": 6
+          },
+          "Branches": []
+        },
+        "T NMediator.Core.Result.RequestResult`1::get_Data()": {
+          "Lines": {
+            "7": 29
+          },
+          "Branches": []
+        },
+        "System.Object NMediator.Core.Result.RequestResult`1::NMediator.Core.Result.IRequestResult.get_Data()": {
+          "Lines": {
+            "8": 4
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Result.RequestResult`1::.ctor(T)": {
+          "Lines": {
+            "10": 13,
+            "11": 13,
+            "12": 13,
+            "13": 13,
+            "14": 13
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Result.RequestResult`1::.ctor(NMediator.Core.Result.Error)": {
+          "Lines": {
+            "16": 2,
+            "17": 2,
+            "18": 2,
+            "19": 2,
+            "20": 2
+          },
+          "Branches": []
+        }
+      },
+      "NMediator.Core.Result.RequestResult": {
+        "NMediator.Core.Result.RequestResult`1<TData> NMediator.Core.Result.RequestResult::Success(TData)": {
+          "Lines": {
+            "25": 10
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Result.RequestResult`1<NMediator.Core.Result.Nothing> NMediator.Core.Result.RequestResult::Success()": {
+          "Lines": {
+            "26": 2
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Result.RequestResult`1<TData> NMediator.Core.Result.RequestResult::Fail(NMediator.Core.Result.Error)": {
+          "Lines": {
+            "27": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Handling\\AssembliesHandlerTypeProvider.cs": {
+      "NMediator.Core.Handling.AssembliesHandlerInterfaceTypeProvider": {
+        "System.Type NMediator.Core.Handling.AssembliesHandlerInterfaceTypeProvider::GetHandlerInterfaceTypeByMessageType(System.Type)": {
+          "Lines": {
+            "39": 1,
+            "40": 1,
+            "41": 1
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Handling.AssembliesHandlerInterfaceTypeProvider::.ctor(System.Collections.Generic.IEnumerable`1<System.Reflection.Assembly>)": {
+          "Lines": {
+            "17": 1,
+            "23": 1,
+            "24": 1,
+            "25": 5,
+            "26": 1,
+            "27": 95,
+            "28": 46,
+            "29": 46,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 46,
+            "34": 1,
+            "35": 1
+          },
+          "Branches": [
+            {
+              "Line": 25,
+              "Offset": 123,
+              "EndOffset": 29,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 27,
+              "Offset": 114,
+              "EndOffset": 49,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 46
+            },
+            {
+              "Line": 29,
+              "Offset": 78,
+              "EndOffset": 80,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 29,
+              "Offset": 78,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 46
+            },
+            {
+              "Line": 27,
+              "Offset": 114,
+              "EndOffset": 116,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 25,
+              "Offset": 123,
+              "EndOffset": 125,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Handling\\DelegateServiceActivator.cs": {
+      "NMediator.Core.Handling.DelegateServiceActivator": {
+        "System.Collections.Generic.IEnumerable`1<System.Object> NMediator.Core.Handling.DelegateServiceActivator::GetInstances(System.Type)": {
+          "Lines": {
+            "22": 1,
+            "23": 1,
+            "24": 1
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Handling.DelegateServiceActivator::.ctor(System.Func`2<System.Type,System.Collections.Generic.IEnumerable`1<System.Object>>)": {
+          "Lines": {
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Handling\\HandlingConfiguration.cs": {
+      "NMediator.Core.Handling.HandlingConfiguration": {
+        "NMediator.Core.SInjector.Container NMediator.Core.Handling.HandlingConfiguration::get_Container()": {
+          "Lines": {
+            "15": 2
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Handling.HandlingConfiguration NMediator.Core.Handling.HandlingConfiguration::UseDelegateActivator(System.Func`2<System.Type,System.Collections.Generic.IEnumerable`1<System.Object>>)": {
+          "Lines": {
+            "32": 1,
+            "33": 1,
+            "34": 2,
+            "35": 1,
+            "36": 1
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Handling.HandlingConfiguration NMediator.Core.Handling.HandlingConfiguration::ScanHandlersFromAssemblies(System.Reflection.Assembly[])": {
+          "Lines": {
+            "44": 1,
+            "45": 1,
+            "46": 2,
+            "47": 1,
+            "48": 1
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Handling.HandlingConfiguration::.ctor(NMediator.Core.SInjector.Container)": {
+          "Lines": {
+            "21": 1,
+            "22": 1,
+            "23": 1,
+            "24": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Handling\\SimpleServiceActivator.cs": {
+      "NMediator.Core.Handling.SimpleServiceActivator": {
+        "System.Collections.Generic.IDictionary`2<System.Type,System.Collections.Generic.ICollection`1<System.Object>> NMediator.Core.Handling.SimpleServiceActivator::get__instances()": {
+          "Lines": {
+            "18": 62
+          },
+          "Branches": []
+        },
+        "System.Type NMediator.Core.Handling.SimpleServiceActivator::GetHandlerInterfaceTypeByMessageType(System.Type)": {
+          "Lines": {
+            "21": 13,
+            "22": 27,
+            "23": 13
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IEnumerable`1<System.Object> NMediator.Core.Handling.SimpleServiceActivator::GetInstances(System.Type)": {
+          "Lines": {
+            "26": 12,
+            "27": 12,
+            "28": 12,
+            "29": 12,
+            "32": 0,
+            "33": 12
+          },
+          "Branches": [
+            {
+              "Line": 27,
+              "Offset": 17,
+              "EndOffset": 19,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 12
+            },
+            {
+              "Line": 27,
+              "Offset": 17,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void NMediator.Core.Handling.SimpleServiceActivator::RegisterMessage(System.Func`3<TMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<NMediator.Core.Result.RequestResult`1<TResult>>>)": {
+          "Lines": {
+            "36": 13,
+            "37": 13,
+            "38": 1,
+            "40": 12,
+            "41": 13
+          },
+          "Branches": [
+            {
+              "Line": 37,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 37,
+              "Offset": 26,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 12
+            }
+          ]
+        }
+      },
+      "NMediator.Core.Handling.SimpleServiceActivator/GenericRequestHandler`2": {
+        "System.Threading.Tasks.Task`1<NMediator.Core.Result.RequestResult`1<TResult>> NMediator.Core.Handling.SimpleServiceActivator/GenericRequestHandler`2::Handle(TMessage,System.Threading.CancellationToken)": {
+          "Lines": {
+            "53": 13,
+            "54": 13,
+            "55": 8
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Handling.SimpleServiceActivator/GenericRequestHandler`2::.ctor(System.Func`3<TMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<NMediator.Core.Result.RequestResult`1<TResult>>>)": {
+          "Lines": {
+            "47": 13,
+            "48": 13,
+            "49": 13,
+            "50": 13
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Context\\DefaultHeadersMessageProcessorDecorator.cs": {
+      "NMediator.Core.Context.DefaultHeadersMessageProcessorDecorator": {
+        "System.Threading.Tasks.Task`1<NMediator.Core.Result.RequestResult`1<TResult>> NMediator.Core.Context.DefaultHeadersMessageProcessorDecorator::Process(TMessage,System.Threading.CancellationToken,System.Collections.Generic.IDictionary`2<System.String,System.String>)": {
+          "Lines": {
+            "21": 13,
+            "22": 13,
+            "24": 13,
+            "25": 13,
+            "26": 13,
+            "27": 13,
+            "29": 13,
+            "30": 13
+          },
+          "Branches": [
+            {
+              "Line": 22,
+              "Offset": 3,
+              "EndOffset": 5,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 11
+            },
+            {
+              "Line": 22,
+              "Offset": 3,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 13
+            },
+            {
+              "Line": 24,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 13
+            },
+            {
+              "Line": 24,
+              "Offset": 28,
+              "EndOffset": 61,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 13
+            },
+            {
+              "Line": 26,
+              "Offset": 77,
+              "EndOffset": 79,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 13
+            },
+            {
+              "Line": 26,
+              "Offset": 77,
+              "EndOffset": 110,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 13
+            }
+          ]
+        },
+        "System.Void NMediator.Core.Context.DefaultHeadersMessageProcessorDecorator::.ctor(NMediator.Core.Message.IMessageProcessor)": {
+          "Lines": {
+            "15": 13,
+            "16": 13,
+            "17": 13,
+            "18": 13
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Context\\MessageContext.cs": {
+      "NMediator.Core.Context.MessageContext": {
+        "NMediator.Core.Context.MessageContext NMediator.Core.Context.MessageContext::get_Current()": {
+          "Lines": {
+            "13": 2
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 13,
+              "EndOffset": 15,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 13,
+              "Offset": 13,
+              "EndOffset": 31,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void NMediator.Core.Context.MessageContext::SetContext(NMediator.Core.Context.MessageContext)": {
+          "Lines": {
+            "16": 14,
+            "17": 14,
+            "18": 14
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IDictionary`2<System.String,System.String> NMediator.Core.Context.MessageContext::get_Values()": {
+          "Lines": {
+            "23": 10
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Context.MessageContext::.ctor()": {
+          "Lines": {
+            "20": 14
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Context.MessageContext::.cctor()": {
+          "Lines": {
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Context\\MessageContextTransportLevelHandlerExecutorDecorator.cs": {
+      "NMediator.Core.Context.MessageContextTransportLevelHandlerExecutorDecorator": {
+        "System.Threading.Tasks.Task`1<NMediator.Core.Result.IRequestResult> NMediator.Core.Context.MessageContextTransportLevelHandlerExecutorDecorator::ExecuteHandler(System.Object,System.Threading.CancellationToken,System.Collections.Generic.IDictionary`2<System.String,System.String>)": {
+          "Lines": {
+            "19": 14,
+            "20": 14,
+            "21": 20,
+            "22": 14,
+            "23": 14,
+            "24": 14
+          },
+          "Branches": [
+            {
+              "Line": 21,
+              "Offset": 19,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 21,
+              "Offset": 19,
+              "EndOffset": 42,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 14
+            }
+          ]
+        },
+        "System.Void NMediator.Core.Context.MessageContextTransportLevelHandlerExecutorDecorator::.ctor(NMediator.Core.Transport.ITransportLevelHandlerExecutor)": {
+          "Lines": {
+            "13": 15,
+            "14": 15,
+            "15": 15,
+            "16": 15
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Core\\Configuration\\MediatorConfiguration.cs": {
+      "NMediator.Core.Configuration.MediatorConfiguration": {
+        "NMediator.Core.SInjector.Container NMediator.Core.Configuration.MediatorConfiguration::get_Container()": {
+          "Lines": {
+            "16": 143
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Configuration.MediatorConfiguration NMediator.Core.Configuration.MediatorConfiguration::Handling(NMediator.Core.Handling.IServiceActivator,NMediator.Core.Handling.IHandlerInterfaceTypeProvider)": {
+          "Lines": {
+            "31": 12,
+            "32": 26,
+            "33": 26,
+            "34": 12,
+            "35": 12
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Configuration.MediatorConfiguration NMediator.Core.Configuration.MediatorConfiguration::Handling(System.Action`1<NMediator.Core.Handling.HandlingConfiguration>)": {
+          "Lines": {
+            "38": 1,
+            "39": 1,
+            "40": 1,
+            "41": 1,
+            "42": 1,
+            "43": 1
+          },
+          "Branches": []
+        },
+        "NMediator.Core.Configuration.MediatorConfiguration NMediator.Core.Configuration.MediatorConfiguration::Handling(NMediator.Core.Handling.SimpleServiceActivator)": {
+          "Lines": {
+            "47": 12
+          },
+          "Branches": []
+        },
+        "System.Void NMediator.Core.Configuration.MediatorConfiguration::.ctor()": {
+          "Lines": {
+            "18": 13,
+            "19": 13,
+            "20": 13,
+            "21": 13,
+            "22": 26,
+            "23": 28,
+            "24": 26,
+            "25": 28,
+            "26": 28,
+            "27": 26,
+            "28": 13
+          },
+          "Branches": [
+            {
+              "Line": 24,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 13
+            },
+            {
+              "Line": 24,
+              "Offset": 7,
+              "EndOffset": 30,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 13
+            }
+          ]
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Event\\ConfigurationExtensions.cs": {
+      "NMediator.Core.Configuration.EventConfigurationExtensions": {
+        "NMediator.Core.Configuration.MediatorConfiguration NMediator.Core.Configuration.EventConfigurationExtensions::Event(NMediator.Core.Configuration.MediatorConfiguration,System.Action`1<NMediator.Event.EventConfiguration>)": {
+          "Lines": {
+            "9": 2,
+            "10": 2,
+            "11": 2,
+            "12": 2,
+            "13": 2,
+            "14": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\InProcess\\EventConfigurationExtensions.cs": {
+      "NMediator.Core.Configuration.InProccessEventConfigurationExtensions": {
+        "NMediator.Core.Transport.Decorator.TransportOptionsConfiguration NMediator.Core.Configuration.InProccessEventConfigurationExtensions::PublishWithInProcess(NMediator.Event.EventConfiguration,System.Type[])": {
+          "Lines": {
+            "11": 2,
+            "12": 4,
+            "13": 2,
+            "14": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\InProcess\\RequestConfigurationExtensions.cs": {
+      "NMediator.Core.Configuration.RequestConfigurationExtensions": {
+        "NMediator.Core.Transport.Decorator.TransportOptionsConfiguration NMediator.Core.Configuration.RequestConfigurationExtensions::ExecuteWithInProcess(NMediator.Request.Configuration.RequestConfiguration,System.Type[])": {
+          "Lines": {
+            "11": 13,
+            "12": 24,
+            "13": 13,
+            "14": 13
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\GIT\\NMediator\\src\\NMediator\\Request\\Configuration\\ConfigurationExtensions.cs": {
+      "NMediator.Core.Configuration.ConfigurationExtensions": {
+        "NMediator.Core.Configuration.MediatorConfiguration NMediator.Core.Configuration.ConfigurationExtensions::Request(NMediator.Core.Configuration.MediatorConfiguration,System.Action`1<NMediator.Request.Configuration.RequestConfiguration>)": {
+          "Lines": {
+            "9": 12,
+            "10": 12,
+            "11": 12,
+            "12": 12,
+            "13": 12,
+            "14": 12
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}
