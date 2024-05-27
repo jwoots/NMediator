@@ -8,11 +8,11 @@ namespace NMediator.NMediator.Http.Reflection
     {
         private readonly HttpDescriptor _descriptor = new HttpDescriptor();
 
-        public HttpDescriptorBuilder<T> CallRelativeUri(string relativeUri, HttpMethod method, ParameterLocation defaultParamterLocation)
+        public HttpDescriptorBuilder<T> CallRelativeUri(string relativeUri, HttpMethod method, ParameterLocation? defaultParamterLocation = null)
         {
             _descriptor.RelativeUri = relativeUri;
             _descriptor.Method = method;
-            _descriptor.ParameterLocation = defaultParamterLocation;
+            _descriptor.ParameterLocation = defaultParamterLocation ?? (method == HttpMethod.Get ? ParameterLocation.QUERY_STRING : ParameterLocation.BODY);
             return this;
         }
 

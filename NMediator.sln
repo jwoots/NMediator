@@ -21,9 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.AspnetCore", "src\NMediator.AspnetCore\NMediator.AspnetCore.csproj", "{D2D2D2D5-7D5C-4E05-A5CE-E3DF43BE9DCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMediator.AspnetCore.Tests", "test\NMediator.AspnetCore.Tests\NMediator.AspnetCore.Tests.csproj", "{62BD8E23-0053-434A-A452-8A50C0E04C80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.AspnetCore.Tests", "test\NMediator.AspnetCore.Tests\NMediator.AspnetCore.Tests.csproj", "{62BD8E23-0053-434A-A452-8A50C0E04C80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMediator.AspnetCore.Tests.FakeWebApp", "test\NMediator.AspnetCore.Tests.FakeWebApp\NMediator.AspnetCore.Tests.FakeWebApp.csproj", "{44F779B0-766C-4058-A230-2863513AD7D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMediator.AspnetCore.Tests.FakeWebApp", "test\NMediator.AspnetCore.Tests.FakeWebApp\NMediator.AspnetCore.Tests.FakeWebApp.csproj", "{44F779B0-766C-4058-A230-2863513AD7D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{E357B913-9C3C-459A-A513-608ADB994287}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B43847EA-AE6B-45ED-BB41-E187B4D9BF19} = {E357B913-9C3C-459A-A513-608ADB994287}
+		{AA8F856A-1242-4168-96A3-9ECAB3184492} = {E357B913-9C3C-459A-A513-608ADB994287}
+		{62BD8E23-0053-434A-A452-8A50C0E04C80} = {E357B913-9C3C-459A-A513-608ADB994287}
+		{44F779B0-766C-4058-A230-2863513AD7D9} = {E357B913-9C3C-459A-A513-608ADB994287}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A525C8E7-8A69-41D9-9C7B-C190F465DC30}

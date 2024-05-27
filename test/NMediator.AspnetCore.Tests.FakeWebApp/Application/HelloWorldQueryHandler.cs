@@ -1,9 +1,10 @@
-﻿using NMediator.Core.Result;
+﻿using NMediator.Core.Message;
+using NMediator.Core.Result;
 using NMediator.Request;
 
 namespace NMediator.AspnetCore.Tests.FakeWebApp.Application
 {
-    public class HelloWorldQueryHandler : IRequestHandler<HelloWorldQuery, string>
+    public class HelloWorldQueryHandler : IMessageHandler<HelloWorldQuery, string>
     {
         public Task<RequestResult<string>> Handle(HelloWorldQuery message, CancellationToken cancellationToken)
         {

@@ -7,9 +7,10 @@ namespace NMediator.AspnetCore
 {
     public static class EndpointRouteBuilderExtensions
     {
-        public static IApplicationBuilder MapMessages(this WebApplication builder, Container container, HttpDescriptors descriptors, ErrorToHttpResponseMapper errorMapper)
+        public static IApplicationBuilder MapMessages(this WebApplication builder, Container container, HttpDescriptors descriptors, ErrorToHttpResponseMapper errorMapper = null)
         {
             var handlerExecutor = container.Get<ITransportLevelHandlerExecutor>();
+            errorMapper ??= new ErrorToHttpResponseMapper();
 
             foreach (var type in descriptors.GetRegisteredTypes())
             {
@@ -21,9 +22,9 @@ namespace NMediator.AspnetCore
                     //build from body
                     using (var stream = new StreamReader(ctx.Request.Body))
                     {
-                        var body = stream.ReadToEnd();
+                        var body = await stream.ReadToEndAsync();
                         if(!string.IsNullOrEmpty(body))
-                            message = descriptor.CreateMessageWithBody(type, body, descriptors.BodyConverter);
+                            message = await descriptor.CreateMessageWithBody(type, body, descriptors.BodyConverter);
                     }
 
                     //build from query string

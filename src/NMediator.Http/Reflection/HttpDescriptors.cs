@@ -1,16 +1,13 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Linq;
+﻿using NMediator.Http;
 using NMediator.Http.Reflection.BodyConverter;
 using NMediator.Http.Reflection.QueryStringBinder;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Threading.Tasks;
-using NMediator.Http;
 
 namespace NMediator.NMediator.Http.Reflection
 {

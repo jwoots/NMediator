@@ -7,9 +7,9 @@ A .net mediator with these features:
 * No coupling between message and mediator contract
 * A transport level abstraction
 
-## Quick start (DRAFT)
+# Quick start (DRAFT)
 
-### Create Request and HandlerRequest
+## Code your business logic
 ```csharp
 public class MyRequest
 {
@@ -25,7 +25,9 @@ public class MyRequestHandler : IMessageHandler<MyRequest,string>
 }
 ```
 
-### Configure NMediator
+## Expose it
+
+This simple example, expose your handler in a in-process mediator and use ServiceCollection as injector.
 ```csharp
 MediatorConfiguration config = new();
 Assembly handlerAssembly = typeof(MyRequestHandler).Assembly;
@@ -44,8 +46,8 @@ config
 BaseConfiguration.Configure(config);
 ```
 
-### Use NMediatior
-```c#
+## Use it
+```csharp
 var requestExecutor = config.Container.Get<IRequestExecutor>();
 var result = await requestExecutor.Execute<MyRequest, string>(new MyRequest {MyParameter="MyValue"});
 ```

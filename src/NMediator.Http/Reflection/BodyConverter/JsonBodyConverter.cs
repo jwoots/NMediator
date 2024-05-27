@@ -14,7 +14,7 @@ namespace NMediator.Http.Reflection.BodyConverter
 
         public JsonBodyConverter(JsonSerializerOptions options = null)
         {
-            _options = options ?? new JsonSerializerOptions() 
+            _options = options ?? new JsonSerializerOptions(JsonSerializerDefaults.Web) 
             { 
                 Converters = { new JsonStringEnumConverter() }
             };
