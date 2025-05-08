@@ -97,6 +97,29 @@ namespace NMediator.NMediator.Http.Reflection
             }
         }
 
+        public void PopulateMessageWithUri(IDictionary<string, string> routeValues, object messageToPopulate, IEnumerable<IQueryStringBinder> queryStringBinders)
+        {
+            Type t = messageToPopulate.GetType();
+            var properties =t.GetProperties();
+
+            foreach (var key in routeValues.Keys)
+            {
+                var stringKey = key.ToString();
+                var property = properties.SingleOrDefault(x => string.Compare(x.Name, stringKey, ignoreCase: true) == 0);
+
+                if (property != null)
+                {
+                    var stringValues = new string[] { routeValues[key] };
+                    object typedValue = queryStringBinders
+                        .FirstOrDefault(x => x.CanBindToType(property.PropertyType, stringValues))
+                        ?.BindToType(property.PropertyType, stringValues)
+                        ?? throw new InvalidOperationException($"no binder found to convert {stringValues} to type {property.PropertyType}");
+
+                    property.SetValue(messageToPopulate, typedValue);
+                }
+            }
+        }
+
         /// <summary>
         /// Create a new message from serialized body
         /// </summary>

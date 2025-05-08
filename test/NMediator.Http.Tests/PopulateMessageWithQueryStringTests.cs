@@ -11,11 +11,11 @@ using Xunit;
 
 namespace NMediator.Http.Tests
 {
-    public class PopulateMessageTests
+    public class PopulateMessageWithQueryStringTests
     {
         private readonly HttpDescriptors descriptors = new HttpDescriptors();
 
-        public PopulateMessageTests()
+        public PopulateMessageWithQueryStringTests()
         {
             descriptors.AddFor<Message>(b =>
             {

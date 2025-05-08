@@ -27,6 +27,9 @@ namespace NMediator.AspnetCore
                             message = await descriptor.CreateMessageWithBody(type, body, descriptors.BodyConverter);
                     }
 
+                    //build form uri
+                   descriptor.PopulateMessageWithUri(ctx.Request.RouteValues.ToDictionary(x => x.Key,x => (string)x.Value), message, descriptors.QueryParametersBinders);
+
                     //build from query string
                     var parsedQueryString = HttpUtility.ParseQueryString(ctx.Request.QueryString.ToString());
                     descriptor.PopulateMessageWithQueryString(parsedQueryString, message, descriptors.QueryParametersBinders);

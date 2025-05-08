@@ -15,12 +15,12 @@ namespace NMediator.AspnetCore.Tests
 {
     public class Tests
     {
-        private readonly CustomWebApplicationFactory<Program> _factory;
+        private readonly CustomWebApplicationFactory<Program> _webAppFactory;
         private readonly JsonSerializerOptions _jsonOptions;
 
         public Tests()
         {
-            _factory = new CustomWebApplicationFactory<Program>();
+            _webAppFactory = new CustomWebApplicationFactory<Program>();
             _jsonOptions = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true
@@ -32,16 +32,33 @@ namespace NMediator.AspnetCore.Tests
         {
             //Arrange
             var descriptors = new HttpDescriptors();
-            descriptors.AddFor<HelloWorldQuery>(b => b.CallRelativeUri("/hello", HttpMethod.Get));
-            _factory.ServicesList.Add(sc => sc.AddSingleton(descriptors));
+            descriptors.AddFor<HelloWorldQuery>(b => b.CallRelativeUri("/hello/{id}", HttpMethod.Get));
+            _webAppFactory.ServicesList.Add(sc => sc.AddSingleton(descriptors));
 
             //Act
-            var client = _factory.CreateClient();
-            var response = await client.GetAsync("/hello");
+            var client = _webAppFactory.CreateClient();
+            var response = await client.GetAsync("/hello/18");
             var content = await response.Content.ReadAsStringAsync();
 
             //Assert
-            JsonSerializer.Deserialize<string>(content).Should().Be("Hello World!");
+            JsonSerializer.Deserialize<string>(content).Should().Be("Hello World! 18");
+        }
+
+        [Fact]
+        public async Task Get_with_parameters()
+        {
+            //Arrange
+            var descriptors = new HttpDescriptors();
+            descriptors.AddFor<HelloWorldWithParametersQuery>(b => b.CallRelativeUri("/hello/{Id}", HttpMethod.Get));
+            _webAppFactory.ServicesList.Add(sc => sc.AddSingleton(descriptors));
+
+            //Act
+            var client = _webAppFactory.CreateClient();
+            var response = await client.GetAsync("/hello/22?name=james");
+            var content = await response.Content.ReadAsStringAsync();
+
+            //Assert
+            JsonSerializer.Deserialize<string>(content).Should().Be("Hello World! 22 james");
         }
 
         [Fact]
@@ -50,11 +67,11 @@ namespace NMediator.AspnetCore.Tests
             //Arrange
             var descriptors = new HttpDescriptors();
             descriptors.AddFor<PostQuery>(b => b.CallRelativeUri("/post", HttpMethod.Post));
-            _factory.ServicesList.Add(sc => sc.AddSingleton(descriptors));
+            _webAppFactory.ServicesList.Add(sc => sc.AddSingleton(descriptors));
 
             //Act
             var expectedPostResult = new PostQueryResult { Name = "John", Adress = "Doe" };
-            var response = await _factory.CreateClient().PostAsJsonAsync("/post", new PostQuery
+            var response = await _webAppFactory.CreateClient().PostAsJsonAsync("/post", new PostQuery
             {
                 Name = "John",
                 Adress = "Doe"

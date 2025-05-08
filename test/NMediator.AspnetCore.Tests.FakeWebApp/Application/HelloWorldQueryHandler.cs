@@ -8,11 +8,12 @@ namespace NMediator.AspnetCore.Tests.FakeWebApp.Application
     {
         public Task<RequestResult<string>> Handle(HelloWorldQuery message, CancellationToken cancellationToken)
         {
-            return Task.FromResult(new RequestResult<string>("Hello World!"));
+            return Task.FromResult(new RequestResult<string>($"Hello World! {message.Id}"));
         }
     }
 
     public class HelloWorldQuery
     {
+        public string Id { get; set; }
     }
 }
