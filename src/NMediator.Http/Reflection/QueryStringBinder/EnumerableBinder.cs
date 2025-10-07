@@ -30,13 +30,26 @@ namespace NMediator.Http.Reflection.QueryStringBinder
                 value = value.First().Split([','],StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
             }
 
-            var array = Array.CreateInstance(argType, value.Count());
-            value.ForEach((index, item) =>
+            if (type.IsInterface)
             {
-                array.SetValue(converter.ConvertFromInvariantString(item), index);
-            });
+                var array = Array.CreateInstance(argType, value.Count());
+                value.ForEach((index, item) =>
+                {
+                    array.SetValue(converter.ConvertFromInvariantString(item), index);
+                });
 
-            return array;
+                return array;
+            }
+            else
+            {
+                var list = Activator.CreateInstance(type) as IList;
+                foreach(var item in value)
+                {
+                    list.Add(converter.ConvertFromInvariantString(item));
+                }
+
+                return list;
+            }
         }
 
         public bool CanBindToString(Type type, object value)

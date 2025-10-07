@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using NMediator.Core.Handling;
+using NMediator.NMediator.Http.Reflection;
 
 namespace NMediator.AspnetCore.Tests
 {
@@ -16,6 +18,21 @@ namespace NMediator.AspnetCore.Tests
             });
 
             base.ConfigureWebHost(builder);
+        }
+
+        public void SetHttpDescriptors(HttpDescriptors descriptors)
+        {
+            ServicesList.Add(sc => sc.AddSingleton(descriptors));
+        }
+
+        public void SetErrorToHttpResponseMapper(ErrorToHttpResponseMapper mapper)
+        {
+            ServicesList.Add(sc => sc.AddSingleton(mapper));
+        }
+
+        public void SetServiceActivator(SimpleServiceActivator activator)
+        {
+            ServicesList.Add(sc => sc.AddSingleton(activator));
         }
     }
 }

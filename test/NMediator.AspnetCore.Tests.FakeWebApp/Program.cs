@@ -1,6 +1,7 @@
 
 using NMediator.AspnetCore.Tests.FakeWebApp.Application;
 using NMediator.Core.Configuration;
+using NMediator.Core.Handling;
 using NMediator.Core.Message;
 using NMediator.NMediator.Http.Reflection;
 
@@ -20,13 +21,23 @@ public  class Program
 
         var app = builder.Build();
 
-        var mediatorConfig = new MediatorConfiguration();
-        mediatorConfig.Handling(h => h
-            .ScanHandlersFromAssemblies(typeof(HelloWorldQueryHandler).Assembly)
-            .UseDelegateActivator(t => app.Services.GetServices(t)));
-
         HttpDescriptors descriptors = app.Services.GetRequiredService<HttpDescriptors>();
         ErrorToHttpResponseMapper? errorMapper = app.Services.GetService<ErrorToHttpResponseMapper>();
+        SimpleServiceActivator? activator = app.Services.GetService<SimpleServiceActivator>();
+
+        var mediatorConfig = new MediatorConfiguration();
+        if (activator != null)
+        {
+            mediatorConfig.Handling(activator);
+        }
+        else
+        {
+            mediatorConfig.Handling(h => h
+                .ScanHandlersFromAssemblies(typeof(HelloWorldQueryHandler).Assembly)
+                .UseDelegateActivator(t => app.Services.GetServices(t)));
+        }
+
+
 
         app.MapMessages(mediatorConfig.Container, descriptors, errorMapper);
 

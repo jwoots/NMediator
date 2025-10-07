@@ -27,13 +27,14 @@ namespace NMediator.Http.Tests
             var serviceActivator = new SimpleServiceActivator();
             serviceActivator.RegisterMessage<MyRequest, Nothing>((m, ct) => Task.FromResult(RequestResult.Success()));
 
-            configuration.Handling(serviceActivator)
-                    .Request(r => r.ExecuteWithHttp(options =>
-                    {
-                        options.HttpClientFactory = () => _mockHttpMessageHandler.ToHttpClient();
-                        options.HttpDescriptors = _descriptors;
-                        options.BaseUri = new Uri("http://test");
-                    }));
+            configuration
+                //.Handling(serviceActivator)
+                .Request(r => r.ExecuteWithHttp(options =>
+                {
+                    options.HttpClientFactory = () => _mockHttpMessageHandler.ToHttpClient();
+                    options.HttpDescriptors = _descriptors;
+                    options.BaseUri = new Uri("http://test");
+                }));
 
         }
 
