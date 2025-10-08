@@ -87,11 +87,13 @@ namespace NMediator.NMediator.Http.Reflection
                 if ( property != null)
                 {
                     var stringValues = parsedQueryString.GetValues(stringKey);
-                    object typedValue = queryStringBinders
-                        .FirstOrDefault(x => x.CanBindToType(property.PropertyType, stringValues))
-                        ?.BindToType(property.PropertyType, stringValues)
-                        ?? throw new InvalidOperationException($"no binder found to convert {stringValues} to type {property.PropertyType}");
-
+                    var queryStringBinder = queryStringBinders.FirstOrDefault(x => x.CanBindToType(property.PropertyType, stringValues));
+                    if (queryStringBinder == null)
+                    {
+                        throw new InvalidOperationException($"no binder found to convert {stringValues} to type {property.PropertyType}");
+                    }
+                    object typedValue = queryStringBinder.BindToType(property.PropertyType, stringValues);
+                        
                     property.SetValue(messageToPopulate, typedValue);
                 }
             }

@@ -209,6 +209,61 @@ namespace NMediator.AspnetCore.Tests
             });
         }
 
+        [Fact]
+        public async Task Get_binding_advanced_types_null()
+        {
+            // Arrange
+            SimpleServiceActivator activator = new();
+            activator.RegisterMessage<GetAdvancedTypesQuery, GetAdvancedTypesResult>((request, token) =>
+            {
+                return Task.FromResult(RequestResult.Success(new GetAdvancedTypesResult
+                {
+                    Date = request.Date,
+                    NullableDate = request.NullableDate,
+                    DateOffset = request.DateOffset,
+                    NullableDateOffset = request.NullableDateOffset,
+                    FloatValue = request.FloatValue,
+                    NullableFloat = request.NullableFloat,
+                    DoubleValue = request.DoubleValue,
+                    NullableDouble = request.NullableDouble,
+                    LongValue = request.LongValue,
+                    NullableLong = request.NullableLong
+                }));
+            });
+
+            var descriptors = new HttpDescriptors();
+            descriptors.AddFor<GetAdvancedTypesQuery>(b => b.CallRelativeUri("/get-advanced", HttpMethod.Get));
+
+            _webAppFactory.SetServiceActivator(activator);
+            _webAppFactory.SetHttpDescriptors(descriptors);
+
+            // Act
+            var url = "/get-advanced"
+                + "?date=2024-01-01T12:34:56"
+                + "&dateOffset=2024-01-01T12:34:56%2B02:00"
+                + "&floatValue=1.23"
+                + "&doubleValue=7.89"
+                + "&longValue=1234567890123";
+            var response = await _webAppFactory.CreateClient().GetAsync(url);
+
+            // Assert
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<GetAdvancedTypesResult>(content, _jsonOptions);
+            result.Should().BeEquivalentTo(new GetAdvancedTypesResult
+            {
+                Date = new DateTime(2024, 1, 1, 12, 34, 56),
+                NullableDate = null,
+                DateOffset = new DateTimeOffset(2024, 1, 1, 12, 34, 56, TimeSpan.FromHours(2)),
+                NullableDateOffset =null,
+                FloatValue = 1.23f,
+                NullableFloat = null,
+                DoubleValue = 7.89,
+                NullableDouble = null,
+                LongValue = 1234567890123L,
+                NullableLong = null
+            });
+        }
+
         private class GetQuery
         {
             public string Name { get; set; }

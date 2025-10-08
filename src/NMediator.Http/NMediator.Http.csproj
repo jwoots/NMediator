@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2</TargetFramework>
-	 <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <LangVersion>Latest</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2</TargetFramework>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<LangVersion>Latest</LangVersion>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="System.Text.Json" Version="9.0.9" />
 	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NMediator\NMediator.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NMediator\NMediator.csproj" />
+	</ItemGroup>
 
 </Project>
