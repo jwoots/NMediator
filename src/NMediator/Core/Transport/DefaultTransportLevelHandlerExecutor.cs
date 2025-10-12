@@ -22,7 +22,7 @@ namespace NMediator.Core.Transport
             _handlerProvider = handlerProvider;
         }
 
-        public async Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string> headers)
+        public async Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string>? headers = null)
         { 
             var handlerType = _handlerProvider.GetHandlerInterfaceTypeByMessageType(message.GetType());
             if (handlerType == null)
@@ -51,7 +51,7 @@ namespace NMediator.Core.Transport
                         await task;
                     }
 
-                    return null;
+                    return RequestResult.Success();
                 }
             }
             catch (TargetInvocationException ex)

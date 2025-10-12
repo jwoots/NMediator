@@ -8,8 +8,8 @@ namespace NMediator.NMediator.Http
 {
     public class HttpOptions
     {
-        public Uri BaseUri { get; set; }
-        public HttpDescriptors HttpDescriptors { get; set; }
-        public Func<HttpClient> HttpClientFactory { get; set; }
+        public Uri BaseUri { get; set; } = null!;
+        public  HttpDescriptors HttpDescriptors { get; set; } = null!;
+        public  Func<HttpClient> HttpClientFactory { get; set; } = null!;
     }
 }

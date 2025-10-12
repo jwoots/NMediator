@@ -1,4 +1,6 @@
 ﻿using NMediator.Core.Result;
+using NMediator.Http;
+using NMediator.Http.BodyConverter;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -16,8 +18,14 @@ namespace NMediator.NMediator.Http
     public class SimpleHttpMessageFactory : IHttpMessageFactory
     {
         private readonly IDictionary<Type, Func<object, HttpRequestMessage>> _requestMessagefactories = new Dictionary<Type, Func<object, HttpRequestMessage>>();
-        private readonly IDictionary<HttpStatusCode, Func<HttpResponseMessage, Error>> _errorfactories = new Dictionary<HttpStatusCode, Func<HttpResponseMessage, Error>>();
-        private readonly IDictionary<HttpStatusCode, Func<HttpResponseMessage, Exception>> _exceptionfactories = new Dictionary<HttpStatusCode, Func<HttpResponseMessage, Exception>>();
+        protected IBodyConverter BodyConverter { get; }
+
+        public HttpResponseToErrorMapper ErrorFactory { get;  } = new HttpResponseToErrorMapper();
+
+        public SimpleHttpMessageFactory(IBodyConverter bodyConverter)
+        {
+            BodyConverter = bodyConverter;
+        }
 
         /// <summary>
         /// Add a factory for create an HttpRequestMessage from TMessage object
@@ -29,33 +37,13 @@ namespace NMediator.NMediator.Http
             _requestMessagefactories[typeof(TMessage)] = o => factory((TMessage)o);
         }
 
-        /// <summary>
-        /// Add a factory to provide a request result Error from HttpResponseMessage for a http status code
-        /// </summary>
-        /// <param name="httpStatusCode">the status code for which apply the factory</param>
-        /// <param name="factory">the factory de create RequestResult Error from Http response message</param>
-        public void AddErrorFactory(HttpStatusCode httpStatusCode, Func<HttpResponseMessage, Error> factory)
-        {
-            _errorfactories[httpStatusCode] = factory;
-        }
-
-        /// <summary>
-        /// Add a factory to create an exception from HttpResponseMessage for a http status code
-        /// </summary>
-        /// <param name="httpStatusCode">the status code for which apply the factory</param>
-        /// <param name="factory">the factory to create Exception from http response message</param>
-        public void AddExceptionFactory(HttpStatusCode httpStatusCode, Func<HttpResponseMessage, Exception> factory)
-        {
-            _exceptionfactories[httpStatusCode] = factory;
-        }
-
         HttpRequestMessage IHttpMessageFactory.CreateRequest(object message)
         {
             var result = CreateRequest(message);
             if (!result.IsSuccess)
-                throw new InvalidOperationException(result.Error.Description);
+                throw new InvalidOperationException(result.Error!.Description);
 
-            return result.Data;
+            return result.Data!;
         }
 
         /// <summary>
@@ -86,17 +74,24 @@ namespace NMediator.NMediator.Http
         /// <param name="httpMessage">the http response message</param>
         protected virtual async Task<RequestResult<TMessage>> CreateResult<TMessage>(HttpResponseMessage httpMessage)
         {
-            if (_errorfactories.ContainsKey(httpMessage.StatusCode))
-                return RequestResult.Fail<TMessage>(_errorfactories[httpMessage.StatusCode](httpMessage));
+            if (ErrorFactory.TryGetError(httpMessage, out Error error))
+                return RequestResult.Fail<TMessage>(error);
 
-            if (_exceptionfactories.ContainsKey(httpMessage.StatusCode))
-                throw _exceptionfactories[httpMessage.StatusCode](httpMessage);
+            if (ErrorFactory.TryGetException(httpMessage, out Exception exception))
+                throw exception;
 
             int statusCode = (int)httpMessage.StatusCode;
             string contentString = await httpMessage.Content.ReadAsStringAsync();
 
             if (statusCode >= 200 && statusCode < 300)
-                return RequestResult.Success(string.IsNullOrWhiteSpace(contentString) ? default : JsonSerializer.Deserialize<TMessage>(contentString));
+            {
+                if (string.IsNullOrWhiteSpace(contentString) && typeof(TMessage) == typeof(Nothing))
+                {
+                    return RequestResult.Success((TMessage)(object)new Nothing());
+                }
+
+                return RequestResult.Success(BodyConverter.ConvertToType<TMessage>(contentString)!);
+            }
 
             if (statusCode >= 300 && statusCode < 400)
                 throw new NotSupportedException("http response code 3xx are not supported");

@@ -3,7 +3,7 @@
     public interface IRequestResult
     {
         bool IsSuccess { get; }
-        object Data { get; }
-        Error Error { get; }
+        object? Data { get; }
+        Error? Error { get; }
     }
 }

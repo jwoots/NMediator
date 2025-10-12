@@ -20,9 +20,9 @@ namespace NMediator.Core.Transport.Decorator
             if(_retryTimes <= 0)
                 throw new ArgumentOutOfRangeException(nameof(retryTimes));
         }
-        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string,string> headers)
+        public async Task<IRequestResult> SendMessage<TMessage, TResult>(TMessage message, CancellationToken token, IDictionary<string,string>? headers = null)
         {
-            Exception e = null;
+            Exception? e = null;
             for(int i=0;i<_retryTimes;i++)
             {
                 try
@@ -36,7 +36,7 @@ namespace NMediator.Core.Transport.Decorator
             }
 
 #pragma warning disable S2259 // Null pointers should not be dereferenced
-            throw e;
+            throw e!;
 #pragma warning restore S2259 // Null pointers should not be dereferenced
 
         }

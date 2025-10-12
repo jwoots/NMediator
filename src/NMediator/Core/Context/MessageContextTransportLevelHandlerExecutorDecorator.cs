@@ -15,7 +15,7 @@ namespace NMediator.Core.Context
             _decoratee = decoratee;
         }
 
-        public Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string> headers)
+        public Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string>? headers = null)
         {
             var mc = new MessageContext();
             headers?.ForEach(kvp => mc.Values[kvp.Key] = kvp.Value);

@@ -17,6 +17,6 @@ namespace NMediator.Core.Transport
         /// <param name="token"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string> headers);
+        Task<IRequestResult> ExecuteHandler(object message, CancellationToken token, IDictionary<string, string>? headers = null);
     }
 }

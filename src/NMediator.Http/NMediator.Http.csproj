@@ -1,13 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-	 <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <LangVersion>10</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2</TargetFramework>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<LangVersion>Latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NMediator\NMediator.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Text.Json" Version="9.0.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\NMediator\NMediator.csproj" />
+	</ItemGroup>
 
 </Project>

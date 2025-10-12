@@ -3,7 +3,9 @@ name: .NET Core
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
+    branches: 
+      - develop
+      - feature/**
   pull_request:
     branches: [ develop ]
 
@@ -20,8 +22,14 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1.9.0
       with:
-        dotnet-version: 6.0.x
-    
+        dotnet-version: 8.0.x
+
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4.2.1
+      with:
+        distribution: 'oracle'
+        java-version: '22'
+        
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
       with:
@@ -32,7 +40,7 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.7
       with:
         useConfigFile: true
-      
+
     - name: Install dotnet scanner
       run: dotnet tool install --global dotnet-sonarscanner
       
@@ -55,11 +63,11 @@ jobs:
        
     - name: Pack
       run : dotnet pack -c Release -o . -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
-      if : github.event_name != 'pull_request'
+      if : github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'
       
     - name: Push
       run : dotnet nuget push *.nupkg -k ${{ secrets.MYGET_TOKEN }} -s https://www.myget.org/F/jwoots/api/v2/package
-      if : github.event_name != 'pull_request'
+      if : github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'
       
     
    
