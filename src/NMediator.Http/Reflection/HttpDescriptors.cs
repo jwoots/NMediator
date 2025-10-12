@@ -1,5 +1,5 @@
 ﻿using NMediator.Http;
-using NMediator.Http.Reflection.BodyConverter;
+using NMediator.Http.BodyConverter;
 using NMediator.Http.Reflection.QueryStringBinder;
 using System;
 using System.Collections.Generic;
@@ -50,8 +50,13 @@ namespace NMediator.NMediator.Http.Reflection
     {
         public string RelativeUri { get; set; }
         public ParameterLocation ParameterLocation { get; set; }
-        public HttpMethod Method { get; set; }
+        public HttpMethod Method { get; set; } = HttpMethod.Post;
         public IDictionary<MemberInfo, ParameterLocation> ParameterLocationOverride {get;} = new Dictionary<MemberInfo, ParameterLocation>();
+
+        public HttpDescriptor(string relativeUri)
+        {
+            RelativeUri = relativeUri;
+        }
 
         public IDictionary<PropertyInfo, object> GetPropertiesForLocation(object message, ParameterLocation location)
         {
@@ -129,7 +134,7 @@ namespace NMediator.NMediator.Http.Reflection
         /// <param name="body"></param>
         /// <param name="converter"></param>
         /// <returns></returns>
-        public Task<object> CreateMessageWithBody(Type type, string body, IBodyConverter converter)
+        public Task<object?> CreateMessageWithBody(Type type, string body, IBodyConverter converter)
         {
             return Task.FromResult(converter.ConvertToType(type, body));
         }

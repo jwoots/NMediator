@@ -6,7 +6,7 @@ namespace NMediator.NMediator.Http.Reflection
 {
     public class HttpDescriptorBuilder<T>
     {
-        private readonly HttpDescriptor _descriptor = new HttpDescriptor();
+        private readonly HttpDescriptor _descriptor = new HttpDescriptor("/");
 
         public HttpDescriptorBuilder<T> CallRelativeUri(string relativeUri, HttpMethod method, ParameterLocation? defaultParamterLocation = null)
         {

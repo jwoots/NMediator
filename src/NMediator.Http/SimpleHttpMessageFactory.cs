@@ -1,5 +1,6 @@
 ﻿using NMediator.Core.Result;
 using NMediator.Http;
+using NMediator.Http.BodyConverter;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -17,7 +18,14 @@ namespace NMediator.NMediator.Http
     public class SimpleHttpMessageFactory : IHttpMessageFactory
     {
         private readonly IDictionary<Type, Func<object, HttpRequestMessage>> _requestMessagefactories = new Dictionary<Type, Func<object, HttpRequestMessage>>();
+        protected IBodyConverter BodyConverter { get; }
+
         public HttpResponseToErrorMapper ErrorFactory { get;  } = new HttpResponseToErrorMapper();
+
+        public SimpleHttpMessageFactory(IBodyConverter bodyConverter)
+        {
+            BodyConverter = bodyConverter;
+        }
 
         /// <summary>
         /// Add a factory for create an HttpRequestMessage from TMessage object
@@ -33,9 +41,9 @@ namespace NMediator.NMediator.Http
         {
             var result = CreateRequest(message);
             if (!result.IsSuccess)
-                throw new InvalidOperationException(result.Error.Description);
+                throw new InvalidOperationException(result.Error!.Description);
 
-            return result.Data;
+            return result.Data!;
         }
 
         /// <summary>
@@ -76,7 +84,14 @@ namespace NMediator.NMediator.Http
             string contentString = await httpMessage.Content.ReadAsStringAsync();
 
             if (statusCode >= 200 && statusCode < 300)
-                return RequestResult.Success(string.IsNullOrWhiteSpace(contentString) ? default : JsonSerializer.Deserialize<TMessage>(contentString));
+            {
+                if (string.IsNullOrWhiteSpace(contentString) && typeof(TMessage) == typeof(Nothing))
+                {
+                    return RequestResult.Success((TMessage)(object)new Nothing());
+                }
+
+                return RequestResult.Success(BodyConverter.ConvertToType<TMessage>(contentString)!);
+            }
 
             if (statusCode >= 300 && statusCode < 400)
                 throw new NotSupportedException("http response code 3xx are not supported");

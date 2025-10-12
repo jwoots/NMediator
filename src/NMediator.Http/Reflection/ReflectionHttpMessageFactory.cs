@@ -14,7 +14,7 @@ namespace NMediator.NMediator.Http.Reflection
         private readonly Uri _baseUri;
         private readonly HttpDescriptors _descriptors;
 
-        public ReflectionHttpMessageFactory(Uri baseUri, HttpDescriptors descriptors)
+        public ReflectionHttpMessageFactory(Uri baseUri, HttpDescriptors descriptors) : base(descriptors.BodyConverter)
         {
             _baseUri = baseUri;
             _descriptors = descriptors;
@@ -42,7 +42,7 @@ namespace NMediator.NMediator.Http.Reflection
             var propertiesToSerialize = bodyProperties.Where(x => messagePropertiesRemaining.ContainsKey(x.Key))
                 .ToDictionary(m => m.Key.Name, m => m.Value);
             var body = _descriptors.BodyConverter.Convert(propertiesToSerialize);
-            toReturn.Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
+            toReturn.Content = new StringContent(body, BodyConverter.Encoding, BodyConverter.ContentType);
                 
 
             //query string
@@ -82,13 +82,13 @@ namespace NMediator.NMediator.Http.Reflection
             foreach (var parameter in parameters)
             {
                 if (parameter.Value == null)
-                    if (Regex.IsMatch(uri, parameter.Key.Name, RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(uri, parameter.Key.Name, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100)))
                         throw new InvalidOperationException("can not place null value in path url parameter");
                     else
                         continue;
 
                 var values = BuildHttpParameter(parameter.Key, parameter.Value);
-                var newUri = Regex.Replace(uri, $"{{{parameter.Key.Name}}}", string.Join(",", values), RegexOptions.IgnoreCase);
+                var newUri = Regex.Replace(uri, $"{{{parameter.Key.Name}}}", string.Join(",", values), RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100));
 
                 if (newUri != uri)
                     usedProperties.Add(parameter.Key);
@@ -111,8 +111,8 @@ namespace NMediator.NMediator.Http.Reflection
 
         private sealed class UriResult
         {
-            public Uri Uri { get; set; }
-            public IEnumerable<PropertyInfo> UsedProperties { get; set; }
+            public Uri Uri { get; set; } = null!;
+            public IEnumerable<PropertyInfo> UsedProperties { get; set; } = null!;
         }
     }
 }

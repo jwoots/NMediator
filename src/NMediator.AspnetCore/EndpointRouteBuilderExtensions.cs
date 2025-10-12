@@ -51,7 +51,7 @@ namespace NMediator.AspnetCore
                             var content = descriptors.BodyConverter.Convert(result.Data);
                       
                             ctx.Response.StatusCode = 200;
-                            ctx.Response.ContentType = "application/json";
+                            ctx.Response.ContentType =descriptors.BodyConverter.ContentType;
                             await ctx.Response.WriteAsync(content, ctx.RequestAborted);
                         }
                         else
@@ -59,7 +59,7 @@ namespace NMediator.AspnetCore
                             var httpResponse = errorMapper.GetResponseFromErrorOrDefault(result.Error);
                             
                             ctx.Response.StatusCode = httpResponse.StatusCode;
-                            ctx.Response.ContentType = "application/json";
+                            ctx.Response.ContentType = descriptors.BodyConverter.ContentType;
                             await ctx.Response.WriteAsync(httpResponse.Body, ctx.RequestAborted);
                         }
                     }
@@ -68,7 +68,7 @@ namespace NMediator.AspnetCore
                         var httpResponse = errorMapper.GetResponseFromExceptionOrDefault(ex);
                         await ctx.Response.WriteAsync(httpResponse.Body, ctx.RequestAborted);
                         ctx.Response.StatusCode = httpResponse.StatusCode;
-                        ctx.Response.ContentType = "application/json";
+                        ctx.Response.ContentType = descriptors.BodyConverter.ContentType;
                     }
                 });
             }

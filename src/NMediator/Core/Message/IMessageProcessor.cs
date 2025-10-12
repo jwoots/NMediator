@@ -9,11 +9,11 @@ namespace NMediator.Core.Message
 {
     public interface IMessageProcessor
     {
-        Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, CancellationToken cancellationToken, IDictionary<string, string> headers = null); 
+        Task<RequestResult<TResult>> Process<TMessage, TResult>(TMessage message, CancellationToken cancellationToken = default, IDictionary<string, string>? headers = null); 
     }
 
     public interface IMessageHandler<TMessage,TResult>
     {
-        Task<RequestResult<TResult>> Handle(TMessage message, CancellationToken cancellationToken);
+        Task<RequestResult<TResult>> Handle(TMessage message, CancellationToken cancellationToken = default);
     }
 }

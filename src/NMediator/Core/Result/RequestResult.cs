@@ -3,9 +3,9 @@
     public class RequestResult<T> : IRequestResult
     {
         public bool IsSuccess { get; set; }
-        public Error Error { get; set; }
-        public T Data { get; set; }
-        object IRequestResult.Data => Data;
+        public Error? Error { get; set; }
+        public T? Data { get; set; }
+        object? IRequestResult.Data => Data;
 
         public RequestResult(T data)
         {

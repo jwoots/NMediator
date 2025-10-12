@@ -1,22 +1,20 @@
 ﻿using FluentAssertions;
+using NMediator.Core.Result;
+using NMediator.Http.BodyConverter;
 using NMediator.NMediator.Http;
-using NMediator.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
-using System.Linq;
-using Xunit;
 using System.Threading.Tasks;
-using NMediator.Core.Result;
+using Xunit;
 
 namespace NMediator.Tests.Http
 {
     public class SimpleHttpMessageFactoryTests
     {
-        private readonly SimpleHttpMessageFactory _simpleHttpMessageFactory = new SimpleHttpMessageFactory();
+        private readonly SimpleHttpMessageFactory _simpleHttpMessageFactory = new SimpleHttpMessageFactory(new JsonBodyConverter());
         private readonly IHttpMessageFactory _sut;
 
         public SimpleHttpMessageFactoryTests()
